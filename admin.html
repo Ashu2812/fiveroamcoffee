@@ -1,5 +1,5 @@
 
-admin_html = r'''<!DOCTYPE html>
+admin_html = '''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -11,8 +11,6 @@ admin_html = r'''<!DOCTYPE html>
     :root{--beige:#f5f0e8;--beige-dark:#e8dfc8;--beige-mid:#ede4d0;--brown:#3e2a1a;--brown-light:#6b4226;--gold:#b8860b;--gold-light:#d4a843;--text:#2c1a0e;--text-light:#6b5040;--white:#fffdf8;--shadow:rgba(62,42,26,0.12);--success:#2a8c4a;--danger:#cc3333;}
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Lato',sans-serif;background:#1a0f07;color:var(--text);min-height:100vh;}
-
-    /* LOGIN */
     #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0f07,#3e2a1a);}
     .login-box{background:var(--white);border-radius:20px;padding:44px 40px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
     .login-logo{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--brown);text-align:center;margin-bottom:6px;}
@@ -28,8 +26,6 @@ admin_html = r'''<!DOCTYPE html>
     .login-btn:hover{background:var(--gold);}
     .login-hint{text-align:center;font-size:0.78rem;color:var(--text-light);margin-top:14px;}
     .login-error{color:var(--danger);font-size:0.82rem;text-align:center;margin-top:10px;display:none;}
-
-    /* LAYOUT */
     #admin-layout{display:none;min-height:100vh;background:#f7f2ea;}
     .admin-topbar{background:var(--brown);color:var(--white);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.2);}
     .admin-topbar-brand{font-family:'Playfair Display',serif;font-size:1.2rem;}
@@ -42,23 +38,17 @@ admin_html = r'''<!DOCTYPE html>
     .admin-content{padding:32px 28px;max-width:1200px;margin:0 auto;}
     .admin-greeting{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--brown);margin-bottom:4px;}
     .admin-sub{color:var(--text-light);font-size:0.88rem;margin-bottom:30px;}
-
-    /* TABS */
     .admin-tabs{display:flex;gap:6px;margin-bottom:26px;flex-wrap:wrap;}
     .tab-btn{background:var(--white);border:2px solid var(--beige-dark);border-radius:22px;padding:8px 20px;font-family:'Lato',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;color:var(--brown-light);transition:all 0.2s;display:flex;align-items:center;gap:7px;}
     .tab-btn:hover{border-color:var(--gold-light);color:var(--brown);}
     .tab-btn.active{background:var(--brown);color:var(--white);border-color:var(--brown);}
     .tab-panel{display:none;}
     .tab-panel.active{display:block;}
-
-    /* STATS */
     .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:32px;}
     .stat-card{background:var(--white);border-radius:14px;padding:20px 22px;box-shadow:0 3px 14px var(--shadow);}
     .stat-label{font-size:0.76rem;color:var(--text-light);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
     .stat-value{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--brown);}
     .stat-icon{float:right;font-size:1.3rem;color:var(--gold-light);margin-top:-2px;}
-
-    /* SECTION */
     .admin-section{background:var(--white);border-radius:16px;padding:26px;margin-bottom:26px;box-shadow:0 3px 14px var(--shadow);}
     .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
     .section-header h2{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--brown);}
@@ -72,8 +62,6 @@ admin_html = r'''<!DOCTYPE html>
     .btn-export{background:var(--gold);color:var(--white);}
     .btn-export:hover{background:var(--gold-light);}
     .btn-sm{padding:5px 12px;font-size:0.78rem;border-radius:14px;}
-
-    /* TABLE */
     .admin-table{width:100%;border-collapse:collapse;font-size:0.85rem;}
     .admin-table th{text-align:left;padding:9px 12px;background:var(--beige-mid);color:var(--brown-light);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;}
     .admin-table td{padding:11px 12px;border-bottom:1px solid var(--beige-mid);vertical-align:middle;color:var(--text);}
@@ -85,34 +73,25 @@ admin_html = r'''<!DOCTYPE html>
     .status-pill{padding:3px 10px;border-radius:12px;font-size:0.73rem;font-weight:700;}
     .status-active{background:#d4edda;color:#1a6b38;}
     .status-inactive{background:#f8d7da;color:#8b1a1a;}
-
-    /* ORDER STATUS */
     .status-new{background:#d4edda;color:#1a6b38;}
     .status-processing{background:#fff3cd;color:#856404;}
     .status-dispatched{background:#cce5ff;color:#004085;}
     .status-delivered{background:#e2e3e5;color:#383d41;}
-
-    /* MODAL */
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px;}
     .modal-overlay.open{display:flex;}
     .modal-box{background:var(--white);border-radius:18px;max-width:580px;width:100%;padding:30px 28px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
     .modal-box h2{font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:20px;font-size:1.2rem;}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
     .form-row-full{margin-bottom:14px;}
-    .form-group{margin-bottom:0;}
     .img-preview{width:72px;height:72px;border-radius:10px;background:linear-gradient(135deg,#d4a843,#8b5e3c);display:flex;align-items:center;justify-content:center;font-size:1.8rem;overflow:hidden;margin-top:8px;}
     .img-preview img{width:100%;height:100%;object-fit:cover;}
     .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
-
-    /* PROMO */
     .promo-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
     .promo-stat{background:var(--beige);border-radius:12px;padding:14px 18px;text-align:center;}
     .promo-stat .val{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--brown);}
     .promo-stat .lbl{font-size:0.75rem;color:var(--text-light);margin-top:3px;}
     .copy-btn{background:var(--beige-dark);border:none;border-radius:8px;padding:3px 9px;font-size:0.72rem;cursor:pointer;color:var(--brown-light);font-weight:600;transition:background 0.2s;margin-left:5px;}
     .copy-btn:hover{background:var(--gold-light);color:var(--white);}
-
-    /* PG */
     .pg-card{border:2px solid var(--beige-dark);border-radius:14px;padding:20px;margin-bottom:14px;cursor:pointer;transition:all 0.2s;position:relative;}
     .pg-card.active{border-color:var(--gold);background:#fff9ef;}
     .pg-card h3{font-family:'Playfair Display',serif;color:var(--brown);font-size:0.97rem;margin-bottom:5px;}
@@ -122,52 +101,33 @@ admin_html = r'''<!DOCTYPE html>
     .pg-coming{background:var(--brown-light);}
     .key-field{background:var(--beige);border:2px solid var(--beige-dark);border-radius:10px;padding:9px 13px;font-family:monospace;font-size:0.83rem;color:var(--text);width:100%;margin-top:7px;outline:none;}
     .key-field:focus{border-color:var(--gold);}
-
-    /* ORDER DETAIL */
     .order-detail-section{background:var(--beige);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
     .order-detail-title{font-size:0.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
     .order-detail-row{display:flex;justify-content:space-between;font-size:0.83rem;margin-bottom:4px;color:var(--text);}
     .order-detail-row span:first-child{color:var(--text-light);}
-
-    /* SEARCH */
     .search-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
     .search-input{flex:1;min-width:200px;padding:9px 14px;border:2px solid var(--beige-dark);border-radius:22px;font-family:'Lato',sans-serif;font-size:0.85rem;outline:none;background:var(--beige);}
     .search-input:focus{border-color:var(--gold);}
-
-    /* TOAST */
     .toast-admin{position:fixed;bottom:26px;right:26px;background:var(--brown);color:var(--white);padding:11px 22px;border-radius:22px;font-size:0.86rem;font-weight:600;z-index:3000;transform:translateY(80px);transition:transform 0.3s;pointer-events:none;}
     .toast-admin.show{transform:translateY(0);}
     .toast-admin.success{background:var(--success);}
     .toast-admin.danger{background:var(--danger);}
-
-    @media(max-width:768px){
-      .stats-row,.promo-stats{grid-template-columns:repeat(2,1fr);}
-      .form-row{grid-template-columns:1fr;}
-      .admin-content{padding:16px 14px;}
-    }
+    @media(max-width:768px){.stats-row,.promo-stats{grid-template-columns:repeat(2,1fr);}.form-row{grid-template-columns:1fr;}.admin-content{padding:16px 14px;}}
   </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">Five<span>Roam</span> Coffee</div>
     <div class="login-sub">Admin Panel &middot; Secure Login</div>
-    <div class="form-group">
-      <label>Username</label>
-      <input type="text" class="form-control" id="login-user" placeholder="admin"/>
-    </div>
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-control" id="login-pass" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')doLogin()"/>
-    </div>
+    <div class="form-group"><label>Username</label><input type="text" class="form-control" id="login-user" placeholder="admin"/></div>
+    <div class="form-group"><label>Password</label><input type="password" class="form-control" id="login-pass" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')doLogin()"/></div>
     <button class="login-btn" onclick="doLogin()"><i class="fas fa-lock"></i> Sign In</button>
     <div class="login-error" id="login-error">Incorrect username or password.</div>
   </div>
 </div>
 
-<!-- ADMIN LAYOUT -->
 <div id="admin-layout">
   <div class="admin-topbar">
     <div class="admin-topbar-brand"><i class="fas fa-coffee" style="margin-right:8px;color:var(--gold-light)"></i>Five<span>Roam</span> Admin</div>
@@ -180,7 +140,6 @@ admin_html = r'''<!DOCTYPE html>
   <div class="admin-content">
     <div class="admin-greeting">Welcome back, Admin &#128075;</div>
     <div class="admin-sub">Manage coffees, orders, promo codes, and payment settings.</div>
-
     <div class="stats-row" id="stats-row"></div>
 
     <div class="admin-tabs">
@@ -191,7 +150,7 @@ admin_html = r'''<!DOCTYPE html>
       <button class="tab-btn" onclick="switchTab('tab-payment',this)"><i class="fas fa-credit-card"></i> Payment</button>
     </div>
 
-    <!-- ORDERS TAB -->
+    <!-- ORDERS -->
     <div class="tab-panel active" id="tab-orders">
       <div class="admin-section">
         <div class="section-header">
@@ -213,7 +172,7 @@ admin_html = r'''<!DOCTYPE html>
         </div>
         <div style="overflow-x:auto">
           <table class="admin-table">
-            <thead><tr><th>Order ID</th><th>Date</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total (&#8377;)</th><th>Status</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Order ID</th><th>Date</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody id="orders-table-body"></tbody>
           </table>
         </div>
@@ -223,7 +182,7 @@ admin_html = r'''<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- COFFEES TAB -->
+    <!-- COFFEES -->
     <div class="tab-panel" id="tab-coffees">
       <div class="admin-section">
         <div class="section-header">
@@ -232,14 +191,14 @@ admin_html = r'''<!DOCTYPE html>
         </div>
         <div style="overflow-x:auto">
           <table class="admin-table">
-            <thead><tr><th>Image</th><th>Estate</th><th>Name</th><th>Process</th><th>Taste Notes</th><th>Price (&#8377;)</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Image</th><th>Estate</th><th>Name</th><th>Process</th><th>Taste Notes</th><th>Price</th><th>Actions</th></tr></thead>
             <tbody id="admin-table-body"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- PROMOS TAB -->
+    <!-- PROMOS -->
     <div class="tab-panel" id="tab-promos">
       <div class="admin-section">
         <div class="section-header">
@@ -257,34 +216,28 @@ admin_html = r'''<!DOCTYPE html>
       </div>
     </div>
 
-    <!-- DISCOUNT TAB -->
+    <!-- DISCOUNT -->
     <div class="tab-panel" id="tab-discount">
       <div class="admin-section">
         <div class="section-header"><h2><i class="fas fa-tag" style="color:var(--gold);margin-right:8px"></i>Multi-Pack Discount</h2></div>
         <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-          <div>
-            <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Threshold (min packets)</label>
-            <input type="number" class="form-control" id="discount-threshold" value="2" min="2" style="width:150px"/>
-          </div>
-          <div>
-            <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Discount %</label>
-            <input type="number" class="form-control" id="discount-pct" value="10" min="1" max="50" style="width:150px"/>
-          </div>
+          <div><label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Threshold (min packets)</label><input type="number" class="form-control" id="discount-threshold" value="2" min="2" style="width:150px"/></div>
+          <div><label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Discount %</label><input type="number" class="form-control" id="discount-pct" value="10" min="1" max="50" style="width:150px"/></div>
           <button class="btn btn-primary" onclick="saveDiscount()" style="margin-top:24px"><i class="fas fa-save"></i> Save</button>
         </div>
         <p style="font-size:0.82rem;color:var(--text-light);margin-top:14px;padding:12px 16px;background:var(--beige);border-radius:10px">
-          When a customer adds <strong id="disc-thresh-display">2</strong> or more packets, a <strong id="disc-pct-display">10%</strong> discount is automatically applied. Promo discounts stack on top.
+          When a customer adds <strong id="disc-thresh-display">2</strong> or more packets, a <strong id="disc-pct-display">10%</strong> discount is automatically applied.
         </p>
       </div>
     </div>
 
-    <!-- PAYMENT TAB -->
+    <!-- PAYMENT -->
     <div class="tab-panel" id="tab-payment">
       <div class="admin-section">
         <div class="section-header"><h2><i class="fas fa-credit-card" style="color:var(--gold);margin-right:8px"></i>Payment Gateway</h2></div>
-        <p style="color:var(--text-light);font-size:0.86rem;margin-bottom:18px;line-height:1.6">Select your gateway and enter API keys when ready to go live. Orders are currently saved locally and confirmed without payment.</p>
+        <p style="color:var(--text-light);font-size:0.86rem;margin-bottom:18px;line-height:1.6">Select your gateway and enter API keys when ready to go live.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:22px">
-          <div class="pg-card active" onclick="selectPG(this,'Razorpay')"><span class="pg-badge pg-live">Recommended</span><h3><i class="fas fa-bolt" style="color:var(--gold);margin-right:6px"></i>Razorpay</h3><p>India&apos;s most popular. UPI, Cards, Net Banking, Wallets.</p></div>
+          <div class="pg-card active" onclick="selectPG(this,'Razorpay')"><span class="pg-badge pg-live">Recommended</span><h3><i class="fas fa-bolt" style="color:var(--gold);margin-right:6px"></i>Razorpay</h3><p>India\'s most popular. UPI, Cards, Net Banking, Wallets.</p></div>
           <div class="pg-card" onclick="selectPG(this,'Cashfree')"><span class="pg-badge pg-coming">Popular</span><h3><i class="fas fa-coins" style="color:var(--gold);margin-right:6px"></i>Cashfree</h3><p>Fast settlements, UPI, cards and international payments.</p></div>
           <div class="pg-card" onclick="selectPG(this,'PayU')"><span class="pg-badge pg-coming">Option</span><h3><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>PayU</h3><p>Trusted with robust analytics and fraud protection.</p></div>
         </div>
@@ -296,7 +249,6 @@ admin_html = r'''<!DOCTYPE html>
           </div>
           <div style="margin-bottom:12px"><label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:6px">Webhook Secret (optional)</label><input type="text" class="key-field" id="pg-webhook" placeholder="whsec_XXXXXXXXXX"/></div>
           <button class="btn btn-success" onclick="savePGKeys()"><i class="fas fa-save"></i> Save Keys</button>
-          <p style="font-size:0.73rem;color:var(--text-light);margin-top:9px"><i class="fas fa-info-circle"></i> Keys are stored in localStorage only. Move to a secure backend for production.</p>
         </div>
       </div>
     </div>
@@ -308,7 +260,7 @@ admin_html = r'''<!DOCTYPE html>
   <div class="modal-box" style="max-width:560px">
     <h2><i class="fas fa-receipt" style="color:var(--gold);margin-right:8px"></i>Order Details</h2>
     <div id="order-detail-content"></div>
-    <div class="form-row-full" style="margin-top:14px">
+    <div style="margin-top:14px">
       <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Update Status</label>
       <div style="display:flex;gap:10px;align-items:center">
         <select class="form-control" id="order-status-select" style="flex:1">
@@ -320,9 +272,7 @@ admin_html = r'''<!DOCTYPE html>
         <button class="btn btn-success" onclick="updateOrderStatus()"><i class="fas fa-save"></i> Save</button>
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-danger" onclick="closeOrderDetail()"><i class="fas fa-times"></i> Close</button>
-    </div>
+    <div class="modal-actions"><button class="btn btn-danger" onclick="closeOrderDetail()"><i class="fas fa-times"></i> Close</button></div>
   </div>
 </div>
 
@@ -333,7 +283,7 @@ admin_html = r'''<!DOCTYPE html>
     <input type="hidden" id="edit-id" value=""/>
     <div class="form-row">
       <div class="form-group"><label>Estate Name *</label><input type="text" class="form-control" id="f-estate" placeholder="e.g. Bison Valley Estate"/></div>
-      <div class="form-group"><label>Price &#8377; (per 100g) *</label><input type="number" class="form-control" id="f-price" placeholder="e.g. 599"/></div>
+      <div class="form-group"><label>Price (per 100g) *</label><input type="number" class="form-control" id="f-price" placeholder="e.g. 599"/></div>
     </div>
     <div class="form-row-full"><label>Coffee Name *</label><input type="text" class="form-control" id="f-name" placeholder="e.g. Bison Valley Bright"/></div>
     <div class="form-row-full"><label>Process Method *</label><input type="text" class="form-control" id="f-process" placeholder="e.g. Double Fermentation"/></div>
@@ -373,7 +323,9 @@ admin_html = r'''<!DOCTYPE html>
 <div class="toast-admin" id="admin-toast"></div>
 
 <script>
-// AUTH
+const Rs = "₹";
+function fmt(n){ return Rs + n.toLocaleString('en-IN'); }
+
 function doLogin(){
   const u=document.getElementById('login-user').value.trim();
   const p=document.getElementById('login-pass').value.trim();
@@ -394,7 +346,6 @@ function doLogout(){
   document.getElementById('login-pass').value='';
 }
 
-// TABS
 function switchTab(id,btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -402,7 +353,6 @@ function switchTab(id,btn){
   btn.classList.add('active');
 }
 
-// DATA
 const DEFAULT_COFFEES=[
   {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:""},
   {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:""},
@@ -434,19 +384,16 @@ function loadAdmin(){
 }
 
 function renderStats(){
-  const coffees=getCoffees();
-  const orders=getOrders();
-  const promos=getPromos();
+  const coffees=getCoffees(),orders=getOrders(),promos=getPromos();
   const newOrders=orders.filter(o=>(!o.status||o.status==='New')).length;
   const revenue=orders.reduce((s,o)=>s+o.grand,0);
   document.getElementById('stats-row').innerHTML=
     '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-receipt"></i>Total Orders</div><div class="stat-value">'+orders.length+'</div></div>'+
     '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-bell"></i>New Orders</div><div class="stat-value">'+newOrders+'</div></div>'+
-    '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-rupee-sign"></i>Total Revenue</div><div class="stat-value">&#8377;'+revenue.toLocaleString('en-IN')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-rupee-sign"></i>Total Revenue</div><div class="stat-value">'+fmt(revenue)+'</div></div>'+
     '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-coffee"></i>Coffees Listed</div><div class="stat-value">'+coffees.length+'</div></div>';
 }
 
-// ORDERS
 let currentOrderId=null;
 function renderOrders(){
   const orders=getOrders();
@@ -473,7 +420,7 @@ function renderOrders(){
       +'<td><strong>'+o.name+'</strong></td>'
       +'<td>'+o.phone+'</td>'
       +'<td style="font-size:0.78rem;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+itemSummary+'</td>'
-      +'<td><strong>&#8377;'+o.grand.toLocaleString('en-IN')+'</strong></td>'
+      +'<td><strong>'+fmt(o.grand)+'</strong></td>'
       +'<td><span class="status-pill '+cls+'">'+status+'</span></td>'
       +'<td><button class="btn btn-primary btn-sm" onclick="openOrderDetail(\''+o.orderId+'\')"><i class="fas fa-eye"></i> View</button></td>';
     tbody.appendChild(tr);
@@ -485,15 +432,14 @@ function openOrderDetail(orderId){
   const o=orders.find(x=>x.orderId===orderId);
   if(!o)return;
   currentOrderId=orderId;
-  const status=o.status||'New';
-  document.getElementById('order-status-select').value=status;
+  document.getElementById('order-status-select').value=o.status||'New';
   const date=new Date(o.timestamp).toLocaleString('en-IN');
   let itemsHtml='';
   o.items.forEach(i=>{
-    itemsHtml+='<div class="order-detail-row"><span>'+i.name+' ('+i.brew+', '+i.roast+' Roast) x'+i.qty+'</span><span>&#8377;'+(i.price*i.qty).toLocaleString('en-IN')+'</span></div>';
+    itemsHtml+='<div class="order-detail-row"><span>'+i.name+' ('+i.brew+', '+i.roast+' Roast) x'+i.qty+'</span><span>'+fmt(i.price*i.qty)+'</span></div>';
   });
-  const promoRow=o.promoCode?'<div class="order-detail-row"><span>Promo "'+o.promoCode+'"</span><span style="color:#2a8c4a">-&#8377;'+o.promoDiscount.toLocaleString('en-IN')+'</span></div>':'';
-  const multiRow=o.multiDiscount>0?'<div class="order-detail-row"><span>Multi-pack Discount</span><span style="color:#2a8c4a">-&#8377;'+o.multiDiscount.toLocaleString('en-IN')+'</span></div>':'';
+  const promoRow=o.promoCode?'<div class="order-detail-row"><span>Promo "'+o.promoCode+'"</span><span style="color:#2a8c4a">-'+fmt(o.promoDiscount)+'</span></div>':'';
+  const multiRow=o.multiDiscount>0?'<div class="order-detail-row"><span>Multi-pack Discount</span><span style="color:#2a8c4a">-'+fmt(o.multiDiscount)+'</span></div>':'';
   document.getElementById('order-detail-content').innerHTML=
     '<div class="order-detail-section"><div class="order-detail-title">&#128222; Customer Info</div>'
     +'<div class="order-detail-row"><span>Order ID</span><span><strong>'+o.orderId+'</strong></span></div>'
@@ -505,35 +451,29 @@ function openOrderDetail(orderId){
     +'</div>'
     +'<div class="order-detail-section"><div class="order-detail-title">&#9749; Order Items</div>'+itemsHtml+'</div>'
     +'<div class="order-detail-section"><div class="order-detail-title">&#128176; Invoice</div>'
-    +'<div class="order-detail-row"><span>Subtotal</span><span>&#8377;'+o.subtotal.toLocaleString('en-IN')+'</span></div>'
+    +'<div class="order-detail-row"><span>Subtotal</span><span>'+fmt(o.subtotal)+'</span></div>'
     +multiRow+promoRow
-    +'<div class="order-detail-row"><span>Delivery</span><span>&#8377;70</span></div>'
-    +'<div class="order-detail-row"><span>GST (5%)</span><span>&#8377;'+o.gst.toLocaleString('en-IN')+'</span></div>'
-    +'<div class="order-detail-row" style="font-weight:700;color:var(--brown);border-top:1px solid var(--beige-dark);padding-top:8px;margin-top:4px"><span>Total Paid</span><span>&#8377;'+o.grand.toLocaleString('en-IN')+'</span></div>'
+    +'<div class="order-detail-row"><span>Delivery</span><span>'+fmt(70)+'</span></div>'
+    +'<div class="order-detail-row"><span>GST (5%)</span><span>'+fmt(o.gst)+'</span></div>'
+    +'<div class="order-detail-row" style="font-weight:700;color:var(--brown);border-top:1px solid var(--beige-dark);padding-top:8px;margin-top:4px"><span>Total Paid</span><span>'+fmt(o.grand)+'</span></div>'
     +'</div>';
   document.getElementById('order-detail-modal').classList.add('open');
 }
 function closeOrderDetail(){document.getElementById('order-detail-modal').classList.remove('open');currentOrderId=null;}
-
 function updateOrderStatus(){
   if(!currentOrderId)return;
   const orders=getOrders();
   const idx=orders.findIndex(o=>o.orderId===currentOrderId);
   if(idx<0)return;
   orders[idx].status=document.getElementById('order-status-select').value;
-  saveOrders(orders);
-  closeOrderDetail();
-  renderStats();renderOrders();
+  saveOrders(orders);closeOrderDetail();renderStats();renderOrders();
   showAdminToast('Order status updated!','success');
 }
-
 function clearOrders(){
   if(!confirm('Clear ALL orders? This cannot be undone.'))return;
   saveOrders([]);renderStats();renderOrders();
   showAdminToast('All orders cleared.','danger');
 }
-
-// EXPORT TO EXCEL (CSV)
 function exportOrdersExcel(){
   const orders=getOrders();
   if(orders.length===0){showAdminToast('No orders to export.','danger');return;}
@@ -543,25 +483,23 @@ function exportOrdersExcel(){
     const brews=o.items.map(i=>i.brew).join(' | ');
     const roasts=o.items.map(i=>i.roast+' Roast').join(' | ');
     return [
-      o.orderId,
-      new Date(o.timestamp).toLocaleString('en-IN'),
+      o.orderId,new Date(o.timestamp).toLocaleString('en-IN'),
       o.name,o.phone,o.email||'',
-      '"'+o.address.replace(/"/g,'""')+'"',
+      '"'+o.address.replace(/"/g,\'""\')+'"',
       '"'+itemNames+'"','"'+brews+'"','"'+roasts+'"',
       o.subtotal,o.multiDiscount||0,o.promoCode||'',o.promoDiscount||0,
       70,o.gst,o.grand,o.status||'New'
     ].join(',');
   });
-  const csv=[headers.join(','),...rows].join('\n');
+  const csv=[headers.join(','),...rows].join('\\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   a.href=url;a.download='FiveRoamCoffee_Orders_'+new Date().toISOString().split('T')[0]+'.csv';
   a.click();URL.revokeObjectURL(url);
-  showAdminToast('Orders exported to CSV/Excel!','success');
+  showAdminToast('Orders exported!','success');
 }
 
-// COFFEES
 function renderTable(){
   const coffees=getCoffees();
   const tbody=document.getElementById('admin-table-body');
@@ -572,7 +510,7 @@ function renderTable(){
     const notePills=c.notes.map(n=>'<span class="notes-pill">'+n+'</span>').join('');
     tr.innerHTML='<td>'+thumb+'</td><td>'+c.estate+'</td><td><strong>'+c.name+'</strong></td>'
       +'<td style="font-size:0.8rem">'+c.process+'</td><td>'+notePills+'</td>'
-      +'<td><strong>&#8377;'+c.price+'</strong></td>'
+      +'<td><strong>'+fmt(c.price)+'</strong></td>'
       +'<td><button class="btn btn-primary btn-sm" onclick="openCoffeeModal('+c.id+')"><i class="fas fa-edit"></i> Edit</button>'
       +' <button class="btn btn-danger btn-sm" onclick="deleteCoffee('+c.id+')"><i class="fas fa-trash"></i> Del</button></td>';
     tbody.appendChild(tr);
@@ -643,7 +581,6 @@ function deleteCoffee(id){
   renderStats();renderTable();showAdminToast('Coffee deleted.','danger');
 }
 
-// PROMOS
 function renderPromos(){
   const promos=getPromos();
   const active=promos.filter(p=>p.active).length;
@@ -654,10 +591,7 @@ function renderPromos(){
     '<div class="promo-stat"><div class="val">'+totalUses+'</div><div class="lbl">Total Uses</div></div>';
   const tbody=document.getElementById('promo-table-body');
   tbody.innerHTML='';
-  if(promos.length===0){
-    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-light);padding:30px">No promo codes yet.</td></tr>';
-    return;
-  }
+  if(promos.length===0){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-light);padding:30px">No promo codes yet.</td></tr>';return;}
   promos.forEach((p,idx)=>{
     const tr=document.createElement('tr');
     const pill=p.active?'<span class="status-pill status-active">Active</span>':'<span class="status-pill status-inactive">Inactive</span>';
@@ -714,8 +648,6 @@ function deletePromo(idx){
 function copyCode(code){
   navigator.clipboard.writeText(code).then(()=>showAdminToast('"'+code+'" copied!','success'));
 }
-
-// PAYMENT
 let selectedPGName='Razorpay';
 function selectPG(el,name){
   document.querySelectorAll('.pg-card').forEach(c=>c.classList.remove('active'));
@@ -729,8 +661,6 @@ function savePGKeys(){
   localStorage.setItem('frc_pg_keys',JSON.stringify({gateway:selectedPGName,keyId,keySecret,webhook}));
   showAdminToast('Payment keys saved!','success');
 }
-
-// DISCOUNT
 function saveDiscount(){
   const threshold=parseInt(document.getElementById('discount-threshold').value)||2;
   const pct=parseInt(document.getElementById('discount-pct').value)||10;
@@ -739,8 +669,6 @@ function saveDiscount(){
   document.getElementById('disc-pct-display').textContent=pct+'%';
   showAdminToast('Discount settings saved!','success');
 }
-
-// TOAST
 function showAdminToast(msg,type=''){
   const t=document.getElementById('admin-toast');
   t.textContent=msg;t.className='toast-admin show '+type;
@@ -752,4 +680,5 @@ function showAdminToast(msg,type=''){
 
 with open('/tmp/admin.html','w',encoding='utf-8') as f:
     f.write(admin_html)
-print("admin.html written:", len(admin_html))
+bad = admin_html.count('&#8377;')
+print(f"admin.html written. Bad entity count: {bad}")
