@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FiveRoamCoffee</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>FiveRoamCoffee</h1>
+  <nav>
+    <a href="#story">Our Story</a>
+    <a href="#coffees">Our Coffees</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>From South Indian Estates to Your Cup</h2>
+  <p>Single Origin. Small Batch. Estate Driven.</p>
+</section>
+
+<section id="story">
+  <h2>Our Journey</h2>
+  <p>
+    We source Specialty Green Arabica Coffee Beans from South Indian Estates.
+    We roast small batch locally for consistent flavour.
+    We rest the beans to develop their complexity.
+    We grind specifically for your brew method.
+    We deliver it fresh across India.
+  </p>
+</section>
+
+<section id="coffees">
+  <h2>Our Estate Coffees</h2>
+  <div id="coffee-list"></div>
+</section>
+
+<section class="cart">
+  <h2>Cart</h2>
+  <div id="cart-items"></div>
+  <p>Total: ₹<span id="total">0</span></p>
+  <p>Discount (20% on 2+ packs): ₹<span id="discount">0</span></p>
+  <h3>Final Amount: ₹<span id="final">0</span></h3>
+  <button onclick="checkout()">Proceed to Payment</button>
+</section>
+
+<footer>
+  <p>PAN India Delivery | Free Shipping above ₹1000</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
