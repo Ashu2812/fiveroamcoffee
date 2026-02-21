@@ -1,4 +1,4 @@
-#removed delivery fee
+#removed msp & other codes from bottom
 index_html = '''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +20,6 @@ index_html = '''<!DOCTYPE html>
     html{scroll-behavior:smooth;}
     body{font-family:"Lato",sans-serif;background:var(--beige);color:var(--text);overflow-x:hidden;}
 
-    /* NAV */
     nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(62,42,26,0.97);backdrop-filter:blur(10px);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 20px rgba(0,0,0,0.3);}
     .nav-brand{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--white);letter-spacing:1px;}
     .nav-brand span{color:var(--gold-light);}
@@ -30,7 +29,6 @@ index_html = '''<!DOCTYPE html>
     .cart-icon-btn{background:none;border:none;cursor:pointer;color:var(--white);font-size:1.2rem;position:relative;padding:6px;}
     .cart-badge{position:absolute;top:-2px;right:-6px;background:var(--gold-light);color:var(--brown);font-size:0.65rem;font-weight:700;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;}
 
-    /* HERO */
     .hero{min-height:100vh;background:linear-gradient(135deg,#1a0f07 0%,#3e2a1a 50%,#2c1a0e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden;}
     .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(184,134,11,0.15) 0%,transparent 60%);pointer-events:none;}
     .hero-eyebrow{font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:18px;opacity:0.9;}
@@ -45,13 +43,11 @@ index_html = '''<!DOCTYPE html>
     .hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.4);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s infinite;}
     @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
 
-    /* SECTION COMMON */
     section{padding:80px 24px;}
     .section-label{font-size:0.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
     .section-title{font-family:"Playfair Display",serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--brown);margin-bottom:16px;line-height:1.2;}
     .section-desc{color:var(--text-light);font-size:0.95rem;line-height:1.8;max-width:580px;}
 
-    /* COFFEE SHOWCASE */
     #coffees{background:var(--white);}
     .coffees-header{text-align:center;margin-bottom:52px;}
     .coffees-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px;max-width:1200px;margin:0 auto;}
@@ -68,8 +64,6 @@ index_html = '''<!DOCTYPE html>
     .coffee-card-footer{display:flex;align-items:center;justify-content:space-between;padding:0 20px 16px;}
     .coffee-price{font-family:"Playfair Display",serif;font-size:1.15rem;color:var(--brown);font-weight:700;}
     .coffee-price span{font-size:0.75rem;color:var(--text-muted);font-family:"Lato",sans-serif;font-weight:400;}
-
-    /* Brew & Roast selectors on card */
     .card-selectors{padding:0 20px 14px;display:flex;flex-direction:column;gap:8px;}
     .card-sel-label{font-size:0.72rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;}
     .card-sel{width:100%;padding:7px 10px;border:1.5px solid var(--beige-dark);border-radius:10px;font-family:"Lato",sans-serif;font-size:0.82rem;color:var(--text);background:var(--beige);outline:none;cursor:pointer;transition:border-color 0.2s;}
@@ -77,7 +71,6 @@ index_html = '''<!DOCTYPE html>
     .add-btn{background:var(--brown);color:var(--white);border:none;border-radius:22px;padding:9px 20px;font-family:"Lato",sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
     .add-btn:hover{background:var(--gold);transform:scale(1.04);}
 
-    /* STORY / HOW IT WORKS */
     #story{background:linear-gradient(135deg,#2c1a0e,#3e2a1a);}
     .story-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
     .story-text .section-title{color:var(--white);}
@@ -93,7 +86,6 @@ index_html = '''<!DOCTYPE html>
     .stat-label-text{font-size:0.78rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
     .divider-line{height:1px;background:rgba(255,255,255,0.1);}
 
-    /* WHY US */
     #why{background:var(--beige);}
     .why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px;max-width:1100px;margin:40px auto 0;}
     .why-card{background:var(--white);border-radius:18px;padding:28px 22px;text-align:center;box-shadow:0 4px 18px var(--shadow);transition:transform 0.2s;}
@@ -102,11 +94,9 @@ index_html = '''<!DOCTYPE html>
     .why-card h3{font-family:"Playfair Display",serif;font-size:1rem;color:var(--brown);margin-bottom:8px;}
     .why-card p{font-size:0.82rem;color:var(--text-light);line-height:1.6;}
 
-    /* FOOTER */
     footer{background:#1a0f07;color:rgba(255,255,255,0.6);text-align:center;padding:32px 24px;font-size:0.82rem;line-height:1.8;}
     footer a{color:var(--gold-light);text-decoration:none;}
 
-    /* CART DRAWER */
     .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:800;display:none;opacity:0;transition:opacity 0.3s;}
     .cart-overlay.open{display:block;opacity:1;}
     .cart-drawer{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:100vw;background:var(--white);z-index:900;transform:translateX(100%);transition:transform 0.35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,0.2);}
@@ -146,7 +136,6 @@ index_html = '''<!DOCTYPE html>
     .checkout-btn{width:100%;background:var(--gold);color:var(--white);border:none;border-radius:28px;padding:14px;font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 16px rgba(184,134,11,0.35);}
     .checkout-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
 
-    /* CHECKOUT MODAL */
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px;}
     .modal-overlay.open{display:flex;}
     .modal-box{background:var(--white);border-radius:22px;max-width:560px;width:100%;padding:32px 28px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
@@ -167,7 +156,6 @@ index_html = '''<!DOCTYPE html>
     .place-order-btn{width:100%;background:var(--brown);color:var(--white);border:none;border-radius:28px;padding:14px;font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.25s;}
     .place-order-btn:hover{background:var(--gold);}
 
-    /* SUCCESS MODAL */
     .success-box{text-align:center;padding:16px 0;}
     .success-icon{font-size:3.5rem;margin-bottom:16px;}
     .success-box h2{font-family:"Playfair Display",serif;color:var(--brown);font-size:1.5rem;margin-bottom:8px;}
@@ -176,7 +164,6 @@ index_html = '''<!DOCTYPE html>
     .continue-btn{background:var(--gold);color:var(--white);border:none;border-radius:24px;padding:12px 32px;font-family:"Playfair Display",serif;font-size:0.95rem;font-weight:700;cursor:pointer;margin-top:14px;transition:background 0.2s;}
     .continue-btn:hover{background:var(--gold-light);}
 
-    /* TOAST */
     .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--brown);color:var(--white);padding:11px 24px;border-radius:24px;font-size:0.88rem;font-weight:600;z-index:2000;transition:transform 0.3s;white-space:nowrap;pointer-events:none;}
     .toast.show{transform:translateX(-50%) translateY(0);}
     .toast.success{background:var(--success);}
@@ -193,7 +180,6 @@ index_html = '''<!DOCTYPE html>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-brand">Five<span>Roam</span></div>
   <div class="nav-links">
@@ -208,7 +194,6 @@ index_html = '''<!DOCTYPE html>
   </button>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-eyebrow">India's Finest Specialty Coffee</div>
   <h1>Where Every Sip<br/>Tells a <em>Story</em></h1>
@@ -227,7 +212,6 @@ index_html = '''<!DOCTYPE html>
   </div>
 </section>
 
-<!-- COFFEE SHOWCASE -->
 <section id="coffees">
   <div class="coffees-header">
     <div class="section-label">The Collection</div>
@@ -237,7 +221,6 @@ index_html = '''<!DOCTYPE html>
   <div class="coffees-grid" id="coffees-grid"></div>
 </section>
 
-<!-- STORY -->
 <section id="story">
   <div class="story-inner">
     <div class="story-text">
@@ -247,7 +230,7 @@ index_html = '''<!DOCTYPE html>
       <div class="story-steps">
         <div class="story-step">
           <div class="step-num">1</div>
-          <div class="step-text"><h4>Browse & Select</h4><p>Choose your coffees, select your preferred brew method and roast level right on the product card.</p></div>
+          <div class="step-text"><h4>Browse &amp; Select</h4><p>Choose your coffees, select your preferred brew method and roast level right on the product card.</p></div>
         </div>
         <div class="story-step">
           <div class="step-num">2</div>
@@ -255,11 +238,11 @@ index_html = '''<!DOCTYPE html>
         </div>
         <div class="story-step">
           <div class="step-num">3</div>
-          <div class="step-text"><h4>Roasted & Shipped</h4><p>Your coffee is roasted fresh to your roast preference and dispatched with free delivery.</p></div>
+          <div class="step-text"><h4>Roasted &amp; Shipped</h4><p>Your coffee is roasted fresh to your roast preference and dispatched with free delivery.</p></div>
         </div>
         <div class="story-step">
           <div class="step-num">4</div>
-          <div class="step-text"><h4>Brew & Enjoy</h4><p>Experience India's finest specialty coffee in your own cup — exactly the way you want it.</p></div>
+          <div class="step-text"><h4>Brew &amp; Enjoy</h4><p>Experience India's finest specialty coffee in your own cup — exactly the way you want it.</p></div>
         </div>
       </div>
     </div>
@@ -275,7 +258,6 @@ index_html = '''<!DOCTYPE html>
   </div>
 </section>
 
-<!-- WHY US -->
 <section id="why">
   <div style="text-align:center;margin-bottom:0">
     <div class="section-label">Why Five Roam</div>
@@ -305,17 +287,14 @@ index_html = '''<!DOCTYPE html>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:8px">Five Roam Coffee</p>
-  <p>MSP Coffee Pvt Ltd &middot; India</p>
   <p style="margin-top:10px">
     <a href="admin.html">Admin Panel</a> &middot;
     <span>&copy; 2026 Five Roam Coffee. All rights reserved.</span>
   </p>
 </footer>
 
-<!-- CART DRAWER -->
 <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
 <div class="cart-drawer" id="cart-drawer">
   <div class="cart-header">
@@ -337,7 +316,6 @@ index_html = '''<!DOCTYPE html>
   </div>
 </div>
 
-<!-- CHECKOUT MODAL -->
 <div class="modal-overlay" id="checkout-modal">
   <div class="modal-box">
     <h2><i class="fas fa-lock" style="color:var(--gold);margin-right:8px"></i>Complete Your Order</h2>
@@ -367,7 +345,6 @@ index_html = '''<!DOCTYPE html>
   </div>
 </div>
 
-<!-- SUCCESS MODAL -->
 <div class="modal-overlay" id="success-modal">
   <div class="modal-box" style="max-width:440px">
     <div class="success-box">
@@ -386,9 +363,6 @@ index_html = '''<!DOCTYPE html>
 <div class="toast" id="toast"></div>
 
 <script>
-/* =========================================================
-   DATA
-   ========================================================= */
 var DEFAULT_COFFEES = [
   {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:""},
   {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:""},
@@ -403,175 +377,150 @@ var DEFAULT_COFFEES = [
 var BREW_OPTIONS = ["Espresso","Pour Over / V60","AeroPress","French Press","Moka Pot","Cold Brew"];
 var ROAST_OPTIONS = ["Light Roast","Medium Roast","Dark Roast"];
 
-function getCoffees() { return JSON.parse(localStorage.getItem("frc_coffees") || "null") || DEFAULT_COFFEES; }
-function getPromos() { return JSON.parse(localStorage.getItem("frc_promos") || "[]"); }
-function getDiscount() { return JSON.parse(localStorage.getItem("frc_discount") || '{"threshold":2,"pct":10}'); }
+function getCoffees(){ return JSON.parse(localStorage.getItem("frc_coffees")||"null")||DEFAULT_COFFEES; }
+function getPromos(){ return JSON.parse(localStorage.getItem("frc_promos")||"[]"); }
+function getDiscount(){ return JSON.parse(localStorage.getItem("frc_discount")||'{"threshold":2,"pct":10}'); }
 
-/* =========================================================
-   CART STATE
-   ========================================================= */
 var cart = [];
 var appliedPromo = null;
 
-function fmt(n) { return "\u20B9" + Number(n).toLocaleString("en-IN"); }
+function fmt(n){ return "\u20B9"+Number(n).toLocaleString("en-IN"); }
 
-/* =========================================================
-   RENDER COFFEE GRID
-   ========================================================= */
-function renderGrid() {
+function renderGrid(){
   var coffees = getCoffees();
   var grid = document.getElementById("coffees-grid");
   grid.innerHTML = "";
-  coffees.forEach(function(c) {
-    var imgHtml = c.img
-      ? "<img src='" + c.img + "' alt='" + c.name + "'/>"
-      : "<span style='font-size:3rem'>&#9749;</span>";
-    var notePills = c.notes.map(function(n) { return "<span class='note-pill'>" + n + "</span>"; }).join("");
-    var brewOpts = BREW_OPTIONS.map(function(b) { return "<option value='" + b + "'>" + b + "</option>"; }).join("");
-    var roastOpts = ROAST_OPTIONS.map(function(r) { return "<option value='" + r + "'>" + r + "</option>"; }).join("");
+  coffees.forEach(function(c){
+    var imgHtml = c.img ? "<img src='"+c.img+"' alt='"+c.name+"'/>" : "<span style='font-size:3rem'>&#9749;</span>";
+    var notePills = c.notes.map(function(n){ return "<span class='note-pill'>"+n+"</span>"; }).join("");
+    var brewOpts = BREW_OPTIONS.map(function(b){ return "<option value='"+b+"'>"+b+"</option>"; }).join("");
+    var roastOpts = ROAST_OPTIONS.map(function(r){ return "<option value='"+r+"'>"+r+"</option>"; }).join("");
     var card = document.createElement("div");
     card.className = "coffee-card";
     card.innerHTML =
-      "<div class='coffee-card-img'>" + imgHtml + "</div>"
-      + "<div class='coffee-card-body'>"
-      +   "<div class='coffee-estate'>" + c.estate + "</div>"
-      +   "<div class='coffee-name'>" + c.name + "</div>"
-      +   "<div class='coffee-process'><i class='fas fa-flask' style='color:var(--gold);margin-right:4px'></i>" + c.process + "</div>"
-      +   "<div class='coffee-notes'>" + notePills + "</div>"
-      + "</div>"
-      + "<div class='card-selectors'>"
-      +   "<div><div class='card-sel-label'>Brew Method</div>"
-      +     "<select class='card-sel' id='brew-" + c.id + "'><option value=''>Select brew method...</option>" + brewOpts + "</select></div>"
-      +   "<div><div class='card-sel-label'>Roast Level</div>"
-      +     "<select class='card-sel' id='roast-" + c.id + "'><option value=''>Select roast level...</option>" + roastOpts + "</select></div>"
-      + "</div>"
-      + "<div class='coffee-card-footer'>"
-      +   "<div class='coffee-price'>" + fmt(c.price) + " <span>/ 100g</span></div>"
-      +   "<button class='add-btn' onclick='addToCart(" + c.id + ")'><i class='fas fa-plus'></i> Add</button>"
-      + "</div>";
+      "<div class='coffee-card-img'>"+imgHtml+"</div>"
+      +"<div class='coffee-card-body'>"
+      +  "<div class='coffee-estate'>"+c.estate+"</div>"
+      +  "<div class='coffee-name'>"+c.name+"</div>"
+      +  "<div class='coffee-process'><i class='fas fa-flask' style='color:var(--gold);margin-right:4px'></i>"+c.process+"</div>"
+      +  "<div class='coffee-notes'>"+notePills+"</div>"
+      +"</div>"
+      +"<div class='card-selectors'>"
+      +  "<div><div class='card-sel-label'>Brew Method</div>"
+      +    "<select class='card-sel' id='brew-"+c.id+"'><option value=''>Select brew method...</option>"+brewOpts+"</select></div>"
+      +  "<div><div class='card-sel-label'>Roast Level</div>"
+      +    "<select class='card-sel' id='roast-"+c.id+"'><option value=''>Select roast level...</option>"+roastOpts+"</select></div>"
+      +"</div>"
+      +"<div class='coffee-card-footer'>"
+      +  "<div class='coffee-price'>"+fmt(c.price)+" <span>/ 100g</span></div>"
+      +  "<button class='add-btn' onclick='addToCart("+c.id+")'><i class='fas fa-plus'></i> Add</button>"
+      +"</div>";
     grid.appendChild(card);
   });
 }
 
-/* =========================================================
-   CART LOGIC
-   ========================================================= */
-function addToCart(id) {
+function addToCart(id){
   var coffees = getCoffees();
-  var c = coffees.find(function(x) { return x.id === id; });
-  var brew = document.getElementById("brew-" + id).value;
-  var roast = document.getElementById("roast-" + id).value;
-  if (!brew) { showToast("Please select a Brew Method first."); return; }
-  if (!roast) { showToast("Please select a Roast Level first."); return; }
-  var key = id + "|" + brew + "|" + roast;
-  var existing = cart.find(function(i) { return i.key === key; });
-  if (existing) {
-    existing.qty++;
-  } else {
-    cart.push({key:key, id:id, name:c.name, estate:c.estate, price:c.price, brew:brew, roast:roast, img:c.img, qty:1});
-  }
+  var c = coffees.find(function(x){ return x.id===id; });
+  var brew = document.getElementById("brew-"+id).value;
+  var roast = document.getElementById("roast-"+id).value;
+  if(!brew){ showToast("Please select a Brew Method first."); return; }
+  if(!roast){ showToast("Please select a Roast Level first."); return; }
+  var key = id+"|"+brew+"|"+roast;
+  var existing = cart.find(function(i){ return i.key===key; });
+  if(existing){ existing.qty++; }
+  else{ cart.push({key:key,id:id,name:c.name,estate:c.estate,price:c.price,brew:brew,roast:roast,img:c.img,qty:1}); }
   renderCart();
-  showToast(c.name + " added to cart!", "success");
+  showToast(c.name+" added to cart!","success");
 }
 
-function removeFromCart(key) {
-  cart = cart.filter(function(i) { return i.key !== key; });
-  if (cart.length === 0) appliedPromo = null;
+function removeFromCart(key){
+  cart = cart.filter(function(i){ return i.key!==key; });
+  if(cart.length===0) appliedPromo=null;
   renderCart();
 }
 
-function changeQty(key, delta) {
-  var item = cart.find(function(i) { return i.key === key; });
-  if (!item) return;
+function changeQty(key,delta){
+  var item = cart.find(function(i){ return i.key===key; });
+  if(!item) return;
   item.qty += delta;
-  if (item.qty <= 0) removeFromCart(key);
+  if(item.qty<=0) removeFromCart(key);
   else renderCart();
 }
 
-function calcTotals() {
-  var subtotal = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
-  var totalQty = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+function calcTotals(){
+  var subtotal = cart.reduce(function(s,i){ return s+i.price*i.qty; },0);
+  var totalQty = cart.reduce(function(s,i){ return s+i.qty; },0);
   var disc = getDiscount();
   var multiDiscount = 0;
-  if (totalQty >= disc.threshold) {
-    multiDiscount = Math.round(subtotal * disc.pct / 100);
-  }
+  if(totalQty>=disc.threshold){ multiDiscount = Math.round(subtotal*disc.pct/100); }
   var promoDiscount = 0;
-  if (appliedPromo) {
-    promoDiscount = Math.round((subtotal - multiDiscount) * appliedPromo.discount / 100);
-  }
-  // ── DELIVERY FREE ──
+  if(appliedPromo){ promoDiscount = Math.round((subtotal-multiDiscount)*appliedPromo.discount/100); }
   var grand = subtotal - multiDiscount - promoDiscount;
-  return {subtotal:subtotal, totalQty:totalQty, multiDiscount:multiDiscount, promoDiscount:promoDiscount, grand:grand};
+  return {subtotal:subtotal,totalQty:totalQty,multiDiscount:multiDiscount,promoDiscount:promoDiscount,grand:grand};
 }
 
-function renderCart() {
+function renderCart(){
   var itemsEl = document.getElementById("cart-items");
   var footerEl = document.getElementById("cart-footer");
   var badge = document.getElementById("cart-badge");
   var totals = calcTotals();
-  var totalQty = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+  var totalQty = cart.reduce(function(s,i){ return s+i.qty; },0);
   badge.textContent = totalQty;
-  badge.style.display = totalQty > 0 ? "flex" : "none";
-  if (cart.length === 0) {
+  badge.style.display = totalQty>0 ? "flex" : "none";
+  if(cart.length===0){
     itemsEl.innerHTML = "<div class='cart-empty'><i class='fas fa-shopping-bag'></i><p>Your cart is empty.<br/>Add some coffees!</p></div>";
     footerEl.style.display = "none";
     return;
   }
   footerEl.style.display = "block";
   itemsEl.innerHTML = "";
-  cart.forEach(function(item) {
+  cart.forEach(function(item){
     var thumb = item.img
-      ? "<div class='cart-item-thumb'><img src='" + item.img + "' alt='" + item.name + "'></div>"
+      ? "<div class='cart-item-thumb'><img src='"+item.img+"' alt='"+item.name+"'></div>"
       : "<div class='cart-item-thumb'>&#9749;</div>";
     var div = document.createElement("div");
     div.className = "cart-item";
     div.innerHTML = thumb
-      + "<div class='cart-item-info'>"
-      +   "<div class='cart-item-name'>" + item.name + "</div>"
-      +   "<div class='cart-item-meta'>" + item.brew + " &middot; " + item.roast + "</div>"
-      +   "<div class='cart-item-controls'>"
-      +     "<button class='qty-btn' onclick='changeQty(\"" + item.key + "\",-1)'>&#8722;</button>"
-      +     "<span class='qty-num'>" + item.qty + "</span>"
-      +     "<button class='qty-btn' onclick='changeQty(\"" + item.key + "\",1)'>&#43;</button>"
-      +     "<button class='qty-btn' onclick='removeFromCart(\"" + item.key + "\")' style='font-size:0.75rem;color:var(--danger)'>&#10005;</button>"
-      +   "</div>"
-      + "</div>"
-      + "<div class='cart-item-price'>" + fmt(item.price * item.qty) + "</div>";
+      +"<div class='cart-item-info'>"
+      +  "<div class='cart-item-name'>"+item.name+"</div>"
+      +  "<div class='cart-item-meta'>"+item.brew+" &middot; "+item.roast+"</div>"
+      +  "<div class='cart-item-controls'>"
+      +    "<button class='qty-btn' onclick='changeQty(\""+item.key+"\",-1)'>&#8722;</button>"
+      +    "<span class='qty-num'>"+item.qty+"</span>"
+      +    "<button class='qty-btn' onclick='changeQty(\""+item.key+"\",1)'>&#43;</button>"
+      +    "<button class='qty-btn' onclick='removeFromCart(\""+item.key+"\")' style='font-size:0.75rem;color:var(--danger)'>&#10005;</button>"
+      +  "</div>"
+      +"</div>"
+      +"<div class='cart-item-price'>"+fmt(item.price*item.qty)+"</div>";
     itemsEl.appendChild(div);
   });
-  // Build cart totals
   var disc = getDiscount();
-  var totalQtyAll = cart.reduce(function(s, i) { return s + i.qty; }, 0);
-  var html = "<div class='cart-total-row'><span>Subtotal (" + totalQtyAll + " item" + (totalQtyAll > 1 ? "s" : "") + ")</span><span>" + fmt(totals.subtotal) + "</span></div>";
-  if (totals.multiDiscount > 0) {
-    html += "<div class='cart-total-row discount'><span><i class='fas fa-tag' style='margin-right:4px'></i>Multi-pack " + disc.pct + "% off</span><span>-" + fmt(totals.multiDiscount) + "</span></div>";
+  var tq = cart.reduce(function(s,i){ return s+i.qty; },0);
+  var html = "<div class='cart-total-row'><span>Subtotal ("+tq+" item"+(tq>1?"s":"")+")</span><span>"+fmt(totals.subtotal)+"</span></div>";
+  if(totals.multiDiscount>0){
+    html += "<div class='cart-total-row discount'><span><i class='fas fa-tag' style='margin-right:4px'></i>Multi-pack "+disc.pct+"% off</span><span>-"+fmt(totals.multiDiscount)+"</span></div>";
   }
-  if (totals.promoDiscount > 0) {
-    html += "<div class='cart-total-row discount'><span><i class='fas fa-percent' style='margin-right:4px'></i>Promo \"" + appliedPromo.code + "\"</span><span>-" + fmt(totals.promoDiscount) + "</span></div>";
+  if(totals.promoDiscount>0){
+    html += "<div class='cart-total-row discount'><span><i class='fas fa-percent' style='margin-right:4px'></i>Promo \""+appliedPromo.code+"\"</span><span>-"+fmt(totals.promoDiscount)+"</span></div>";
   }
-  // ── FREE DELIVERY NOTE ──
   html += "<div class='cart-total-row'><span class='free-delivery-note'><i class='fas fa-truck'></i> Delivery Free on every order</span></div>";
-  html += "<div class='cart-total-row grand'><span>Total Payable</span><span>" + fmt(totals.grand) + "</span></div>";
+  html += "<div class='cart-total-row grand'><span>Total Payable</span><span>"+fmt(totals.grand)+"</span></div>";
   document.getElementById("cart-totals").innerHTML = html;
 }
 
-/* =========================================================
-   PROMO
-   ========================================================= */
-function applyPromo() {
+function applyPromo(){
   var code = document.getElementById("promo-input").value.trim().toUpperCase();
   var msgEl = document.getElementById("promo-msg");
-  if (!code) { msgEl.innerHTML = "<div class='promo-msg err'>Enter a promo code.</div>"; return; }
+  if(!code){ msgEl.innerHTML = "<div class='promo-msg err'>Enter a promo code.</div>"; return; }
   var promos = getPromos();
-  var found = promos.find(function(p) { return p.code === code && p.active; });
-  if (found) {
+  var found = promos.find(function(p){ return p.code===code && p.active; });
+  if(found){
     appliedPromo = found;
-    // Increment usage
-    var idx = promos.findIndex(function(p) { return p.code === code; });
-    promos[idx].uses = (promos[idx].uses || 0) + 1;
-    localStorage.setItem("frc_promos", JSON.stringify(promos));
-    msgEl.innerHTML = "<div class='promo-msg ok'><i class='fas fa-check-circle'></i> Code applied! " + found.discount + "% off.</div>";
+    var idx = promos.findIndex(function(p){ return p.code===code; });
+    promos[idx].uses = (promos[idx].uses||0)+1;
+    localStorage.setItem("frc_promos",JSON.stringify(promos));
+    msgEl.innerHTML = "<div class='promo-msg ok'><i class='fas fa-check-circle'></i> Code applied! "+found.discount+"% off.</div>";
     renderCart();
   } else {
     appliedPromo = null;
@@ -580,108 +529,80 @@ function applyPromo() {
   }
 }
 
-/* =========================================================
-   CHECKOUT
-   ========================================================= */
-function openCheckout() {
-  if (cart.length === 0) return;
+function openCheckout(){
+  if(cart.length===0) return;
   var totals = calcTotals();
   var disc = getDiscount();
-  var totalQty = cart.reduce(function(s, i) { return s + i.qty; }, 0);
-  var itemRows = cart.map(function(i) {
-    return "<div class='invoice-row'><span>" + i.name + " x" + i.qty + "</span><span>" + fmt(i.price * i.qty) + "</span></div>";
+  var itemRows = cart.map(function(i){
+    return "<div class='invoice-row'><span>"+i.name+" x"+i.qty+"</span><span>"+fmt(i.price*i.qty)+"</span></div>";
   }).join("");
-  var multiRow = totals.multiDiscount > 0
-    ? "<div class='invoice-row discount'><span>Multi-pack " + disc.pct + "% off</span><span>-" + fmt(totals.multiDiscount) + "</span></div>" : "";
-  var promoRow = totals.promoDiscount > 0
-    ? "<div class='invoice-row discount'><span>Promo \"" + appliedPromo.code + "\"</span><span>-" + fmt(totals.promoDiscount) + "</span></div>" : "";
-  // ── FREE DELIVERY IN INVOICE ──
+  var multiRow = totals.multiDiscount>0
+    ? "<div class='invoice-row discount'><span>Multi-pack "+disc.pct+"% off</span><span>-"+fmt(totals.multiDiscount)+"</span></div>" : "";
+  var promoRow = totals.promoDiscount>0
+    ? "<div class='invoice-row discount'><span>Promo \""+appliedPromo.code+"\"</span><span>-"+fmt(totals.promoDiscount)+"</span></div>" : "";
   var invoiceHtml =
     "<div class='invoice-title'>Order Summary</div>"
-    + itemRows
-    + "<div class='invoice-row'><span>Subtotal</span><span>" + fmt(totals.subtotal) + "</span></div>"
-    + multiRow + promoRow
-    + "<div class='invoice-free-delivery'><i class='fas fa-truck'></i> Delivery Free on every order</div>"
-    + "<div class='invoice-row total'><span>Total Payable</span><span>" + fmt(totals.grand) + "</span></div>";
+    +itemRows
+    +"<div class='invoice-row'><span>Subtotal</span><span>"+fmt(totals.subtotal)+"</span></div>"
+    +multiRow+promoRow
+    +"<div class='invoice-free-delivery'><i class='fas fa-truck'></i> Delivery Free on every order</div>"
+    +"<div class='invoice-row total'><span>Total Payable</span><span>"+fmt(totals.grand)+"</span></div>";
   document.getElementById("checkout-invoice").innerHTML = invoiceHtml;
   document.getElementById("checkout-modal").classList.add("open");
   toggleCart();
 }
 
-function placeOrder() {
+function placeOrder(){
   var name = document.getElementById("co-name").value.trim();
   var phone = document.getElementById("co-phone").value.trim();
   var email = document.getElementById("co-email").value.trim();
   var address = document.getElementById("co-address").value.trim();
-  if (!name) { showToast("Please enter your name."); return; }
-  if (!/^[6-9]\d{9}$/.test(phone)) { showToast("Enter a valid 10-digit mobile number."); return; }
-  if (!address) { showToast("Please enter your delivery address."); return; }
+  if(!name){ showToast("Please enter your name."); return; }
+  if(!/^[6-9]\d{9}$/.test(phone)){ showToast("Enter a valid 10-digit mobile number."); return; }
+  if(!address){ showToast("Please enter your delivery address."); return; }
   var totals = calcTotals();
-  var orderId = "FRC-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).substr(2,4).toUpperCase();
+  var orderId = "FRC-"+Date.now().toString(36).toUpperCase()+"-"+Math.random().toString(36).substr(2,4).toUpperCase();
   var order = {
-    orderId: orderId,
-    timestamp: Date.now(),
-    name: name,
-    phone: phone,
-    email: email,
-    address: address,
-    items: cart.map(function(i) { return {name:i.name, qty:i.qty, price:i.price, brew:i.brew, roast:i.roast}; }),
-    subtotal: totals.subtotal,
-    multiDiscount: totals.multiDiscount,
-    promoCode: appliedPromo ? appliedPromo.code : "",
-    promoDiscount: totals.promoDiscount,
-    delivery: 0,
-    grand: totals.grand,
-    status: "New"
+    orderId:orderId, timestamp:Date.now(),
+    name:name, phone:phone, email:email, address:address,
+    items:cart.map(function(i){ return {name:i.name,qty:i.qty,price:i.price,brew:i.brew,roast:i.roast}; }),
+    subtotal:totals.subtotal, multiDiscount:totals.multiDiscount,
+    promoCode:appliedPromo?appliedPromo.code:"", promoDiscount:totals.promoDiscount,
+    delivery:0, grand:totals.grand, status:"New"
   };
-  var orders = JSON.parse(localStorage.getItem("frc_orders") || "[]");
+  var orders = JSON.parse(localStorage.getItem("frc_orders")||"[]");
   orders.unshift(order);
-  localStorage.setItem("frc_orders", JSON.stringify(orders));
+  localStorage.setItem("frc_orders",JSON.stringify(orders));
   document.getElementById("checkout-modal").classList.remove("open");
   document.getElementById("success-order-id").textContent = orderId;
   document.getElementById("success-modal").classList.add("open");
-  cart = []; appliedPromo = null;
-  ["co-name","co-phone","co-email","co-address"].forEach(function(id) { document.getElementById(id).value = ""; });
-  document.getElementById("promo-input").value = "";
-  document.getElementById("promo-msg").innerHTML = "";
+  cart=[]; appliedPromo=null;
+  ["co-name","co-phone","co-email","co-address"].forEach(function(id){ document.getElementById(id).value=""; });
+  document.getElementById("promo-input").value="";
+  document.getElementById("promo-msg").innerHTML="";
   renderCart();
 }
 
-function closeSuccess() {
+function closeSuccess(){
   document.getElementById("success-modal").classList.remove("open");
   renderCart();
 }
 
-/* =========================================================
-   CART TOGGLE
-   ========================================================= */
-function toggleCart() {
+function toggleCart(){
   var drawer = document.getElementById("cart-drawer");
   var overlay = document.getElementById("cart-overlay");
   var isOpen = drawer.classList.contains("open");
-  if (isOpen) {
-    drawer.classList.remove("open");
-    overlay.classList.remove("open");
-  } else {
-    renderCart();
-    drawer.classList.add("open");
-    overlay.classList.add("open");
-  }
+  if(isOpen){ drawer.classList.remove("open"); overlay.classList.remove("open"); }
+  else{ renderCart(); drawer.classList.add("open"); overlay.classList.add("open"); }
 }
 
-/* =========================================================
-   TOAST
-   ========================================================= */
-function showToast(msg, type) {
+function showToast(msg,type){
   var t = document.getElementById("toast");
   t.textContent = msg;
-  t.className = "toast show " + (type || "");
-  setTimeout(function() { t.className = "toast"; }, 3000);
+  t.className = "toast show "+(type||"");
+  setTimeout(function(){ t.className="toast"; },3000);
 }
 
-/* =========================================================
-   INIT
-   ========================================================= */
 renderGrid();
 renderCart();
 </script>
@@ -691,20 +612,17 @@ renderCart();
 with open('/tmp/index.html', 'w', encoding='utf-8') as f:
     f.write(index_html)
 
-# Verify
+# Verify both fixes
+msp_present = 'MSP Coffee' in index_html
+print(f"'MSP Coffee Pvt Ltd' present: {msp_present}")
+
+# Check footer is clean
 import re
-# Check no ₹70 delivery anywhere
-delivery_70 = [m.group() for m in re.finditer(r'.{0,40}70.{0,40}', index_html) if 'delivery' in m.group().lower() or 'Delivery' in m.group()]
-print("Delivery+70 matches:", delivery_70)
+footer = re.search(r'<footer.*?</footer>', index_html, re.DOTALL).group()
+print("\nFINAL FOOTER:")
+print(footer)
 
-# Check free delivery note present
-free_count = index_html.count("Delivery Free on every order")
-print(f"'Delivery Free on every order' appears: {free_count} times")
-
-# Check grand total formula (no +70)
-grand_lines = [l.strip() for l in index_html.split('\n') if 'grand' in l.lower() and ('=' in l or 'subtotal' in l.lower())]
-for l in grand_lines:
-    print("GRAND:", l[:100])
-
+# Check nothing after </html>
+after_html = index_html.split('</html>')
+print(f"\nContent after </html>: '{after_html[-1].strip()}'")
 print(f"\nFile size: {len(index_html)} chars")
-print(f"Bad &#8377;: {index_html.count('&#8377;')}")
