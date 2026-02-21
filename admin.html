@@ -25,7 +25,7 @@ admin_html = '''<!DOCTYPE html>
     .login-btn{width:100%;background:var(--brown);color:var(--white);border:none;border-radius:24px;padding:13px;font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background 0.2s;margin-top:6px;}
     .login-btn:hover{background:var(--gold);}
     .login-hint{text-align:center;font-size:0.78rem;color:var(--text-light);margin-top:14px;}
-    .login-error{color:var(--danger);font-size:0.82rem;text-align:center;margin-top:10px;display:none;}
+    .login-error{color:var(--danger);font-size:0.82rem;text-align:center;margin-top:10px;display:none;padding:8px;background:#ffeaea;border-radius:8px;}
     #admin-layout{display:none;min-height:100vh;background:#f7f2ea;}
     .admin-topbar{background:var(--brown);color:var(--white);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.2);}
     .admin-topbar-brand{font-family:"Playfair Display",serif;font-size:1.2rem;}
@@ -117,29 +117,47 @@ admin_html = '''<!DOCTYPE html>
 </head>
 <body>
 
+<!-- LOGIN SCREEN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">Five<span>Roam</span> Coffee</div>
     <div class="login-sub">Admin Panel &middot; Secure Login</div>
     <div class="form-group">
       <label>Username</label>
-      <input type="text" class="form-control" id="login-user" placeholder="admin" autocomplete="username"/>
+      <input type="text" class="form-control" id="login-user" placeholder="admin"
+             autocomplete="off" spellcheck="false"/>
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input type="password" class="form-control" id="login-pass" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key===\'Enter\')doLogin()"/>
+      <input type="password" class="form-control" id="login-pass" placeholder="Enter password"
+             autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()"/>
     </div>
-    <button class="login-btn" onclick="doLogin()"><i class="fas fa-lock"></i> Sign In</button>
-    <div class="login-error" id="login-error"><i class="fas fa-exclamation-circle"></i> Incorrect username or password.</div>
+    <button class="login-btn" onclick="doLogin()">
+      <i class="fas fa-lock"></i>&nbsp; Sign In
+    </button>
+    <div class="login-hint">
+      Username: <strong>admin</strong> &nbsp;&middot;&nbsp; Password: <strong>fiveroam2026</strong>
+    </div>
+    <div class="login-error" id="login-error">
+      <i class="fas fa-exclamation-circle"></i>
+      Incorrect username or password.
+    </div>
   </div>
 </div>
 
+<!-- ADMIN LAYOUT -->
 <div id="admin-layout">
   <div class="admin-topbar">
-    <div class="admin-topbar-brand"><i class="fas fa-coffee" style="margin-right:8px;color:var(--gold-light)"></i>Five<span>Roam</span> Admin</div>
+    <div class="admin-topbar-brand">
+      <i class="fas fa-coffee" style="margin-right:8px;color:var(--gold-light)"></i>Five<span>Roam</span> Admin
+    </div>
     <div class="topbar-right">
-      <a href="index.html" class="topbar-link" target="_blank"><i class="fas fa-external-link-alt"></i> View Store</a>
-      <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      <a href="index.html" class="topbar-link" target="_blank">
+        <i class="fas fa-external-link-alt"></i> View Store
+      </a>
+      <button class="logout-btn" onclick="doLogout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
     </div>
   </div>
 
@@ -149,19 +167,20 @@ admin_html = '''<!DOCTYPE html>
     <div class="stats-row" id="stats-row"></div>
 
     <div class="admin-tabs">
-      <button class="tab-btn active" onclick="switchTab(\'tab-orders\',this)"><i class="fas fa-receipt"></i> Orders</button>
-      <button class="tab-btn" onclick="switchTab(\'tab-coffees\',this)"><i class="fas fa-coffee"></i> Coffee Catalogue</button>
-      <button class="tab-btn" onclick="switchTab(\'tab-promos\',this)"><i class="fas fa-percent"></i> Promo Codes</button>
-      <button class="tab-btn" onclick="switchTab(\'tab-discount\',this)"><i class="fas fa-tag"></i> Discount</button>
-      <button class="tab-btn" onclick="switchTab(\'tab-payment\',this)"><i class="fas fa-credit-card"></i> Payment</button>
+      <button class="tab-btn active" onclick="switchTab('tab-orders',this)"><i class="fas fa-receipt"></i> Orders</button>
+      <button class="tab-btn" onclick="switchTab('tab-coffees',this)"><i class="fas fa-coffee"></i> Coffee Catalogue</button>
+      <button class="tab-btn" onclick="switchTab('tab-promos',this)"><i class="fas fa-percent"></i> Promo Codes</button>
+      <button class="tab-btn" onclick="switchTab('tab-discount',this)"><i class="fas fa-tag"></i> Discount</button>
+      <button class="tab-btn" onclick="switchTab('tab-payment',this)"><i class="fas fa-credit-card"></i> Payment</button>
     </div>
 
+    <!-- ORDERS TAB -->
     <div class="tab-panel active" id="tab-orders">
       <div class="admin-section">
         <div class="section-header">
           <h2><i class="fas fa-receipt" style="color:var(--gold);margin-right:8px"></i>Received Orders</h2>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button class="btn btn-export" onclick="exportOrdersExcel()"><i class="fas fa-file-excel"></i> Export to Excel</button>
+            <button class="btn btn-export" onclick="exportOrdersCSV()"><i class="fas fa-file-excel"></i> Export CSV</button>
             <button class="btn btn-danger" onclick="clearOrders()"><i class="fas fa-trash"></i> Clear All</button>
           </div>
         </div>
@@ -187,6 +206,7 @@ admin_html = '''<!DOCTYPE html>
       </div>
     </div>
 
+    <!-- COFFEES TAB -->
     <div class="tab-panel" id="tab-coffees">
       <div class="admin-section">
         <div class="section-header">
@@ -195,20 +215,23 @@ admin_html = '''<!DOCTYPE html>
         </div>
         <div style="overflow-x:auto">
           <table class="admin-table">
-            <thead><tr><th>Image</th><th>Estate</th><th>Name</th><th>Process</th><th>Taste Notes</th><th>Price (incl. GST)</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Image</th><th>Estate</th><th>Name</th><th>Process</th><th>Taste Notes</th><th>Price</th><th>Actions</th></tr></thead>
             <tbody id="admin-table-body"></tbody>
           </table>
         </div>
       </div>
     </div>
 
+    <!-- PROMOS TAB -->
     <div class="tab-panel" id="tab-promos">
       <div class="admin-section">
         <div class="section-header">
           <h2><i class="fas fa-percent" style="color:var(--gold);margin-right:8px"></i>Promo / Influencer Codes</h2>
           <button class="btn btn-primary" onclick="openPromoModal()"><i class="fas fa-plus"></i> Create Code</button>
         </div>
-        <p style="color:var(--text-light);font-size:0.85rem;margin-bottom:18px;line-height:1.6">Assign unique discount codes to influencers. Usage is tracked automatically when customers redeem them.</p>
+        <p style="color:var(--text-light);font-size:0.85rem;margin-bottom:18px;line-height:1.6">
+          Assign unique discount codes to influencers. Usage is tracked automatically when customers redeem them.
+        </p>
         <div class="promo-stats" id="promo-stats"></div>
         <div style="overflow-x:auto">
           <table class="admin-table">
@@ -219,42 +242,83 @@ admin_html = '''<!DOCTYPE html>
       </div>
     </div>
 
+    <!-- DISCOUNT TAB -->
     <div class="tab-panel" id="tab-discount">
       <div class="admin-section">
-        <div class="section-header"><h2><i class="fas fa-tag" style="color:var(--gold);margin-right:8px"></i>Multi-Pack Discount</h2></div>
+        <div class="section-header">
+          <h2><i class="fas fa-tag" style="color:var(--gold);margin-right:8px"></i>Multi-Pack Discount</h2>
+        </div>
         <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
-          <div><label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Threshold (min packets)</label><input type="number" class="form-control" id="discount-threshold" value="2" min="2" style="width:150px"/></div>
-          <div><label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Discount %</label><input type="number" class="form-control" id="discount-pct" value="10" min="1" max="50" style="width:150px"/></div>
-          <button class="btn btn-primary" onclick="saveDiscount()" style="margin-top:24px"><i class="fas fa-save"></i> Save</button>
+          <div>
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Threshold (min packets)</label>
+            <input type="number" class="form-control" id="discount-threshold" value="2" min="2" style="width:150px"/>
+          </div>
+          <div>
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Discount %</label>
+            <input type="number" class="form-control" id="discount-pct" value="10" min="1" max="50" style="width:150px"/>
+          </div>
+          <button class="btn btn-primary" onclick="saveDiscount()" style="margin-top:24px">
+            <i class="fas fa-save"></i> Save
+          </button>
         </div>
         <p style="font-size:0.82rem;color:var(--text-light);margin-top:14px;padding:12px 16px;background:var(--beige);border-radius:10px">
-          When a customer adds <strong id="disc-thresh-display">2</strong> or more packets, a <strong id="disc-pct-display">10%</strong> discount is automatically applied.
+          When a customer adds <strong id="disc-thresh-display">2</strong> or more packets,
+          a <strong id="disc-pct-display">10%</strong> discount is automatically applied.
         </p>
       </div>
     </div>
 
+    <!-- PAYMENT TAB -->
     <div class="tab-panel" id="tab-payment">
       <div class="admin-section">
-        <div class="section-header"><h2><i class="fas fa-credit-card" style="color:var(--gold);margin-right:8px"></i>Payment Gateway</h2></div>
-        <p style="color:var(--text-light);font-size:0.86rem;margin-bottom:18px;line-height:1.6">Select your gateway and enter API keys when ready to go live.</p>
+        <div class="section-header">
+          <h2><i class="fas fa-credit-card" style="color:var(--gold);margin-right:8px"></i>Payment Gateway</h2>
+        </div>
+        <p style="color:var(--text-light);font-size:0.86rem;margin-bottom:18px;line-height:1.6">
+          Select your gateway and enter API keys when ready to go live.
+        </p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:22px">
-          <div class="pg-card active" onclick="selectPG(this,\'Razorpay\')"><span class="pg-badge pg-live">Recommended</span><h3><i class="fas fa-bolt" style="color:var(--gold);margin-right:6px"></i>Razorpay</h3><p>India\'s most popular. UPI, Cards, Net Banking, Wallets.</p></div>
-          <div class="pg-card" onclick="selectPG(this,\'Cashfree\')"><span class="pg-badge pg-coming">Popular</span><h3><i class="fas fa-coins" style="color:var(--gold);margin-right:6px"></i>Cashfree</h3><p>Fast settlements, UPI, cards and international payments.</p></div>
-          <div class="pg-card" onclick="selectPG(this,\'PayU\')"><span class="pg-badge pg-coming">Option</span><h3><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>PayU</h3><p>Trusted with robust analytics and fraud protection.</p></div>
+          <div class="pg-card active" onclick="selectPG(this,'Razorpay')">
+            <span class="pg-badge pg-live">Recommended</span>
+            <h3><i class="fas fa-bolt" style="color:var(--gold);margin-right:6px"></i>Razorpay</h3>
+            <p>India's most popular. UPI, Cards, Net Banking, Wallets.</p>
+          </div>
+          <div class="pg-card" onclick="selectPG(this,'Cashfree')">
+            <span class="pg-badge pg-coming">Popular</span>
+            <h3><i class="fas fa-coins" style="color:var(--gold);margin-right:6px"></i>Cashfree</h3>
+            <p>Fast settlements, UPI, cards and international payments.</p>
+          </div>
+          <div class="pg-card" onclick="selectPG(this,'PayU')">
+            <span class="pg-badge pg-coming">Option</span>
+            <h3><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>PayU</h3>
+            <p>Trusted with robust analytics and fraud protection.</p>
+          </div>
         </div>
         <div style="background:var(--beige);border-radius:12px;padding:20px;border:1px solid var(--beige-dark)">
-          <h3 style="font-family:\'Playfair Display\',serif;color:var(--brown);margin-bottom:14px;font-size:0.97rem" id="pg-title">Razorpay &ndash; API Keys</h3>
+          <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:14px;font-size:0.97rem" id="pg-title">
+            Razorpay &ndash; API Keys
+          </h3>
           <div class="form-row">
-            <div class="form-group"><label>Key ID</label><input type="text" class="key-field" id="pg-key-id" placeholder="rzp_live_XXXXXXXXXXXX"/></div>
-            <div class="form-group"><label>Key Secret</label><input type="password" class="key-field" id="pg-key-secret" placeholder="Key Secret"/></div>
+            <div class="form-group">
+              <label>Key ID</label>
+              <input type="text" class="key-field" id="pg-key-id" placeholder="rzp_live_XXXXXXXXXXXX"/>
+            </div>
+            <div class="form-group">
+              <label>Key Secret</label>
+              <input type="password" class="key-field" id="pg-key-secret" placeholder="Key Secret"/>
+            </div>
           </div>
-          <div style="margin-bottom:12px"><label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:6px">Webhook Secret (optional)</label><input type="text" class="key-field" id="pg-webhook" placeholder="whsec_XXXXXXXXXX"/></div>
+          <div style="margin-bottom:12px">
+            <label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:6px">Webhook Secret (optional)</label>
+            <input type="text" class="key-field" id="pg-webhook" placeholder="whsec_XXXXXXXXXX"/>
+          </div>
           <button class="btn btn-success" onclick="savePGKeys()"><i class="fas fa-save"></i> Save Keys</button>
         </div>
       </div>
     </div>
-  </div>
-</div>
+
+  </div><!-- end admin-content -->
+</div><!-- end admin-layout -->
 
 <!-- ORDER DETAIL MODAL -->
 <div class="modal-overlay" id="order-detail-modal">
@@ -265,13 +329,17 @@ admin_html = '''<!DOCTYPE html>
       <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Update Status</label>
       <div style="display:flex;gap:10px;align-items:center">
         <select class="form-control" id="order-status-select" style="flex:1">
-          <option value="New">New</option><option value="Processing">Processing</option>
-          <option value="Dispatched">Dispatched</option><option value="Delivered">Delivered</option>
+          <option value="New">New</option>
+          <option value="Processing">Processing</option>
+          <option value="Dispatched">Dispatched</option>
+          <option value="Delivered">Delivered</option>
         </select>
         <button class="btn btn-success" onclick="updateOrderStatus()"><i class="fas fa-save"></i> Save</button>
       </div>
     </div>
-    <div class="modal-actions"><button class="btn btn-danger" onclick="closeOrderDetail()"><i class="fas fa-times"></i> Close</button></div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" onclick="closeOrderDetail()"><i class="fas fa-times"></i> Close</button>
+    </div>
   </div>
 </div>
 
@@ -282,7 +350,7 @@ admin_html = '''<!DOCTYPE html>
     <input type="hidden" id="edit-id" value=""/>
     <div class="form-row">
       <div class="form-group"><label>Estate Name *</label><input type="text" class="form-control" id="f-estate" placeholder="e.g. Bison Valley Estate"/></div>
-      <div class="form-group"><label>Price incl. GST (per 100g) *</label><input type="number" class="form-control" id="f-price" placeholder="e.g. 599"/></div>
+      <div class="form-group"><label>Price (per 100g) *</label><input type="number" class="form-control" id="f-price" placeholder="e.g. 599"/></div>
     </div>
     <div class="form-row-full"><label>Coffee Name *</label><input type="text" class="form-control" id="f-name" placeholder="e.g. Bison Valley Bright"/></div>
     <div class="form-row-full"><label>Process Method *</label><input type="text" class="form-control" id="f-process" placeholder="e.g. Double Fermentation"/></div>
@@ -292,7 +360,11 @@ admin_html = '''<!DOCTYPE html>
     </div>
     <div class="form-row-full"><label>Taste Notes (comma-separated)</label><input type="text" class="form-control" id="f-notes" placeholder="Golden Kiwi, White Chocolate"/></div>
     <div class="form-row-full"><label>Image URL</label><input type="text" class="form-control" id="f-img-url" placeholder="https://..." oninput="updateImgPreview(this.value)"/></div>
-    <div class="form-row-full"><label>Or Upload Image</label><input type="file" class="form-control" id="f-img-file" accept="image/*" onchange="handleImgUpload(this)"/><div class="img-preview" id="img-preview">&#9749;</div></div>
+    <div class="form-row-full">
+      <label>Or Upload Image</label>
+      <input type="file" class="form-control" id="f-img-file" accept="image/*" onchange="handleImgUpload(this)"/>
+      <div class="img-preview" id="img-preview">&#9749;</div>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-danger" onclick="closeCoffeeModal()"><i class="fas fa-times"></i> Cancel</button>
       <button class="btn btn-success" onclick="saveCoffee()"><i class="fas fa-save"></i> Save Coffee</button>
@@ -305,13 +377,24 @@ admin_html = '''<!DOCTYPE html>
   <div class="modal-box" style="max-width:460px">
     <h2 id="promo-modal-title"><i class="fas fa-plus" style="color:var(--gold);margin-right:8px"></i>Create Promo Code</h2>
     <input type="hidden" id="promo-edit-id" value=""/>
-    <div class="form-row-full"><label>Promo Code *</label><input type="text" class="form-control" id="p-code" placeholder="e.g. RIYA15" style="text-transform:uppercase;letter-spacing:1px;font-weight:700" oninput="this.value=this.value.toUpperCase()"/></div>
+    <div class="form-row-full">
+      <label>Promo Code *</label>
+      <input type="text" class="form-control" id="p-code" placeholder="e.g. RIYA15"
+             style="text-transform:uppercase;letter-spacing:1px;font-weight:700"
+             oninput="this.value=this.value.toUpperCase()"/>
+    </div>
     <div class="form-row">
       <div class="form-group"><label>Influencer / Assignee *</label><input type="text" class="form-control" id="p-influencer" placeholder="e.g. Riya Sharma"/></div>
       <div class="form-group"><label>Discount % *</label><input type="number" class="form-control" id="p-discount" placeholder="e.g. 15" min="1" max="50"/></div>
     </div>
     <div class="form-row-full"><label>Notes / Platform</label><input type="text" class="form-control" id="p-notes" placeholder="e.g. Instagram, 50K followers"/></div>
-    <div class="form-row-full"><label>Status</label><select class="form-control" id="p-active"><option value="true">Active</option><option value="false">Inactive</option></select></div>
+    <div class="form-row-full">
+      <label>Status</label>
+      <select class="form-control" id="p-active">
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
+      </select>
+    </div>
     <div class="modal-actions">
       <button class="btn btn-danger" onclick="closePromoModal()"><i class="fas fa-times"></i> Cancel</button>
       <button class="btn btn-success" onclick="savePromo()"><i class="fas fa-save"></i> Save Code</button>
@@ -322,41 +405,50 @@ admin_html = '''<!DOCTYPE html>
 <div class="toast-admin" id="admin-toast"></div>
 
 <script>
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "fiveroam2026";
-const Rs = "\\u20B9";
-function fmt(n){ return Rs + Number(n).toLocaleString("en-IN"); }
-function extractGST(amount){ return Math.round(amount - amount / 1.05); }
-
-// FIX: robust login using trimmed string comparison
-function doLogin(){
-  var u = document.getElementById("login-user").value.trim();
-  var p = document.getElementById("login-pass").value.trim();
+/* =========================================================
+   BULLETPROOF LOGIN
+   - Strip ALL whitespace chars (trim, non-breaking, etc.)
+   - Direct string literals — no constants that could be
+     mangled by encoding
+   ========================================================= */
+function doLogin() {
+  var rawU = document.getElementById("login-user").value;
+  var rawP = document.getElementById("login-pass").value;
+  // Remove every whitespace character including non-breaking spaces
+  var u = rawU.replace(/\s/g, "").replace(/\u00A0/g, "");
+  var p = rawP.replace(/\s/g, "").replace(/\u00A0/g, "");
   var err = document.getElementById("login-error");
-  if(u === ADMIN_USER && p === ADMIN_PASS){
+  if (u === "admin" && p === "fiveroam2026") {
+    err.style.display = "none";
     document.getElementById("login-screen").style.display = "none";
     document.getElementById("admin-layout").style.display = "block";
     loadAdmin();
   } else {
     err.style.display = "block";
-    setTimeout(function(){ err.style.display = "none"; }, 4000);
+    document.getElementById("login-pass").value = "";
+    setTimeout(function() { err.style.display = "none"; }, 4000);
   }
 }
-function doLogout(){
+
+function doLogout() {
   document.getElementById("login-screen").style.display = "flex";
   document.getElementById("admin-layout").style.display = "none";
   document.getElementById("login-user").value = "";
   document.getElementById("login-pass").value = "";
 }
 
-function switchTab(id, btn){
-  document.querySelectorAll(".tab-panel").forEach(function(p){ p.classList.remove("active"); });
-  document.querySelectorAll(".tab-btn").forEach(function(b){ b.classList.remove("active"); });
+/* =========================================================
+   HELPERS
+   ========================================================= */
+function fmt(n) { return "\u20B9" + Number(n).toLocaleString("en-IN"); }
+function switchTab(id, btn) {
+  document.querySelectorAll(".tab-panel").forEach(function(p) { p.classList.remove("active"); });
+  document.querySelectorAll(".tab-btn").forEach(function(b) { b.classList.remove("active"); });
   document.getElementById(id).classList.add("active");
   btn.classList.add("active");
 }
 
-var DEFAULT_COFFEES=[
+var DEFAULT_COFFEES = [
   {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:""},
   {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:""},
   {id:3,estate:"Hidden Falls Estate",name:"Hidden Falls Effervescent",process:"Double Fermentation",acidity:"Sweet, effervescent",body:"Syrupy, Medium+",notes:["Muscat Grapes","Hibiscus","Dark Chocolate","Almond","Cocoa"],price:649,img:""},
@@ -366,168 +458,185 @@ var DEFAULT_COFFEES=[
   {id:7,estate:"Stanmore Estate",name:"Stanmore Watermelon",process:"Watermelon Process",acidity:"Sweet / Medium",body:"Velvety, smooth",notes:["Lavender","Rose Hip","Baking Chocolate","Chocolatey"],price:649,img:""},
   {id:8,estate:"Orchardale Estate",name:"Orchardale Hazelnut",process:"Watermelon Process",acidity:"Bright / Sweet",body:"Medium+",notes:["Hazelnut","Milk Chocolate","Honey","Cocoa","Lime Zest"],price:625,img:""}
 ];
-function getCoffees(){ return JSON.parse(localStorage.getItem("frc_coffees") || "null") || DEFAULT_COFFEES; }
-function saveCoffees(d){ localStorage.setItem("frc_coffees", JSON.stringify(d)); }
-function getPromos(){ return JSON.parse(localStorage.getItem("frc_promos") || "[]"); }
-function savePromos(d){ localStorage.setItem("frc_promos", JSON.stringify(d)); }
-function getOrders(){ return JSON.parse(localStorage.getItem("frc_orders") || "[]"); }
-function saveOrders(d){ localStorage.setItem("frc_orders", JSON.stringify(d)); }
 
-function loadAdmin(){
+function getCoffees() { return JSON.parse(localStorage.getItem("frc_coffees") || "null") || DEFAULT_COFFEES; }
+function saveCoffees(d) { localStorage.setItem("frc_coffees", JSON.stringify(d)); }
+function getPromos() { return JSON.parse(localStorage.getItem("frc_promos") || "[]"); }
+function savePromos(d) { localStorage.setItem("frc_promos", JSON.stringify(d)); }
+function getOrders() { return JSON.parse(localStorage.getItem("frc_orders") || "[]"); }
+function saveOrders(d) { localStorage.setItem("frc_orders", JSON.stringify(d)); }
+
+function loadAdmin() {
   renderStats(); renderTable(); renderPromos(); renderOrders();
-  var disc = JSON.parse(localStorage.getItem("frc_discount") || "{\"threshold\":2,\"pct\":10}");
+  var disc = JSON.parse(localStorage.getItem("frc_discount") || '{"threshold":2,"pct":10}');
   document.getElementById("discount-threshold").value = disc.threshold;
   document.getElementById("discount-pct").value = disc.pct;
   document.getElementById("disc-thresh-display").textContent = disc.threshold;
   document.getElementById("disc-pct-display").textContent = disc.pct + "%";
   var pgKeys = JSON.parse(localStorage.getItem("frc_pg_keys") || "{}");
-  if(pgKeys.keyId) document.getElementById("pg-key-id").value = pgKeys.keyId;
-  if(pgKeys.keySecret) document.getElementById("pg-key-secret").value = pgKeys.keySecret;
-  if(pgKeys.webhook) document.getElementById("pg-webhook").value = pgKeys.webhook;
+  if (pgKeys.keyId) document.getElementById("pg-key-id").value = pgKeys.keyId;
+  if (pgKeys.keySecret) document.getElementById("pg-key-secret").value = pgKeys.keySecret;
+  if (pgKeys.webhook) document.getElementById("pg-webhook").value = pgKeys.webhook;
 }
 
-function renderStats(){
-  var coffees = getCoffees(), orders = getOrders(), promos = getPromos();
-  var newOrders = orders.filter(function(o){ return !o.status || o.status === "New"; }).length;
-  var revenue = orders.reduce(function(s,o){ return s + o.grand; }, 0);
+/* =========================================================
+   STATS
+   ========================================================= */
+function renderStats() {
+  var orders = getOrders(), coffees = getCoffees();
+  var newOrders = orders.filter(function(o) { return !o.status || o.status === "New"; }).length;
+  var revenue = orders.reduce(function(s, o) { return s + o.grand; }, 0);
   document.getElementById("stats-row").innerHTML =
-    "<div class=\'stat-card\'><div class=\'stat-label\'><i class=\'stat-icon fas fa-receipt\'></i>Total Orders</div><div class=\'stat-value\'>" + orders.length + "</div></div>" +
-    "<div class=\'stat-card\'><div class=\'stat-label\'><i class=\'stat-icon fas fa-bell\'></i>New Orders</div><div class=\'stat-value\'>" + newOrders + "</div></div>" +
-    "<div class=\'stat-card\'><div class=\'stat-label\'><i class=\'stat-icon fas fa-rupee-sign\'></i>Total Revenue</div><div class=\'stat-value\'>" + fmt(revenue) + "</div></div>" +
-    "<div class=\'stat-card\'><div class=\'stat-label\'><i class=\'stat-icon fas fa-coffee\'></i>Coffees Listed</div><div class=\'stat-value\'>" + coffees.length + "</div></div>";
+    "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-receipt'></i>Total Orders</div><div class='stat-value'>" + orders.length + "</div></div>" +
+    "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-bell'></i>New Orders</div><div class='stat-value'>" + newOrders + "</div></div>" +
+    "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-rupee-sign'></i>Total Revenue</div><div class='stat-value'>" + fmt(revenue) + "</div></div>" +
+    "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-coffee'></i>Coffees Listed</div><div class='stat-value'>" + coffees.length + "</div></div>";
 }
 
+/* =========================================================
+   ORDERS
+   ========================================================= */
 var currentOrderId = null;
-function renderOrders(){
+
+function renderOrders() {
   var orders = getOrders();
   var search = (document.getElementById("order-search").value || "").toLowerCase();
   var statusFilter = document.getElementById("order-status-filter").value;
-  var filtered = orders.filter(function(o){
-    var matchSearch = !search || o.orderId.toLowerCase().includes(search) || o.name.toLowerCase().includes(search) || o.phone.includes(search);
-    var matchStatus = !statusFilter || (o.status || "New") === statusFilter;
-    return matchSearch && matchStatus;
+  var filtered = orders.filter(function(o) {
+    var ms = !search || o.orderId.toLowerCase().includes(search) || o.name.toLowerCase().includes(search) || o.phone.includes(search);
+    var mf = !statusFilter || (o.status || "New") === statusFilter;
+    return ms && mf;
   });
   var tbody = document.getElementById("orders-table-body");
   var empty = document.getElementById("orders-empty");
   tbody.innerHTML = "";
-  if(filtered.length === 0){ empty.style.display = "block"; return; }
+  if (filtered.length === 0) { empty.style.display = "block"; return; }
   empty.style.display = "none";
-  filtered.forEach(function(o){
+  filtered.forEach(function(o) {
     var status = o.status || "New";
     var clsMap = {New:"status-new",Processing:"status-processing",Dispatched:"status-dispatched",Delivered:"status-delivered"};
-    var cls = clsMap[status] || "status-new";
-    var date = new Date(o.timestamp).toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"2-digit"});
-    var itemSummary = o.items.map(function(i){ return i.name + " x" + i.qty; }).join(", ");
+    var date = new Date(o.timestamp).toLocaleDateString("en-IN", {day:"2-digit", month:"short", year:"2-digit"});
+    var summary = o.items.map(function(i) { return i.name + " x" + i.qty; }).join(", ");
     var tr = document.createElement("tr");
-    tr.innerHTML = "<td><strong style=\'font-size:0.78rem;letter-spacing:0.5px\'>" + o.orderId + "</strong></td>"
-      + "<td style=\'font-size:0.82rem\'>" + date + "</td>"
+    tr.innerHTML = "<td><strong style='font-size:0.78rem'>" + o.orderId + "</strong></td>"
+      + "<td style='font-size:0.82rem'>" + date + "</td>"
       + "<td><strong>" + o.name + "</strong></td>"
       + "<td>" + o.phone + "</td>"
-      + "<td style=\'font-size:0.78rem;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis\'>" + itemSummary + "</td>"
+      + "<td style='font-size:0.78rem;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>" + summary + "</td>"
       + "<td><strong>" + fmt(o.grand) + "</strong></td>"
-      + "<td><span class=\'status-pill " + cls + "\'>" + status + "</span></td>"
-      + "<td><button class=\'btn btn-primary btn-sm\' onclick=\'openOrderDetail(\\"" + o.orderId + "\\")\' ><i class=\'fas fa-eye\'></i> View</button></td>";
+      + "<td><span class='status-pill " + (clsMap[status] || "status-new") + "'>" + status + "</span></td>"
+      + "<td><button class='btn btn-primary btn-sm' onclick='openOrderDetail(\"" + o.orderId + "\")'><i class='fas fa-eye'></i> View</button></td>";
     tbody.appendChild(tr);
   });
 }
 
-function openOrderDetail(orderId){
+function openOrderDetail(orderId) {
   var orders = getOrders();
-  var o = orders.find(function(x){ return x.orderId === orderId; });
-  if(!o) return;
+  var o = orders.find(function(x) { return x.orderId === orderId; });
+  if (!o) return;
   currentOrderId = orderId;
   document.getElementById("order-status-select").value = o.status || "New";
   var date = new Date(o.timestamp).toLocaleString("en-IN");
   var itemsHtml = "";
-  o.items.forEach(function(i){ itemsHtml += "<div class=\'order-detail-row\'><span>" + i.name + " (" + i.brew + ", " + i.roast + " Roast) x" + i.qty + "</span><span>" + fmt(i.price * i.qty) + "</span></div>"; });
-  var promoRow = o.promoCode ? "<div class=\'order-detail-row\'><span>Promo \\"" + o.promoCode + "\\"</span><span style=\'color:#2a8c4a\'>-" + fmt(o.promoDiscount) + "</span></div>" : "";
-  var multiRow = o.multiDiscount > 0 ? "<div class=\'order-detail-row\'><span>Multi-pack Discount</span><span style=\'color:#2a8c4a\'>-" + fmt(o.multiDiscount) + "</span></div>" : "";
-  var gstAmt = o.gstIncluded || extractGST(o.subtotal - (o.multiDiscount||0) - (o.promoDiscount||0));
+  o.items.forEach(function(i) {
+    itemsHtml += "<div class='order-detail-row'><span>" + i.name + " (" + i.brew + ", " + i.roast + " Roast) x" + i.qty + "</span><span>" + fmt(i.price * i.qty) + "</span></div>";
+  });
+  var multiRow = o.multiDiscount > 0 ? "<div class='order-detail-row'><span>Multi-pack Discount</span><span style='color:#2a8c4a'>-" + fmt(o.multiDiscount) + "</span></div>" : "";
+  var promoRow = o.promoCode ? "<div class='order-detail-row'><span>Promo \"" + o.promoCode + "\"</span><span style='color:#2a8c4a'>-" + fmt(o.promoDiscount) + "</span></div>" : "";
   document.getElementById("order-detail-content").innerHTML =
-    "<div class=\'order-detail-section\'><div class=\'order-detail-title\'>Customer Info</div>"
-    + "<div class=\'order-detail-row\'><span>Order ID</span><span><strong>" + o.orderId + "</strong></span></div>"
-    + "<div class=\'order-detail-row\'><span>Date</span><span>" + date + "</span></div>"
-    + "<div class=\'order-detail-row\'><span>Name</span><span>" + o.name + "</span></div>"
-    + "<div class=\'order-detail-row\'><span>Phone</span><span>" + o.phone + "</span></div>"
-    + "<div class=\'order-detail-row\'><span>Email</span><span>" + (o.email || "&mdash;") + "</span></div>"
-    + "<div class=\'order-detail-row\'><span>Address</span><span style=\'text-align:right;max-width:60%\'>" + o.address + "</span></div></div>"
-    + "<div class=\'order-detail-section\'><div class=\'order-detail-title\'>Order Items</div>" + itemsHtml + "</div>"
-    + "<div class=\'order-detail-section\'><div class=\'order-detail-title\'>Invoice</div>"
-    + "<div class=\'order-detail-row\'><span>Subtotal (incl. GST)</span><span>" + fmt(o.subtotal) + "</span></div>"
+    "<div class='order-detail-section'><div class='order-detail-title'>Customer Info</div>"
+    + "<div class='order-detail-row'><span>Order ID</span><span><strong>" + o.orderId + "</strong></span></div>"
+    + "<div class='order-detail-row'><span>Date</span><span>" + date + "</span></div>"
+    + "<div class='order-detail-row'><span>Name</span><span>" + o.name + "</span></div>"
+    + "<div class='order-detail-row'><span>Phone</span><span>" + o.phone + "</span></div>"
+    + "<div class='order-detail-row'><span>Email</span><span>" + (o.email || "&mdash;") + "</span></div>"
+    + "<div class='order-detail-row'><span>Address</span><span style='text-align:right;max-width:60%'>" + o.address + "</span></div></div>"
+    + "<div class='order-detail-section'><div class='order-detail-title'>Order Items</div>" + itemsHtml + "</div>"
+    + "<div class='order-detail-section'><div class='order-detail-title'>Invoice</div>"
+    + "<div class='order-detail-row'><span>Subtotal</span><span>" + fmt(o.subtotal) + "</span></div>"
     + multiRow + promoRow
-    + "<div class=\'order-detail-row\' style=\'font-style:italic\'><span>GST @ 5% (incl. in price)</span><span>" + fmt(gstAmt) + "</span></div>"
-    + "<div class=\'order-detail-row\'><span>Delivery</span><span>" + fmt(70) + "</span></div>"
-    + "<div class=\'order-detail-row\' style=\'font-weight:700;color:var(--brown);border-top:1px solid var(--beige-dark);padding-top:8px;margin-top:4px\'><span>Total Paid</span><span>" + fmt(o.grand) + "</span></div></div>";
+    + "<div class='order-detail-row'><span>Delivery</span><span>" + fmt(70) + "</span></div>"
+    + "<div class='order-detail-row' style='font-weight:700;color:var(--brown);border-top:1px solid var(--beige-dark);padding-top:8px;margin-top:4px'><span>Total Paid</span><span>" + fmt(o.grand) + "</span></div></div>";
   document.getElementById("order-detail-modal").classList.add("open");
 }
-function closeOrderDetail(){ document.getElementById("order-detail-modal").classList.remove("open"); currentOrderId = null; }
-function updateOrderStatus(){
-  if(!currentOrderId) return;
+
+function closeOrderDetail() { document.getElementById("order-detail-modal").classList.remove("open"); currentOrderId = null; }
+
+function updateOrderStatus() {
+  if (!currentOrderId) return;
   var orders = getOrders();
-  var idx = orders.findIndex(function(o){ return o.orderId === currentOrderId; });
-  if(idx < 0) return;
+  var idx = orders.findIndex(function(o) { return o.orderId === currentOrderId; });
+  if (idx < 0) return;
   orders[idx].status = document.getElementById("order-status-select").value;
   saveOrders(orders); closeOrderDetail(); renderStats(); renderOrders();
   showAdminToast("Order status updated!", "success");
 }
-function clearOrders(){
-  if(!confirm("Clear ALL orders? This cannot be undone.")) return;
+
+function clearOrders() {
+  if (!confirm("Clear ALL orders? This cannot be undone.")) return;
   saveOrders([]); renderStats(); renderOrders();
   showAdminToast("All orders cleared.", "danger");
 }
-function exportOrdersExcel(){
+
+function exportOrdersCSV() {
   var orders = getOrders();
-  if(orders.length === 0){ showAdminToast("No orders to export.", "danger"); return; }
-  var headers = ["Order ID","Date","Name","Phone","Email","Address","Items","Brew Methods","Roast Levels","Subtotal","Multi-Discount","Promo Code","Promo Discount","GST (incl.)","Delivery","Grand Total","Status"];
-  var rows = orders.map(function(o){
-    var itemNames = o.items.map(function(i){ return i.name + " x" + i.qty; }).join(" | ");
-    var brews = o.items.map(function(i){ return i.brew; }).join(" | ");
-    var roasts = o.items.map(function(i){ return i.roast + " Roast"; }).join(" | ");
-    var gstAmt = o.gstIncluded || extractGST(o.subtotal - (o.multiDiscount||0) - (o.promoDiscount||0));
+  if (orders.length === 0) { showAdminToast("No orders to export.", "danger"); return; }
+  var headers = ["Order ID","Date","Name","Phone","Email","Address","Items","Subtotal","Multi-Discount","Promo Code","Promo Discount","Delivery","Grand Total","Status"];
+  var rows = orders.map(function(o) {
+    var items = o.items.map(function(i) { return i.name + " x" + i.qty + " (" + i.brew + "/" + i.roast + ")"; }).join(" | ");
     return [
-      o.orderId, new Date(o.timestamp).toLocaleString("en-IN"),
+      o.orderId,
+      new Date(o.timestamp).toLocaleString("en-IN"),
       o.name, o.phone, o.email || "",
-      "\\"" + o.address.replace(/"/g, "\\"\\"") + "\\"",
-      "\\"" + itemNames + "\\"", "\\"" + brews + "\\"", "\\"" + roasts + "\\"",
+      '"' + o.address.replace(/"/g, '""') + '"',
+      '"' + items + '"',
       o.subtotal, o.multiDiscount || 0, o.promoCode || "", o.promoDiscount || 0,
-      gstAmt, 70, o.grand, o.status || "New"
+      70, o.grand, o.status || "New"
     ].join(",");
   });
-  var csv = [headers.join(",")].concat(rows).join("\\n");
-  var blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+  var csv = [headers.join(",")].concat(rows).join("\n");
+  var blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
   var url = URL.createObjectURL(blob);
   var a = document.createElement("a");
-  a.href = url; a.download = "FiveRoamCoffee_Orders_" + new Date().toISOString().split("T")[0] + ".csv";
-  a.click(); URL.revokeObjectURL(url);
+  a.href = url;
+  a.download = "FiveRoamCoffee_Orders_" + new Date().toISOString().split("T")[0] + ".csv";
+  a.click();
+  URL.revokeObjectURL(url);
   showAdminToast("Orders exported!", "success");
 }
 
-function renderTable(){
+/* =========================================================
+   COFFEE CATALOGUE
+   ========================================================= */
+var imgDataUrl = "";
+
+function renderTable() {
   var coffees = getCoffees();
   var tbody = document.getElementById("admin-table-body");
   tbody.innerHTML = "";
-  coffees.forEach(function(c){
+  coffees.forEach(function(c) {
     var tr = document.createElement("tr");
-    var thumb = c.img ? "<div class=\'coffee-thumb\'><img src=\'" + c.img + "\' alt=\'" + c.name + "\'></div>" : "<div class=\'coffee-thumb\'>&#9749;</div>";
-    var notePills = c.notes.map(function(n){ return "<span class=\'notes-pill\'>" + n + "</span>"; }).join("");
+    var thumb = c.img ? "<div class='coffee-thumb'><img src='" + c.img + "' alt='" + c.name + "'></div>" : "<div class='coffee-thumb'>&#9749;</div>";
+    var pills = c.notes.map(function(n) { return "<span class='notes-pill'>" + n + "</span>"; }).join("");
     tr.innerHTML = "<td>" + thumb + "</td><td>" + c.estate + "</td><td><strong>" + c.name + "</strong></td>"
-      + "<td style=\'font-size:0.8rem\'>" + c.process + "</td><td>" + notePills + "</td>"
+      + "<td style='font-size:0.8rem'>" + c.process + "</td><td>" + pills + "</td>"
       + "<td><strong>" + fmt(c.price) + "</strong></td>"
-      + "<td><button class=\'btn btn-primary btn-sm\' onclick=\'openCoffeeModal(" + c.id + ")\'><i class=\'fas fa-edit\'></i> Edit</button>"
-      + " <button class=\'btn btn-danger btn-sm\' onclick=\'deleteCoffee(" + c.id + ")\'><i class=\'fas fa-trash\'></i> Del</button></td>";
+      + "<td>"
+      + "<button class='btn btn-primary btn-sm' onclick='openCoffeeModal(" + c.id + ")'><i class='fas fa-edit'></i> Edit</button> "
+      + "<button class='btn btn-danger btn-sm' onclick='deleteCoffee(" + c.id + ")'><i class='fas fa-trash'></i> Del</button>"
+      + "</td>";
     tbody.appendChild(tr);
   });
 }
 
-var imgDataUrl = "";
-function openCoffeeModal(id){
+function openCoffeeModal(id) {
   imgDataUrl = "";
   document.getElementById("img-preview").innerHTML = "&#9749;";
   document.getElementById("f-img-url").value = "";
   document.getElementById("f-img-file").value = "";
-  if(id){
-    var c = getCoffees().find(function(x){ return x.id === id; });
-    document.getElementById("coffee-modal-title").innerHTML = "<i class=\'fas fa-edit\' style=\'color:var(--gold);margin-right:8px\'></i>Edit Coffee";
+  if (id) {
+    var c = getCoffees().find(function(x) { return x.id === id; });
+    document.getElementById("coffee-modal-title").innerHTML = "<i class='fas fa-edit' style='color:var(--gold);margin-right:8px'></i>Edit Coffee";
     document.getElementById("edit-id").value = id;
     document.getElementById("f-estate").value = c.estate;
     document.getElementById("f-name").value = c.name;
@@ -536,23 +645,24 @@ function openCoffeeModal(id){
     document.getElementById("f-body").value = c.body;
     document.getElementById("f-notes").value = c.notes.join(", ");
     document.getElementById("f-price").value = c.price;
-    if(c.img){ document.getElementById("f-img-url").value = c.img; updateImgPreview(c.img); }
+    if (c.img) { document.getElementById("f-img-url").value = c.img; updateImgPreview(c.img); }
   } else {
-    document.getElementById("coffee-modal-title").innerHTML = "<i class=\'fas fa-plus\' style=\'color:var(--gold);margin-right:8px\'></i>Add New Coffee";
+    document.getElementById("coffee-modal-title").innerHTML = "<i class='fas fa-plus' style='color:var(--gold);margin-right:8px'></i>Add New Coffee";
     document.getElementById("edit-id").value = "";
-    ["f-estate","f-name","f-process","f-acidity","f-body","f-notes","f-price"].forEach(function(i){ document.getElementById(i).value = ""; });
+    ["f-estate","f-name","f-process","f-acidity","f-body","f-notes","f-price"].forEach(function(id) { document.getElementById(id).value = ""; });
   }
   document.getElementById("coffee-modal").classList.add("open");
 }
-function closeCoffeeModal(){ document.getElementById("coffee-modal").classList.remove("open"); }
-function updateImgPreview(url){ document.getElementById("img-preview").innerHTML = url ? "<img src=\'" + url + "\' alt=\'preview\'>" : "&#9749;"; }
-function handleImgUpload(input){
-  var file = input.files[0]; if(!file) return;
+
+function closeCoffeeModal() { document.getElementById("coffee-modal").classList.remove("open"); }
+function updateImgPreview(url) { document.getElementById("img-preview").innerHTML = url ? "<img src='" + url + "' alt='preview'>" : "&#9749;"; }
+function handleImgUpload(input) {
+  var file = input.files[0]; if (!file) return;
   var reader = new FileReader();
-  reader.onload = function(e){ imgDataUrl = e.target.result; document.getElementById("img-preview").innerHTML = "<img src=\'" + imgDataUrl + "\' alt=\'preview\'>"; };
+  reader.onload = function(e) { imgDataUrl = e.target.result; document.getElementById("img-preview").innerHTML = "<img src='" + imgDataUrl + "' alt='preview'>"; };
   reader.readAsDataURL(file);
 }
-function saveCoffee(){
+function saveCoffee() {
   var estate = document.getElementById("f-estate").value.trim();
   var name = document.getElementById("f-name").value.trim();
   var process = document.getElementById("f-process").value.trim();
@@ -561,130 +671,149 @@ function saveCoffee(){
   var notesRaw = document.getElementById("f-notes").value.trim();
   var price = parseInt(document.getElementById("f-price").value);
   var imgUrl = document.getElementById("f-img-url").value.trim();
-  if(!estate || !name || !process || !price){ showAdminToast("Please fill all required fields.", "danger"); return; }
-  var notes = notesRaw ? notesRaw.split(",").map(function(n){ return n.trim(); }).filter(Boolean) : [];
+  if (!estate || !name || !process || !price) { showAdminToast("Please fill all required fields.", "danger"); return; }
+  var notes = notesRaw ? notesRaw.split(",").map(function(n) { return n.trim(); }).filter(Boolean) : [];
   var img = imgDataUrl || imgUrl || "";
   var coffees = getCoffees();
   var editId = document.getElementById("edit-id").value;
-  if(editId){
-    var idx = coffees.findIndex(function(c){ return c.id === parseInt(editId); });
-    coffees[idx] = {id:parseInt(editId),estate,name,process,acidity,body,notes,price,img};
+  if (editId) {
+    var idx = coffees.findIndex(function(c) { return c.id === parseInt(editId); });
+    coffees[idx] = {id:parseInt(editId), estate:estate, name:name, process:process, acidity:acidity, body:body, notes:notes, price:price, img:img};
     showAdminToast("Coffee updated!", "success");
   } else {
-    var newId = coffees.length ? Math.max.apply(null, coffees.map(function(c){ return c.id; })) + 1 : 1;
-    coffees.push({id:newId,estate,name,process,acidity,body,notes,price,img});
+    var newId = coffees.length ? Math.max.apply(null, coffees.map(function(c) { return c.id; })) + 1 : 1;
+    coffees.push({id:newId, estate:estate, name:name, process:process, acidity:acidity, body:body, notes:notes, price:price, img:img});
     showAdminToast("Coffee added!", "success");
   }
   saveCoffees(coffees); closeCoffeeModal(); renderStats(); renderTable();
 }
-function deleteCoffee(id){
-  if(!confirm("Delete this coffee?")) return;
-  saveCoffees(getCoffees().filter(function(c){ return c.id !== id; }));
+function deleteCoffee(id) {
+  if (!confirm("Delete this coffee?")) return;
+  saveCoffees(getCoffees().filter(function(c) { return c.id !== id; }));
   renderStats(); renderTable(); showAdminToast("Coffee deleted.", "danger");
 }
 
-function renderPromos(){
+/* =========================================================
+   PROMOS
+   ========================================================= */
+function renderPromos() {
   var promos = getPromos();
-  var active = promos.filter(function(p){ return p.active; }).length;
-  var totalUses = promos.reduce(function(s,p){ return s + (p.uses||0); }, 0);
+  var active = promos.filter(function(p) { return p.active; }).length;
+  var totalUses = promos.reduce(function(s, p) { return s + (p.uses || 0); }, 0);
   document.getElementById("promo-stats").innerHTML =
-    "<div class=\'promo-stat\'><div class=\'val\'>" + promos.length + "</div><div class=\'lbl\'>Total Codes</div></div>" +
-    "<div class=\'promo-stat\'><div class=\'val\'>" + active + "</div><div class=\'lbl\'>Active Codes</div></div>" +
-    "<div class=\'promo-stat\'><div class=\'val\'>" + totalUses + "</div><div class=\'lbl\'>Total Uses</div></div>";
+    "<div class='promo-stat'><div class='val'>" + promos.length + "</div><div class='lbl'>Total Codes</div></div>" +
+    "<div class='promo-stat'><div class='val'>" + active + "</div><div class='lbl'>Active Codes</div></div>" +
+    "<div class='promo-stat'><div class='val'>" + totalUses + "</div><div class='lbl'>Total Uses</div></div>";
   var tbody = document.getElementById("promo-table-body");
   tbody.innerHTML = "";
-  if(promos.length === 0){ tbody.innerHTML = "<tr><td colspan=\'7\' style=\'text-align:center;color:var(--text-light);padding:30px\'>No promo codes yet.</td></tr>"; return; }
-  promos.forEach(function(p, idx){
+  if (promos.length === 0) { tbody.innerHTML = "<tr><td colspan='7' style='text-align:center;color:var(--text-light);padding:30px'>No promo codes yet.</td></tr>"; return; }
+  promos.forEach(function(p, idx) {
+    var pill = p.active ? "<span class='status-pill status-active'>Active</span>" : "<span class='status-pill status-inactive'>Inactive</span>";
     var tr = document.createElement("tr");
-    var pill = p.active ? "<span class=\'status-pill status-active\'>Active</span>" : "<span class=\'status-pill status-inactive\'>Inactive</span>";
-    tr.innerHTML = "<td><strong style=\'letter-spacing:1px\'>" + p.code + "</strong><button class=\'copy-btn\' onclick=\'copyCode(\\"" + p.code + "\\")\'><i class=\'fas fa-copy\'></i> Copy</button></td>"
-      + "<td>" + p.influencer + "</td><td><strong>" + p.discount + "%</strong></td><td>" + (p.uses||0) + "</td><td>" + pill + "</td>"
-      + "<td style=\'font-size:0.8rem;color:var(--text-light)\'>" + (p.notes || "&mdash;") + "</td>"
-      + "<td><button class=\'btn btn-primary btn-sm\' onclick=\'openPromoModal(" + idx + ")\'><i class=\'fas fa-edit\'></i> Edit</button>"
-      + " <button class=\'btn btn-danger btn-sm\' onclick=\'deletePromo(" + idx + ")\'><i class=\'fas fa-trash\'></i> Del</button></td>";
+    tr.innerHTML = "<td><strong style='letter-spacing:1px'>" + p.code + "</strong>"
+      + "<button class='copy-btn' onclick='copyCode(\"" + p.code + "\")'><i class='fas fa-copy'></i> Copy</button></td>"
+      + "<td>" + p.influencer + "</td><td><strong>" + p.discount + "%</strong></td>"
+      + "<td>" + (p.uses || 0) + "</td><td>" + pill + "</td>"
+      + "<td style='font-size:0.8rem;color:var(--text-light)'>" + (p.notes || "&mdash;") + "</td>"
+      + "<td>"
+      + "<button class='btn btn-primary btn-sm' onclick='openPromoModal(" + idx + ")'><i class='fas fa-edit'></i> Edit</button> "
+      + "<button class='btn btn-danger btn-sm' onclick='deletePromo(" + idx + ")'><i class='fas fa-trash'></i> Del</button>"
+      + "</td>";
     tbody.appendChild(tr);
   });
 }
-function openPromoModal(idx){
+function openPromoModal(idx) {
   document.getElementById("promo-edit-id").value = (idx !== undefined) ? idx : "";
-  if(idx !== undefined){
+  if (idx !== undefined) {
     var p = getPromos()[idx];
-    document.getElementById("promo-modal-title").innerHTML = "<i class=\'fas fa-edit\' style=\'color:var(--gold);margin-right:8px\'></i>Edit Promo Code";
+    document.getElementById("promo-modal-title").innerHTML = "<i class='fas fa-edit' style='color:var(--gold);margin-right:8px'></i>Edit Promo Code";
     document.getElementById("p-code").value = p.code;
     document.getElementById("p-influencer").value = p.influencer;
     document.getElementById("p-discount").value = p.discount;
     document.getElementById("p-notes").value = p.notes || "";
     document.getElementById("p-active").value = p.active ? "true" : "false";
   } else {
-    document.getElementById("promo-modal-title").innerHTML = "<i class=\'fas fa-plus\' style=\'color:var(--gold);margin-right:8px\'></i>Create Promo Code";
-    ["p-code","p-influencer","p-discount","p-notes"].forEach(function(i){ document.getElementById(i).value = ""; });
+    document.getElementById("promo-modal-title").innerHTML = "<i class='fas fa-plus' style='color:var(--gold);margin-right:8px'></i>Create Promo Code";
+    ["p-code","p-influencer","p-discount","p-notes"].forEach(function(id) { document.getElementById(id).value = ""; });
     document.getElementById("p-active").value = "true";
   }
   document.getElementById("promo-modal").classList.add("open");
 }
-function closePromoModal(){ document.getElementById("promo-modal").classList.remove("open"); }
-function savePromo(){
+function closePromoModal() { document.getElementById("promo-modal").classList.remove("open"); }
+function savePromo() {
   var code = document.getElementById("p-code").value.trim().toUpperCase();
   var influencer = document.getElementById("p-influencer").value.trim();
   var discount = parseInt(document.getElementById("p-discount").value);
   var notes = document.getElementById("p-notes").value.trim();
   var active = document.getElementById("p-active").value === "true";
-  if(!code || !influencer || !discount){ showAdminToast("Please fill required fields.", "danger"); return; }
+  if (!code || !influencer || !discount) { showAdminToast("Please fill required fields.", "danger"); return; }
   var promos = getPromos();
   var editIdx = document.getElementById("promo-edit-id").value;
-  if(editIdx !== ""){
-    promos[parseInt(editIdx)] = {code, influencer, discount, notes, active, uses: promos[parseInt(editIdx)].uses || 0};
+  if (editIdx !== "") {
+    promos[parseInt(editIdx)] = {code:code, influencer:influencer, discount:discount, notes:notes, active:active, uses: promos[parseInt(editIdx)].uses || 0};
     showAdminToast("Promo updated!", "success");
   } else {
-    if(promos.find(function(p){ return p.code === code; })){ showAdminToast("Code already exists!", "danger"); return; }
-    promos.push({code, influencer, discount, notes, active, uses: 0});
+    if (promos.find(function(p) { return p.code === code; })) { showAdminToast("Code already exists!", "danger"); return; }
+    promos.push({code:code, influencer:influencer, discount:discount, notes:notes, active:active, uses:0});
     showAdminToast("Promo created!", "success");
   }
   savePromos(promos); closePromoModal(); renderStats(); renderPromos();
 }
-function deletePromo(idx){
-  if(!confirm("Delete this promo code?")) return;
+function deletePromo(idx) {
+  if (!confirm("Delete this promo code?")) return;
   var promos = getPromos(); promos.splice(idx, 1);
   savePromos(promos); renderStats(); renderPromos(); showAdminToast("Promo deleted.", "danger");
 }
-function copyCode(code){
-  navigator.clipboard.writeText(code).then(function(){ showAdminToast("\\"" + code + "\\" copied!", "success"); });
+function copyCode(code) {
+  navigator.clipboard.writeText(code).then(function() { showAdminToast('"' + code + '" copied!', "success"); });
 }
+
+/* =========================================================
+   DISCOUNT & PAYMENT
+   ========================================================= */
 var selectedPGName = "Razorpay";
-function selectPG(el, name){
-  document.querySelectorAll(".pg-card").forEach(function(c){ c.classList.remove("active"); });
+function selectPG(el, name) {
+  document.querySelectorAll(".pg-card").forEach(function(c) { c.classList.remove("active"); });
   el.classList.add("active"); selectedPGName = name;
-  document.getElementById("pg-title").textContent = name + " \\u2013 API Keys";
+  document.getElementById("pg-title").textContent = name + " \u2013 API Keys";
 }
-function savePGKeys(){
+function savePGKeys() {
   var keyId = document.getElementById("pg-key-id").value.trim();
   var keySecret = document.getElementById("pg-key-secret").value.trim();
   var webhook = document.getElementById("pg-webhook").value.trim();
-  localStorage.setItem("frc_pg_keys", JSON.stringify({gateway:selectedPGName,keyId,keySecret,webhook}));
+  localStorage.setItem("frc_pg_keys", JSON.stringify({gateway:selectedPGName, keyId:keyId, keySecret:keySecret, webhook:webhook}));
   showAdminToast("Payment keys saved!", "success");
 }
-function saveDiscount(){
+function saveDiscount() {
   var threshold = parseInt(document.getElementById("discount-threshold").value) || 2;
   var pct = parseInt(document.getElementById("discount-pct").value) || 10;
-  localStorage.setItem("frc_discount", JSON.stringify({threshold, pct}));
+  localStorage.setItem("frc_discount", JSON.stringify({threshold:threshold, pct:pct}));
   document.getElementById("disc-thresh-display").textContent = threshold;
   document.getElementById("disc-pct-display").textContent = pct + "%";
   showAdminToast("Discount settings saved!", "success");
 }
-function showAdminToast(msg, type){
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+function showAdminToast(msg, type) {
   var t = document.getElementById("admin-toast");
-  t.textContent = msg; t.className = "toast-admin show " + (type || "");
-  setTimeout(function(){ t.className = "toast-admin"; }, 3500);
+  t.textContent = msg;
+  t.className = "toast-admin show " + (type || "");
+  setTimeout(function() { t.className = "toast-admin"; }, 3500);
 }
 </script>
 </body>
 </html>'''
 
-with open('/tmp/admin.html','w',encoding='utf-8') as f:
+with open('/tmp/admin.html', 'w', encoding='utf-8') as f:
     f.write(admin_html)
-bad = admin_html.count('&#8377;')
-print(f"admin.html written. Bad entity count: {bad}, size: {len(admin_html)}")
-print("\nVerifying login credentials in file:")
+
+# Verify login section
 import re
-cred_match = re.search(r'ADMIN_PASS = "([^"]+)"', admin_html)
-print("Password stored as:", cred_match.group(1) if cred_match else "NOT FOUND")
+login_fn = re.search(r'function doLogin\(\) \{.*?\}', admin_html, re.DOTALL)
+print("Login function found:", bool(login_fn))
+if login_fn:
+    print(login_fn.group()[:600])
+print(f"\nFile size: {len(admin_html)} chars")
+print(f"Bad &#8377; entities: {admin_html.count('&#8377;')}")
