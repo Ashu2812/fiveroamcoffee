@@ -1,3 +1,10 @@
+
+# Session reset - rebuild index.html from scratch with the last known good version
+# ONLY 2 changes from the previous version:
+# 1. Coffee cards show Brew & Roast selectors INLINE on the card (no modal popup) - all 8 shown
+# 2. GST line removed from cart totals and checkout invoice
+# Everything else stays exactly as it was
+
 index_html = '''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +14,7 @@ index_html = '''<!DOCTYPE html>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    :root {
-      --beige:#f5f0e8;--beige-dark:#e8dfc8;--beige-mid:#ede4d0;
-      --brown:#3e2a1a;--brown-light:#6b4226;
-      --gold:#b8860b;--gold-light:#d4a843;--accent:#8b5e3c;
-      --text:#2c1a0e;--text-light:#6b5040;--white:#fffdf8;
-      --shadow:rgba(62,42,26,0.12);
-    }
+    :root{--beige:#f5f0e8;--beige-dark:#e8dfc8;--beige-mid:#ede4d0;--brown:#3e2a1a;--brown-light:#6b4226;--gold:#b8860b;--gold-light:#d4a843;--accent:#8b5e3c;--text:#2c1a0e;--text-light:#6b5040;--white:#fffdf8;--shadow:rgba(62,42,26,0.12);}
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Lato',sans-serif;background:var(--beige);color:var(--text);}
     a{text-decoration:none;color:inherit;}
@@ -61,8 +62,13 @@ index_html = '''<!DOCTYPE html>
     .coffee-meta{display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap;}
     .coffee-meta-item{font-size:0.8rem;color:var(--text-light);}
     .coffee-meta-item strong{color:var(--brown-light);}
-    .taste-notes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+    .taste-notes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
     .taste-tag{background:var(--beige-mid);color:var(--brown-light);font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:12px;}
+    /* INLINE BREW & ROAST SELECTORS ON CARD */
+    .card-selectors{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+    .card-select{width:100%;padding:7px 10px;border:2px solid var(--beige-dark);border-radius:10px;font-family:'Lato',sans-serif;font-size:0.8rem;color:var(--text);background:var(--beige);outline:none;cursor:pointer;transition:border-color 0.2s;}
+    .card-select:focus{border-color:var(--gold);}
+    .card-select-label{font-size:0.72rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
     .coffee-footer{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
     .coffee-price{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--brown);font-weight:700;}
     .coffee-price span{font-size:0.75rem;color:var(--text-light);font-family:'Lato',sans-serif;font-weight:400;}
@@ -135,21 +141,6 @@ index_html = '''<!DOCTYPE html>
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:8000;display:none;align-items:center;justify-content:center;padding:16px;}
     .modal-overlay.open{display:flex;}
     .modal-box{background:var(--white);border-radius:20px;width:100%;padding:30px 28px;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
-    #brew-modal .modal-box{max-width:520px;}
-    .modal-box h2{font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:6px;font-size:1.3rem;}
-    .modal-box .modal-sub{color:var(--text-light);font-size:0.87rem;margin-bottom:20px;line-height:1.55;}
-    .step-label{font-size:0.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;}
-    .option-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
-    .option-grid.brew-grid{grid-template-columns:repeat(2,1fr);}
-    .opt-btn{border:2px solid var(--beige-dark);border-radius:12px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--white);}
-    .opt-btn:hover,.opt-btn.sel{border-color:var(--gold);background:#fff9ef;}
-    .opt-btn i{font-size:1.4rem;color:var(--gold);margin-bottom:6px;display:block;}
-    .opt-btn span{font-size:0.8rem;font-weight:600;color:var(--brown);display:block;}
-    .opt-btn small{font-size:0.7rem;color:var(--text-light);}
-    .modal-confirm{width:100%;background:var(--brown);color:var(--white);border:none;border-radius:22px;padding:12px;font-family:'Lato',sans-serif;font-weight:700;font-size:0.92rem;cursor:pointer;transition:background 0.2s;margin-top:4px;}
-    .modal-confirm:hover{background:var(--gold);}
-    .modal-cancel{display:block;text-align:center;margin-top:10px;font-size:0.8rem;color:var(--text-light);cursor:pointer;}
-    .modal-cancel:hover{color:var(--brown);}
     #checkout-modal .modal-box{max-width:560px;}
     .form-group{margin-bottom:14px;}
     .form-group label{display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
@@ -168,7 +159,7 @@ index_html = '''<!DOCTYPE html>
     .order-id-box{background:var(--beige);border-radius:10px;padding:12px 20px;font-family:monospace;font-size:1rem;color:var(--brown);font-weight:700;letter-spacing:2px;margin-bottom:20px;}
     .close-success-btn{background:var(--brown);color:var(--white);border:none;border-radius:22px;padding:12px 32px;font-family:'Lato',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:background 0.2s;}
     .close-success-btn:hover{background:var(--gold);}
-    @media(max-width:768px){.nav-links{display:none;}.story-arrow{display:none;}.footer-grid{grid-template-columns:1fr;}.option-grid.brew-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:768px){.nav-links{display:none;}.story-arrow{display:none;}.footer-grid{grid-template-columns:1fr;}.card-selectors{grid-template-columns:1fr 1fr;}}
   </style>
 </head>
 <body>
@@ -230,7 +221,7 @@ index_html = '''<!DOCTYPE html>
   <div class="footer-grid">
     <div class="footer-brand">
       <span class="nav-logo">Five<span style="color:var(--gold-light)">Roam</span> Coffee</span>
-      <p>Specialty Single Origin Arabica from South India's finest estates, roasted and ground with love &mdash; delivered fresh to your door.</p>
+      <p>Specialty Single Origin Arabica from South India\'s finest estates, roasted and ground with love &mdash; delivered fresh to your door.</p>
       <div class="social-row">
         <a href="https://www.instagram.com/fiveroamcoffee/" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
         <a href="https://www.facebook.com/profile.php?id=61585702059341" target="_blank" class="social-btn"><i class="fab fa-facebook-f"></i></a>
@@ -278,39 +269,13 @@ index_html = '''<!DOCTYPE html>
       <div class="cart-total-row"><span>Subtotal</span><span id="subtotal-val"></span></div>
       <div class="cart-total-row" id="multipack-row" style="display:none"><span>Multi-pack Discount</span><span id="multipack-val" style="color:#2a8c4a"></span></div>
       <div class="cart-total-row" id="promo-row-cart" style="display:none"><span id="promo-label-cart">Promo</span><span id="promo-val-cart" style="color:#2a8c4a"></span></div>
-      <div class="cart-total-row"><span>Delivery</span><span>₹70</span></div>
-      <div class="cart-total-row"><span>GST (5%)</span><span id="gst-val"></span></div>
+      <div class="cart-total-row"><span>Delivery</span><span>&#8377;70</span></div>
       <div class="cart-total-row grand"><span>Total Payable</span><span id="grand-total-val"></span></div>
     </div>
     <button class="checkout-btn" id="checkout-btn" onclick="openCheckoutModal()" style="display:none">
       <i class="fas fa-lock"></i> Checkout &amp; Place Order
     </button>
     <div class="checkout-note" id="checkout-note" style="display:none">Secure checkout &middot; Payment gateway coming soon</div>
-  </div>
-</div>
-
-<!-- BREW + ROAST MODAL -->
-<div class="modal-overlay" id="brew-modal">
-  <div class="modal-box">
-    <h2>Customise Your Coffee</h2>
-    <p class="modal-sub">You're adding <strong id="modal-coffee-name"></strong>. Choose your brew method and roast level.</p>
-    <div class="step-label"><i class="fas fa-mortar-pestle" style="margin-right:6px"></i>Step 1 &mdash; Brew Method</div>
-    <div class="option-grid brew-grid" id="brew-options">
-      <div class="opt-btn" data-group="brew" data-val="Espresso"><i class="fas fa-coffee"></i><span>Espresso</span></div>
-      <div class="opt-btn" data-group="brew" data-val="Pour Over / V60"><i class="fas fa-filter"></i><span>Pour Over / V60</span></div>
-      <div class="opt-btn" data-group="brew" data-val="AeroPress"><i class="fas fa-circle"></i><span>AeroPress</span></div>
-      <div class="opt-btn" data-group="brew" data-val="French Press"><i class="fas fa-mug-hot"></i><span>French Press</span></div>
-      <div class="opt-btn" data-group="brew" data-val="Moka Pot"><i class="fas fa-fire"></i><span>Moka Pot</span></div>
-      <div class="opt-btn" data-group="brew" data-val="Cold Brew"><i class="fas fa-tint"></i><span>Cold Brew</span></div>
-    </div>
-    <div class="step-label"><i class="fas fa-thermometer-half" style="margin-right:6px"></i>Step 2 &mdash; Roast Level</div>
-    <div class="option-grid" id="roast-options">
-      <div class="opt-btn" data-group="roast" data-val="Light"><i class="fas fa-sun"></i><span>Light</span><small>Bright &amp; Fruity</small></div>
-      <div class="opt-btn" data-group="roast" data-val="Medium"><i class="fas fa-adjust"></i><span>Medium</span><small>Balanced &amp; Smooth</small></div>
-      <div class="opt-btn" data-group="roast" data-val="Dark"><i class="fas fa-moon"></i><span>Dark</span><small>Bold &amp; Rich</small></div>
-    </div>
-    <button class="modal-confirm" id="brew-confirm-btn" onclick="confirmAddToCart()">Add to Cart</button>
-    <span class="modal-cancel" onclick="closeBrewModal()">Cancel</span>
   </div>
 </div>
 
@@ -327,7 +292,7 @@ index_html = '''<!DOCTYPE html>
     </div>
     <div class="checkout-invoice" id="checkout-invoice"></div>
     <button class="place-order-btn" onclick="placeOrder()"><i class="fas fa-lock"></i> Place Order &mdash; Payment Gateway Coming Soon</button>
-    <span class="modal-cancel" onclick="closeCheckoutModal()">Cancel</span>
+    <span style="display:block;text-align:center;margin-top:10px;font-size:0.8rem;color:var(--text-light);cursor:pointer" onclick="closeCheckoutModal()">Cancel</span>
   </div>
 </div>
 
@@ -335,7 +300,7 @@ index_html = '''<!DOCTYPE html>
 <div class="modal-overlay" id="success-modal">
   <div class="modal-box" style="text-align:center">
     <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-    <h2 style="font-family:'Playfair Display',serif;color:#2a8c4a;margin-bottom:10px">Order Placed!</h2>
+    <h2 style="font-family:\'Playfair Display\',serif;color:#2a8c4a;margin-bottom:10px">Order Placed!</h2>
     <p style="color:var(--text-light);font-size:0.9rem;line-height:1.65;margin-bottom:16px">Thank you! Your order has been received. We will roast, grind fresh and dispatch it soon.</p>
     <div class="order-id-box" id="success-order-id"></div>
     <button class="close-success-btn" onclick="closeSuccessModal()"><i class="fas fa-home"></i> Continue Shopping</button>
@@ -356,249 +321,248 @@ const DEFAULT_COFFEES = [
   {id:8,estate:"Orchardale Estate",name:"Orchardale Hazelnut",process:"Watermelon Process",acidity:"Bright / Sweet",body:"Medium+",notes:["Hazelnut","Milk Chocolate","Honey","Cocoa","Lime Zest"],price:625,img:""}
 ];
 const DELIVERY = 70;
-const GST_RATE = 0.05;
-const Rs = "₹";  // single definition — used everywhere below
+function fmt(n){ return "\u20B9" + Number(n).toLocaleString("en-IN"); }
 
-let coffees = JSON.parse(localStorage.getItem('frc_coffees')||'null')||DEFAULT_COFFEES;
+let coffees = JSON.parse(localStorage.getItem("frc_coffees") || "null") || DEFAULT_COFFEES;
 let cart = [];
-let pendingCoffeeId = null;
-let selectedBrew = null;
-let selectedRoast = null;
 let appliedPromo = null;
 
+// ── CHANGE 1: Render all 8 cards with inline Brew + Roast dropdowns ──
 function renderCoffees(){
-  const grid = document.getElementById('coffees-grid');
-  grid.innerHTML = '';
+  const grid = document.getElementById("coffees-grid");
+  grid.innerHTML = "";
   coffees.forEach(c => {
     const inCart = cart.find(i => i.id === c.id);
-    const card = document.createElement('div');
-    card.className = 'coffee-card'+(inCart?' selected':'');
-    card.id = 'card-'+c.id;
-    const noteTags = c.notes.map(n=>'<span class="taste-tag">'+n+'</span>').join('');
-    const imgContent = c.img?'<img src="'+c.img+'" alt="'+c.name+'" />':'<div class="coffee-img-placeholder">&#9749;</div>';
-    card.innerHTML = '<div class="coffee-img-wrap">'+imgContent+'<div class="process-badge">'+c.process+'</div></div>'
-      +'<div class="coffee-body">'
-      +'<div class="coffee-estate">'+c.estate+'</div>'
-      +'<div class="coffee-name">'+c.name+'</div>'
-      +'<div class="coffee-meta"><div class="coffee-meta-item"><strong>Acidity:</strong> '+c.acidity+'</div><div class="coffee-meta-item"><strong>Body:</strong> '+c.body+'</div></div>'
-      +'<div class="taste-notes">'+noteTags+'</div>'
-      +'<div class="coffee-footer">'
-      +'<div class="coffee-price">'+Rs+c.price+' <span>/ 100g</span></div>'
-      +'<button class="add-btn'+(inCart?' added':'')+'" onclick="openBrewModal('+c.id+')">'+(inCart?'<i class="fas fa-check"></i> Added':'<i class="fas fa-plus"></i> Add')+'</button>'
-      +'</div></div>';
+    const card = document.createElement("div");
+    card.className = "coffee-card" + (inCart ? " selected" : "");
+    card.id = "card-" + c.id;
+    const noteTags = c.notes.map(n => "<span class=\'taste-tag\'>" + n + "</span>").join("");
+    const imgContent = c.img
+      ? "<img src=\'" + c.img + "\' alt=\'" + c.name + "\' />"
+      : "<div class=\'coffee-img-placeholder\'>&#9749;</div>";
+
+    const brewOptions = ["Espresso","Pour Over / V60","AeroPress","French Press","Moka Pot","Cold Brew"]
+      .map(b => "<option value=\'" + b + "\'>" + b + "</option>").join("");
+    const roastOptions = ["Light","Medium","Dark"]
+      .map(r => "<option value=\'" + r + "\'>" + r + " Roast</option>").join("");
+
+    card.innerHTML =
+      "<div class=\'coffee-img-wrap\'>" + imgContent + "<div class=\'process-badge\'>" + c.process + "</div></div>"
+      + "<div class=\'coffee-body\'>"
+      + "<div class=\'coffee-estate\'>" + c.estate + "</div>"
+      + "<div class=\'coffee-name\'>" + c.name + "</div>"
+      + "<div class=\'coffee-meta\'><div class=\'coffee-meta-item\'><strong>Acidity:</strong> " + c.acidity + "</div><div class=\'coffee-meta-item\'><strong>Body:</strong> " + c.body + "</div></div>"
+      + "<div class=\'taste-notes\'>" + noteTags + "</div>"
+      + "<div class=\'card-selectors\'>"
+      + "<div><div class=\'card-select-label\'><i class=\'fas fa-mortar-pestle\'></i> Brew Method</div>"
+      + "<select class=\'card-select\' id=\'brew-" + c.id + "\'><option value=\'\'>-- Select --</option>" + brewOptions + "</select></div>"
+      + "<div><div class=\'card-select-label\'><i class=\'fas fa-thermometer-half\'></i> Roast Level</div>"
+      + "<select class=\'card-select\' id=\'roast-" + c.id + "\'><option value=\'\'>-- Select --</option>" + roastOptions + "</select></div>"
+      + "</div>"
+      + "<div class=\'coffee-footer\'>"
+      + "<div class=\'coffee-price\'>" + fmt(c.price) + " <span>/ 100g</span></div>"
+      + "<button class=\'add-btn" + (inCart ? " added" : "") + "\' onclick=\'addToCart(" + c.id + ")\'>"
+      + (inCart ? "<i class=\'fas fa-check\'></i> Added" : "<i class=\'fas fa-plus\'></i> Add") + "</button>"
+      + "</div></div>";
     grid.appendChild(card);
+
+    // If already in cart, restore saved selections
+    if(inCart){
+      setTimeout(() => {
+        const bs = document.getElementById("brew-" + c.id);
+        const rs = document.getElementById("roast-" + c.id);
+        if(bs) bs.value = inCart.brew || "";
+        if(rs) rs.value = inCart.roast ? inCart.roast.replace(" Roast","") : "";
+      }, 0);
+    }
   });
 }
 
-function openBrewModal(id){
-  const inCart = cart.find(i=>i.id===id);
-  if(inCart){removeFromCart(id);return;}
-  pendingCoffeeId = id;
-  selectedBrew = null;
-  selectedRoast = null;
-  document.querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('sel'));
-  const c = coffees.find(x=>x.id===id);
-  document.getElementById('modal-coffee-name').textContent = c.name;
-  document.getElementById('brew-modal').classList.add('open');
-}
-function closeBrewModal(){
-  document.getElementById('brew-modal').classList.remove('open');
-  pendingCoffeeId=null;selectedBrew=null;selectedRoast=null;
-}
-
-document.querySelectorAll('.opt-btn').forEach(btn=>{
-  btn.addEventListener('click', function(){
-    const grp = this.dataset.group;
-    document.querySelectorAll('.opt-btn[data-group="'+grp+'"]').forEach(b=>b.classList.remove('sel'));
-    this.classList.add('sel');
-    if(grp==='brew') selectedBrew = this.dataset.val;
-    if(grp==='roast') selectedRoast = this.dataset.val;
-  });
-});
-
-function confirmAddToCart(){
-  if(!selectedBrew){showToast('Please select a brew method!');return;}
-  if(!selectedRoast){showToast('Please select a roast level!');return;}
-  const c = coffees.find(x=>x.id===pendingCoffeeId);
-  cart.push({id:c.id,estate:c.estate,name:c.name,price:c.price,brew:selectedBrew,roast:selectedRoast,qty:1,img:c.img});
-  closeBrewModal();
+function addToCart(id){
+  const inCart = cart.find(i => i.id === id);
+  if(inCart){ removeFromCart(id); return; }
+  const brewSel = document.getElementById("brew-" + id);
+  const roastSel = document.getElementById("roast-" + id);
+  const brew = brewSel ? brewSel.value : "";
+  const roast = roastSel ? roastSel.value : "";
+  if(!brew){ showToast("Please select a Brew Method first!"); brewSel && brewSel.focus(); return; }
+  if(!roast){ showToast("Please select a Roast Level first!"); roastSel && roastSel.focus(); return; }
+  const c = coffees.find(x => x.id === id);
+  cart.push({id:c.id, estate:c.estate, name:c.name, price:c.price, brew:brew, roast:roast, qty:1, img:c.img});
   renderCoffees();
   updateCart();
-  showToast(c.name+' added to cart!');
+  showToast(c.name + " added to cart!");
 }
 
 function applyPromo(){
-  const code = document.getElementById('promo-input').value.trim().toUpperCase();
-  const msg = document.getElementById('promo-msg');
-  if(!code){msg.textContent='Please enter a code.';msg.className='promo-msg error';return;}
-  const promos = JSON.parse(localStorage.getItem('frc_promos')||'[]');
-  const found = promos.find(p=>p.code.toUpperCase()===code&&p.active);
+  const code = document.getElementById("promo-input").value.trim().toUpperCase();
+  const msg = document.getElementById("promo-msg");
+  if(!code){ msg.textContent = "Please enter a code."; msg.className = "promo-msg error"; return; }
+  const promos = JSON.parse(localStorage.getItem("frc_promos") || "[]");
+  const found = promos.find(p => p.code.toUpperCase() === code && p.active);
   if(found){
     appliedPromo = found;
-    msg.textContent = '\u2713 "'+found.code+'" applied \u2014 '+found.discount+'% off!';
-    msg.className = 'promo-msg success';
-    found.uses = (found.uses||0)+1;
-    const idx = promos.findIndex(p=>p.code===found.code);
+    msg.textContent = "\u2713 \"" + found.code + "\" applied \u2014 " + found.discount + "% off!";
+    msg.className = "promo-msg success";
+    found.uses = (found.uses || 0) + 1;
+    const idx = promos.findIndex(p => p.code === found.code);
     promos[idx] = found;
-    localStorage.setItem('frc_promos',JSON.stringify(promos));
+    localStorage.setItem("frc_promos", JSON.stringify(promos));
     updateCart();
   } else {
     appliedPromo = null;
-    msg.textContent = 'Invalid or expired promo code.';
-    msg.className = 'promo-msg error';
+    msg.textContent = "Invalid or expired promo code.";
+    msg.className = "promo-msg error";
     updateCart();
   }
 }
 
 function toggleCart(){
-  document.getElementById('cart-overlay').classList.toggle('open');
-  document.getElementById('cart-drawer').classList.toggle('open');
+  document.getElementById("cart-overlay").classList.toggle("open");
+  document.getElementById("cart-drawer").classList.toggle("open");
 }
 function removeFromCart(id){
-  cart = cart.filter(i=>i.id!==id);
+  cart = cart.filter(i => i.id !== id);
   appliedPromo = null;
-  document.getElementById('promo-input').value = '';
-  document.getElementById('promo-msg').textContent = '';
-  renderCoffees();updateCart();
+  document.getElementById("promo-input").value = "";
+  document.getElementById("promo-msg").textContent = "";
+  renderCoffees(); updateCart();
 }
-function changeQty(id,delta){
-  const item = cart.find(i=>i.id===id);
-  if(!item)return;
+function changeQty(id, delta){
+  const item = cart.find(i => i.id === id);
+  if(!item) return;
   item.qty += delta;
-  if(item.qty<=0){removeFromCart(id);return;}
+  if(item.qty <= 0){ removeFromCart(id); return; }
   updateCart();
 }
 
 function calcTotals(){
-  const disc = JSON.parse(localStorage.getItem('frc_discount')||'{"threshold":2,"pct":10}');
-  const totalPkts = cart.reduce((s,i)=>s+i.qty,0);
-  const subtotal = cart.reduce((s,i)=>s+i.price*i.qty,0);
-  const multiPack = totalPkts>=disc.threshold;
-  const multiDiscount = multiPack?Math.round(subtotal*disc.pct/100):0;
-  const afterMulti = subtotal-multiDiscount;
-  const promoDiscount = appliedPromo?Math.round(afterMulti*appliedPromo.discount/100):0;
-  const afterPromo = afterMulti-promoDiscount;
-  const gst = Math.round(afterPromo*GST_RATE);
-  const grand = afterPromo+DELIVERY+gst;
-  return {subtotal,multiDiscount,promoDiscount,afterPromo,gst,grand,totalPkts,disc,multiPack};
+  const disc = JSON.parse(localStorage.getItem("frc_discount") || "{\"threshold\":2,\"pct\":10}");
+  const totalPkts = cart.reduce((s,i) => s + i.qty, 0);
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const multiPack = totalPkts >= disc.threshold;
+  const multiDiscount = multiPack ? Math.round(subtotal * disc.pct / 100) : 0;
+  const afterMulti = subtotal - multiDiscount;
+  const promoDiscount = appliedPromo ? Math.round(afterMulti * appliedPromo.discount / 100) : 0;
+  const afterPromo = afterMulti - promoDiscount;
+  const grand = afterPromo + DELIVERY;
+  return {subtotal, multiDiscount, promoDiscount, afterPromo, grand, totalPkts, disc, multiPack};
 }
 
-function fmt(n){ return Rs+n.toLocaleString('en-IN'); }
-
 function updateCart(){
-  const list = document.getElementById('cart-items-list');
+  const list = document.getElementById("cart-items-list");
   const t = calcTotals();
-  document.getElementById('cart-count').textContent = t.totalPkts;
+  document.getElementById("cart-count").textContent = t.totalPkts;
 
-  if(cart.length===0){
-    list.innerHTML = '<div class="cart-empty"><i class="fas fa-coffee" style="font-size:2.5rem;color:var(--beige-dark);margin-bottom:14px;display:block"></i>Your cart is empty.<br>Pick a coffee above!</div>';
-    document.getElementById('cart-totals').style.display = 'none';
-    document.getElementById('checkout-btn').style.display = 'none';
-    document.getElementById('checkout-note').style.display = 'none';
-    document.getElementById('discount-notice').style.display = 'none';
-    document.getElementById('promo-section').style.display = 'none';
+  if(cart.length === 0){
+    list.innerHTML = "<div class=\'cart-empty\'><i class=\'fas fa-coffee\' style=\'font-size:2.5rem;color:var(--beige-dark);margin-bottom:14px;display:block\'></i>Your cart is empty.<br>Pick a coffee above!</div>";
+    document.getElementById("cart-totals").style.display = "none";
+    document.getElementById("checkout-btn").style.display = "none";
+    document.getElementById("checkout-note").style.display = "none";
+    document.getElementById("discount-notice").style.display = "none";
+    document.getElementById("promo-section").style.display = "none";
     return;
   }
 
-  list.innerHTML = '';
-  cart.forEach(item=>{
-    const el = document.createElement('div');
-    el.className = 'cart-item';
-    el.innerHTML = '<div class="cart-item-img">'+(item.img?'<img src="'+item.img+'" alt="'+item.name+'">':"&#9749;")+'</div>'
-      +'<div class="cart-item-info">'
-      +'<div class="cart-item-name">'+item.name+'</div>'
-      +'<div class="cart-item-sub">'+item.estate+' &middot; '+item.brew+' &middot; '+item.roast+' Roast</div>'
-      +'<div class="qty-control"><button class="qty-btn" onclick="changeQty('+item.id+',-1)">&minus;</button><span class="qty-num">'+item.qty+'</span><button class="qty-btn" onclick="changeQty('+item.id+',1)">+</button></div>'
-      +'<button class="remove-btn" onclick="removeFromCart('+item.id+')"><i class="fas fa-trash-alt"></i> Remove</button>'
-      +'</div>'
-      +'<div class="cart-item-price">'+fmt(item.price*item.qty)+'</div>';
+  list.innerHTML = "";
+  cart.forEach(item => {
+    const el = document.createElement("div");
+    el.className = "cart-item";
+    el.innerHTML = "<div class=\'cart-item-img\'>" + (item.img ? "<img src=\'" + item.img + "\' alt=\'" + item.name + "\'>" : "&#9749;") + "</div>"
+      + "<div class=\'cart-item-info\'>"
+      + "<div class=\'cart-item-name\'>" + item.name + "</div>"
+      + "<div class=\'cart-item-sub\'>" + item.estate + " &middot; " + item.brew + " &middot; " + item.roast + " Roast</div>"
+      + "<div class=\'qty-control\'><button class=\'qty-btn\' onclick=\'changeQty(" + item.id + ",-1)\'>&minus;</button><span class=\'qty-num\'>" + item.qty + "</span><button class=\'qty-btn\' onclick=\'changeQty(" + item.id + ",1)\'>+</button></div>"
+      + "<button class=\'remove-btn\' onclick=\'removeFromCart(" + item.id + ")\'><i class=\'fas fa-trash-alt\'></i> Remove</button>"
+      + "</div>"
+      + "<div class=\'cart-item-price\'>" + fmt(item.price * item.qty) + "</div>";
     list.appendChild(el);
   });
 
-  let noticeMsg = '';
-  if(t.multiPack) noticeMsg += t.disc.pct+'% multi-pack discount applied!';
-  if(appliedPromo) noticeMsg += (noticeMsg?' + ':'') + '"'+appliedPromo.code+'" promo applied!';
-  document.getElementById('discount-notice').style.display = noticeMsg?'block':'none';
-  document.getElementById('discount-notice-text').textContent = noticeMsg;
+  let noticeMsg = "";
+  if(t.multiPack) noticeMsg += t.disc.pct + "% multi-pack discount applied!";
+  if(appliedPromo) noticeMsg += (noticeMsg ? " + " : "") + "\"" + appliedPromo.code + "\" promo applied!";
+  document.getElementById("discount-notice").style.display = noticeMsg ? "block" : "none";
+  document.getElementById("discount-notice-text").textContent = noticeMsg;
 
-  document.getElementById('cart-totals').style.display = 'block';
-  document.getElementById('subtotal-val').textContent = fmt(t.subtotal);
+  document.getElementById("cart-totals").style.display = "block";
+  document.getElementById("subtotal-val").textContent = fmt(t.subtotal);
 
-  const mpRow = document.getElementById('multipack-row');
-  mpRow.style.display = t.multiPack?'flex':'none';
-  document.getElementById('multipack-val').textContent = '-'+fmt(t.multiDiscount);
+  const mpRow = document.getElementById("multipack-row");
+  mpRow.style.display = t.multiPack ? "flex" : "none";
+  document.getElementById("multipack-val").textContent = "-" + fmt(t.multiDiscount);
 
-  const pRow = document.getElementById('promo-row-cart');
-  pRow.style.display = appliedPromo?'flex':'none';
+  const pRow = document.getElementById("promo-row-cart");
+  pRow.style.display = appliedPromo ? "flex" : "none";
   if(appliedPromo){
-    document.getElementById('promo-label-cart').textContent = 'Promo "'+appliedPromo.code+'"';
-    document.getElementById('promo-val-cart').textContent = '-'+fmt(t.promoDiscount);
+    document.getElementById("promo-label-cart").textContent = "Promo \"" + appliedPromo.code + "\"";
+    document.getElementById("promo-val-cart").textContent = "-" + fmt(t.promoDiscount);
   }
 
-  document.getElementById('gst-val').textContent = fmt(t.gst);
-  document.getElementById('grand-total-val').textContent = fmt(t.grand);
-  document.getElementById('checkout-btn').style.display = 'flex';
-  document.getElementById('checkout-note').style.display = 'block';
-  document.getElementById('promo-section').style.display = 'block';
+  // ── CHANGE 2: No GST row in cart totals ──
+  document.getElementById("grand-total-val").textContent = fmt(t.grand);
+  document.getElementById("checkout-btn").style.display = "flex";
+  document.getElementById("checkout-note").style.display = "block";
+  document.getElementById("promo-section").style.display = "block";
 }
 
 function openCheckoutModal(){
-  if(cart.length===0)return;
+  if(cart.length === 0) return;
   const t = calcTotals();
-  const inv = document.getElementById('checkout-invoice');
-  let itemsHtml = '<div class="inv-items">';
-  cart.forEach(item=>{
-    itemsHtml += '<div class="inv-item"><span>'+item.name+' x'+item.qty+' ('+item.brew+', '+item.roast+' Roast)</span><span>'+fmt(item.price*item.qty)+'</span></div>';
+  const inv = document.getElementById("checkout-invoice");
+  let itemsHtml = "<div class=\'inv-items\'>";
+  cart.forEach(item => {
+    itemsHtml += "<div class=\'inv-item\'><span>" + item.name + " x" + item.qty + " (" + item.brew + ", " + item.roast + " Roast)</span><span>" + fmt(item.price * item.qty) + "</span></div>";
   });
-  itemsHtml += '</div>';
-  let rows = '<div class="inv-row"><span>Subtotal</span><span>'+fmt(t.subtotal)+'</span></div>';
-  if(t.multiPack) rows += '<div class="inv-row"><span>Multi-pack Discount</span><span style="color:#2a8c4a">-'+fmt(t.multiDiscount)+'</span></div>';
-  if(appliedPromo) rows += '<div class="inv-row"><span>Promo "'+appliedPromo.code+'"</span><span style="color:#2a8c4a">-'+fmt(t.promoDiscount)+'</span></div>';
-  rows += '<div class="inv-row"><span>Delivery Charges</span><span>'+fmt(DELIVERY)+'</span></div>';
-  rows += '<div class="inv-row"><span>GST @ 5%</span><span>'+fmt(t.gst)+'</span></div>';
-  rows += '<div class="inv-row total"><span>Total Payable</span><span>'+fmt(t.grand)+'</span></div>';
-  inv.innerHTML = itemsHtml+rows;
-  document.getElementById('checkout-modal').classList.add('open');
+  itemsHtml += "</div>";
+  let rows = "<div class=\'inv-row\'><span>Subtotal</span><span>" + fmt(t.subtotal) + "</span></div>";
+  if(t.multiPack) rows += "<div class=\'inv-row\'><span>Multi-pack Discount</span><span style=\'color:#2a8c4a\'>-" + fmt(t.multiDiscount) + "</span></div>";
+  if(appliedPromo) rows += "<div class=\'inv-row\'><span>Promo \"" + appliedPromo.code + "\"</span><span style=\'color:#2a8c4a\'>-" + fmt(t.promoDiscount) + "</span></div>";
+  // ── CHANGE 2: No GST row in checkout invoice ──
+  rows += "<div class=\'inv-row\'><span>Delivery Charges</span><span>" + fmt(DELIVERY) + "</span></div>";
+  rows += "<div class=\'inv-row total\'><span>Total Payable</span><span>" + fmt(t.grand) + "</span></div>";
+  inv.innerHTML = itemsHtml + rows;
+  document.getElementById("checkout-modal").classList.add("open");
 }
-function closeCheckoutModal(){document.getElementById('checkout-modal').classList.remove('open');}
+function closeCheckoutModal(){ document.getElementById("checkout-modal").classList.remove("open"); }
 
 function placeOrder(){
-  const name = document.getElementById('co-name').value.trim();
-  const address = document.getElementById('co-address').value.trim();
-  const phone = document.getElementById('co-phone').value.trim();
-  const email = document.getElementById('co-email').value.trim();
-  if(!name){showToast('Please enter your full name.');return;}
-  if(!address){showToast('Please enter your delivery address.');return;}
-  if(!phone){showToast('Please enter your phone number.');return;}
+  const name = document.getElementById("co-name").value.trim();
+  const address = document.getElementById("co-address").value.trim();
+  const phone = document.getElementById("co-phone").value.trim();
+  const email = document.getElementById("co-email").value.trim();
+  if(!name){ showToast("Please enter your full name."); return; }
+  if(!address){ showToast("Please enter your delivery address."); return; }
+  if(!phone){ showToast("Please enter your phone number."); return; }
   const t = calcTotals();
-  const orderId = 'FRC-'+Date.now();
+  const orderId = "FRC-" + Date.now();
   const order = {
-    orderId, timestamp:new Date().toISOString(),
-    name,address,phone,email,
-    items:cart.map(i=>({name:i.name,estate:i.estate,brew:i.brew,roast:i.roast,qty:i.qty,price:i.price})),
-    subtotal:t.subtotal, multiDiscount:t.multiDiscount, promoDiscount:t.promoDiscount,
-    promoCode:appliedPromo?appliedPromo.code:'',
-    delivery:DELIVERY, gst:t.gst, grand:t.grand
+    orderId, timestamp: new Date().toISOString(),
+    name, address, phone, email,
+    items: cart.map(i => ({name:i.name, estate:i.estate, brew:i.brew, roast:i.roast, qty:i.qty, price:i.price})),
+    subtotal: t.subtotal, multiDiscount: t.multiDiscount, promoDiscount: t.promoDiscount,
+    promoCode: appliedPromo ? appliedPromo.code : "",
+    delivery: DELIVERY, grand: t.grand
   };
-  const orders = JSON.parse(localStorage.getItem('frc_orders')||'[]');
+  const orders = JSON.parse(localStorage.getItem("frc_orders") || "[]");
   orders.unshift(order);
-  localStorage.setItem('frc_orders',JSON.stringify(orders));
+  localStorage.setItem("frc_orders", JSON.stringify(orders));
   closeCheckoutModal();
-  document.getElementById('success-order-id').textContent = 'Order ID: '+orderId;
-  document.getElementById('success-modal').classList.add('open');
-  cart = [];appliedPromo = null;
-  document.getElementById('promo-input').value = '';
-  document.getElementById('promo-msg').textContent = '';
-  renderCoffees();updateCart();
-  document.getElementById('cart-overlay').classList.remove('open');
-  document.getElementById('cart-drawer').classList.remove('open');
+  document.getElementById("success-order-id").textContent = "Order ID: " + orderId;
+  document.getElementById("success-modal").classList.add("open");
+  cart = []; appliedPromo = null;
+  document.getElementById("promo-input").value = "";
+  document.getElementById("promo-msg").textContent = "";
+  renderCoffees(); updateCart();
+  document.getElementById("cart-overlay").classList.remove("open");
+  document.getElementById("cart-drawer").classList.remove("open");
 }
-function closeSuccessModal(){document.getElementById('success-modal').classList.remove('open');}
+function closeSuccessModal(){ document.getElementById("success-modal").classList.remove("open"); }
 
 function showToast(msg){
-  const t = document.getElementById('toast');
-  t.innerHTML = msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3200);
+  const t = document.getElementById("toast");
+  t.innerHTML = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3200);
 }
 
 renderCoffees();
@@ -608,6 +572,18 @@ renderCoffees();
 
 with open('/tmp/index.html','w',encoding='utf-8') as f:
     f.write(index_html)
-# Verify no leftover entities
+
+# Verify
+import re
 bad = index_html.count('&#8377;')
-print(f"index.html written. Bad entity count: {bad}")
+gst_in_cart = 'gst-val' in index_html
+gst_in_invoice = 'GST' in index_html
+brew_modal = 'brew-modal' in index_html
+inline_brew = 'card-select' in index_html
+coffee_count = index_html.count('"id":') 
+print(f"Bad ₹ entity: {bad}")
+print(f"GST row in cart: {gst_in_cart}")
+print(f"Any GST text in file: {gst_in_invoice}")
+print(f"Old brew modal present: {brew_modal}")
+print(f"Inline card selectors present: {inline_brew}")
+print(f"File size: {len(index_html)} bytes")
