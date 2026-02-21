@@ -1,137 +1,149 @@
 
-admin_html = '''<!DOCTYPE html>
+admin_html = r'''<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Admin Panel – Five Roam Coffee</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    :root {
-      --beige:#f5f0e8; --beige-dark:#e8dfc8; --beige-mid:#ede4d0;
-      --brown:#3e2a1a; --brown-light:#6b4226;
-      --gold:#b8860b; --gold-light:#d4a843; --accent:#8b5e3c;
-      --text:#2c1a0e; --text-light:#6b5040; --white:#fffdf8;
-      --shadow:rgba(62,42,26,0.12); --success:#2a8c4a; --danger:#cc3333;
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Lato',sans-serif; background:#1a0f07; color:var(--text); min-height:100vh; }
+    :root{--beige:#f5f0e8;--beige-dark:#e8dfc8;--beige-mid:#ede4d0;--brown:#3e2a1a;--brown-light:#6b4226;--gold:#b8860b;--gold-light:#d4a843;--text:#2c1a0e;--text-light:#6b5040;--white:#fffdf8;--shadow:rgba(62,42,26,0.12);--success:#2a8c4a;--danger:#cc3333;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Lato',sans-serif;background:#1a0f07;color:var(--text);min-height:100vh;}
 
     /* LOGIN */
-    #login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1a0f07,#3e2a1a); }
-    .login-box { background:var(--white); border-radius:20px; padding:44px 40px; max-width:400px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.4); }
-    .login-logo { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--brown); text-align:center; margin-bottom:6px; }
-    .login-logo span { color:var(--gold); }
-    .login-sub { text-align:center; color:var(--text-light); font-size:0.85rem; margin-bottom:32px; }
-    .form-group { margin-bottom:18px; }
-    .form-group label { display:block; font-size:0.82rem; font-weight:600; color:var(--brown-light); margin-bottom:7px; text-transform:uppercase; letter-spacing:0.5px; }
-    .form-control { width:100%; padding:11px 14px; border:2px solid var(--beige-dark); border-radius:10px; font-family:'Lato',sans-serif; font-size:0.95rem; color:var(--text); background:var(--beige); outline:none; transition:border-color 0.2s; }
-    .form-control:focus { border-color:var(--gold); }
-    .login-btn { width:100%; background:var(--brown); color:var(--white); border:none; border-radius:24px; padding:13px; font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; cursor:pointer; transition:background 0.2s; margin-top:6px; }
-    .login-btn:hover { background:var(--gold); }
-    .login-hint { text-align:center; font-size:0.78rem; color:var(--text-light); margin-top:14px; }
-    .login-error { color:var(--danger); font-size:0.83rem; text-align:center; margin-top:10px; display:none; }
+    #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a0f07,#3e2a1a);}
+    .login-box{background:var(--white);border-radius:20px;padding:44px 40px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+    .login-logo{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--brown);text-align:center;margin-bottom:6px;}
+    .login-logo span{color:var(--gold);}
+    .login-sub{text-align:center;color:var(--text-light);font-size:0.85rem;margin-bottom:32px;}
+    .form-group{margin-bottom:16px;}
+    .form-group label{display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
+    .form-control{width:100%;padding:10px 14px;border:2px solid var(--beige-dark);border-radius:10px;font-family:'Lato',sans-serif;font-size:0.93rem;color:var(--text);background:var(--beige);outline:none;transition:border-color 0.2s;}
+    .form-control:focus{border-color:var(--gold);}
+    textarea.form-control{height:70px;resize:vertical;}
+    select.form-control{cursor:pointer;}
+    .login-btn{width:100%;background:var(--brown);color:var(--white);border:none;border-radius:24px;padding:13px;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background 0.2s;margin-top:6px;}
+    .login-btn:hover{background:var(--gold);}
+    .login-hint{text-align:center;font-size:0.78rem;color:var(--text-light);margin-top:14px;}
+    .login-error{color:var(--danger);font-size:0.82rem;text-align:center;margin-top:10px;display:none;}
 
-    /* ADMIN LAYOUT */
-    #admin-layout { display:none; min-height:100vh; background:#f7f2ea; }
-    .admin-topbar { background:var(--brown); color:var(--white); height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 32px; position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,0.2); }
-    .admin-topbar-brand { font-family:'Playfair Display',serif; font-size:1.2rem; }
-    .admin-topbar-brand span { color:var(--gold-light); }
-    .topbar-right { display:flex; align-items:center; gap:20px; }
-    .topbar-link { font-size:0.85rem; color:rgba(255,255,255,0.75); cursor:pointer; transition:color 0.2s; }
-    .topbar-link:hover { color:var(--gold-light); }
-    .logout-btn { background:rgba(255,255,255,0.12); color:var(--white); border:1px solid rgba(255,255,255,0.25); border-radius:20px; padding:6px 18px; font-size:0.83rem; cursor:pointer; transition:all 0.2s; }
-    .logout-btn:hover { background:var(--danger); border-color:var(--danger); }
-    .admin-content { padding:36px 32px; max-width:1200px; margin:0 auto; }
-    .admin-greeting { font-family:'Playfair Display',serif; font-size:1.7rem; color:var(--brown); margin-bottom:6px; }
-    .admin-sub { color:var(--text-light); font-size:0.9rem; margin-bottom:36px; }
+    /* LAYOUT */
+    #admin-layout{display:none;min-height:100vh;background:#f7f2ea;}
+    .admin-topbar{background:var(--brown);color:var(--white);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.2);}
+    .admin-topbar-brand{font-family:'Playfair Display',serif;font-size:1.2rem;}
+    .admin-topbar-brand span{color:var(--gold-light);}
+    .topbar-right{display:flex;align-items:center;gap:18px;}
+    .topbar-link{font-size:0.85rem;color:rgba(255,255,255,0.75);cursor:pointer;text-decoration:none;transition:color 0.2s;}
+    .topbar-link:hover{color:var(--gold-light);}
+    .logout-btn{background:rgba(255,255,255,0.12);color:var(--white);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 18px;font-size:0.82rem;cursor:pointer;transition:all 0.2s;}
+    .logout-btn:hover{background:var(--danger);border-color:var(--danger);}
+    .admin-content{padding:32px 28px;max-width:1200px;margin:0 auto;}
+    .admin-greeting{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--brown);margin-bottom:4px;}
+    .admin-sub{color:var(--text-light);font-size:0.88rem;margin-bottom:30px;}
 
     /* TABS */
-    .admin-tabs { display:flex; gap:6px; margin-bottom:30px; flex-wrap:wrap; }
-    .tab-btn { background:var(--white); border:2px solid var(--beige-dark); border-radius:22px; padding:9px 22px; font-family:'Lato',sans-serif; font-size:0.87rem; font-weight:700; cursor:pointer; color:var(--brown-light); transition:all 0.2s; display:flex; align-items:center; gap:8px; }
-    .tab-btn:hover { border-color:var(--gold-light); color:var(--brown); }
-    .tab-btn.active { background:var(--brown); color:var(--white); border-color:var(--brown); }
-    .tab-panel { display:none; }
-    .tab-panel.active { display:block; }
+    .admin-tabs{display:flex;gap:6px;margin-bottom:26px;flex-wrap:wrap;}
+    .tab-btn{background:var(--white);border:2px solid var(--beige-dark);border-radius:22px;padding:8px 20px;font-family:'Lato',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;color:var(--brown-light);transition:all 0.2s;display:flex;align-items:center;gap:7px;}
+    .tab-btn:hover{border-color:var(--gold-light);color:var(--brown);}
+    .tab-btn.active{background:var(--brown);color:var(--white);border-color:var(--brown);}
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;}
 
     /* STATS */
-    .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-bottom:40px; }
-    .stat-card { background:var(--white); border-radius:14px; padding:22px 24px; box-shadow:0 3px 14px var(--shadow); }
-    .stat-label { font-size:0.78rem; color:var(--text-light); font-weight:600; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; }
-    .stat-value { font-family:'Playfair Display',serif; font-size:2rem; color:var(--brown); }
-    .stat-icon { float:right; font-size:1.4rem; color:var(--gold-light); margin-top:-4px; }
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:32px;}
+    .stat-card{background:var(--white);border-radius:14px;padding:20px 22px;box-shadow:0 3px 14px var(--shadow);}
+    .stat-label{font-size:0.76rem;color:var(--text-light);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+    .stat-value{font-family:'Playfair Display',serif;font-size:1.9rem;color:var(--brown);}
+    .stat-icon{float:right;font-size:1.3rem;color:var(--gold-light);margin-top:-2px;}
 
-    /* SECTION CARD */
-    .admin-section { background:var(--white); border-radius:16px; padding:28px 28px; margin-bottom:30px; box-shadow:0 3px 14px var(--shadow); }
-    .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
-    .section-header h2 { font-family:'Playfair Display',serif; font-size:1.25rem; color:var(--brown); }
-    .btn { border:none; border-radius:22px; padding:9px 20px; font-family:'Lato',sans-serif; font-weight:700; font-size:0.85rem; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:7px; }
-    .btn-primary { background:var(--brown); color:var(--white); }
-    .btn-primary:hover { background:var(--gold); }
-    .btn-success { background:var(--success); color:var(--white); }
-    .btn-success:hover { background:#1e6b38; }
-    .btn-danger { background:var(--danger); color:var(--white); }
-    .btn-danger:hover { background:#aa2222; }
-    .btn-warning { background:var(--gold); color:var(--white); }
-    .btn-warning:hover { background:var(--gold-light); }
-    .btn-sm { padding:6px 14px; font-size:0.8rem; border-radius:16px; }
+    /* SECTION */
+    .admin-section{background:var(--white);border-radius:16px;padding:26px;margin-bottom:26px;box-shadow:0 3px 14px var(--shadow);}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+    .section-header h2{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--brown);}
+    .btn{border:none;border-radius:20px;padding:8px 18px;font-family:'Lato',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px;}
+    .btn-primary{background:var(--brown);color:var(--white);}
+    .btn-primary:hover{background:var(--gold);}
+    .btn-success{background:var(--success);color:var(--white);}
+    .btn-success:hover{background:#1e6b38;}
+    .btn-danger{background:var(--danger);color:var(--white);}
+    .btn-danger:hover{background:#aa2222;}
+    .btn-export{background:var(--gold);color:var(--white);}
+    .btn-export:hover{background:var(--gold-light);}
+    .btn-sm{padding:5px 12px;font-size:0.78rem;border-radius:14px;}
 
     /* TABLE */
-    .admin-table { width:100%; border-collapse:collapse; font-size:0.88rem; }
-    .admin-table th { text-align:left; padding:10px 14px; background:var(--beige-mid); color:var(--brown-light); font-size:0.78rem; text-transform:uppercase; letter-spacing:0.5px; }
-    .admin-table td { padding:12px 14px; border-bottom:1px solid var(--beige-mid); vertical-align:middle; color:var(--text); }
-    .admin-table tr:last-child td { border-bottom:none; }
-    .admin-table tr:hover td { background:#fdfaf4; }
-    .coffee-thumb { width:48px; height:48px; border-radius:8px; object-fit:cover; background:linear-gradient(135deg,#d4a843,#8b5e3c); display:flex; align-items:center; justify-content:center; font-size:1.3rem; overflow:hidden; }
-    .coffee-thumb img { width:100%; height:100%; object-fit:cover; }
-    .notes-pill { background:var(--beige-mid); color:var(--brown-light); padding:2px 8px; border-radius:10px; font-size:0.75rem; margin-right:4px; display:inline-block; margin-bottom:2px; }
-    .status-pill { padding:3px 10px; border-radius:12px; font-size:0.75rem; font-weight:700; }
-    .status-active { background:#d4edda; color:#1a6b38; }
-    .status-inactive { background:#f8d7da; color:#8b1a1a; }
+    .admin-table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+    .admin-table th{text-align:left;padding:9px 12px;background:var(--beige-mid);color:var(--brown-light);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.5px;}
+    .admin-table td{padding:11px 12px;border-bottom:1px solid var(--beige-mid);vertical-align:middle;color:var(--text);}
+    .admin-table tr:last-child td{border-bottom:none;}
+    .admin-table tr:hover td{background:#fdfaf4;}
+    .coffee-thumb{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#d4a843,#8b5e3c);display:flex;align-items:center;justify-content:center;font-size:1.2rem;overflow:hidden;}
+    .coffee-thumb img{width:100%;height:100%;object-fit:cover;}
+    .notes-pill{background:var(--beige-mid);color:var(--brown-light);padding:2px 8px;border-radius:10px;font-size:0.73rem;margin-right:3px;display:inline-block;margin-bottom:2px;}
+    .status-pill{padding:3px 10px;border-radius:12px;font-size:0.73rem;font-weight:700;}
+    .status-active{background:#d4edda;color:#1a6b38;}
+    .status-inactive{background:#f8d7da;color:#8b1a1a;}
+
+    /* ORDER STATUS */
+    .status-new{background:#d4edda;color:#1a6b38;}
+    .status-processing{background:#fff3cd;color:#856404;}
+    .status-dispatched{background:#cce5ff;color:#004085;}
+    .status-delivered{background:#e2e3e5;color:#383d41;}
 
     /* MODAL */
-    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:2000; display:none; align-items:center; justify-content:center; padding:20px; }
-    .modal-overlay.open { display:flex; }
-    .modal-box { background:var(--white); border-radius:18px; max-width:600px; width:100%; padding:34px 32px; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
-    .modal-box h2 { font-family:'Playfair Display',serif; color:var(--brown); margin-bottom:24px; font-size:1.3rem; }
-    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
-    .form-row-full { margin-bottom:16px; }
-    .form-group { margin-bottom:0; }
-    textarea.form-control { height:80px; resize:vertical; }
-    .img-preview { width:80px; height:80px; border-radius:10px; background:linear-gradient(135deg,#d4a843,#8b5e3c); display:flex; align-items:center; justify-content:center; font-size:2rem; overflow:hidden; margin-top:8px; }
-    .img-preview img { width:100%; height:100%; object-fit:cover; }
-    .modal-actions { display:flex; gap:12px; justify-content:flex-end; margin-top:24px; }
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px;}
+    .modal-overlay.open{display:flex;}
+    .modal-box{background:var(--white);border-radius:18px;max-width:580px;width:100%;padding:30px 28px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
+    .modal-box h2{font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:20px;font-size:1.2rem;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+    .form-row-full{margin-bottom:14px;}
+    .form-group{margin-bottom:0;}
+    .img-preview{width:72px;height:72px;border-radius:10px;background:linear-gradient(135deg,#d4a843,#8b5e3c);display:flex;align-items:center;justify-content:center;font-size:1.8rem;overflow:hidden;margin-top:8px;}
+    .img-preview img{width:100%;height:100%;object-fit:cover;}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
 
-    /* PROMO SPECIFIC */
-    .promo-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
-    .promo-stat { background:var(--beige); border-radius:12px; padding:16px 20px; text-align:center; }
-    .promo-stat .val { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--brown); }
-    .promo-stat .lbl { font-size:0.78rem; color:var(--text-light); margin-top:4px; }
-    .copy-btn { background:var(--beige-dark); border:none; border-radius:8px; padding:4px 10px; font-size:0.75rem; cursor:pointer; color:var(--brown-light); font-weight:600; transition:background 0.2s; margin-left:6px; }
-    .copy-btn:hover { background:var(--gold-light); color:var(--white); }
+    /* PROMO */
+    .promo-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+    .promo-stat{background:var(--beige);border-radius:12px;padding:14px 18px;text-align:center;}
+    .promo-stat .val{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--brown);}
+    .promo-stat .lbl{font-size:0.75rem;color:var(--text-light);margin-top:3px;}
+    .copy-btn{background:var(--beige-dark);border:none;border-radius:8px;padding:3px 9px;font-size:0.72rem;cursor:pointer;color:var(--brown-light);font-weight:600;transition:background 0.2s;margin-left:5px;}
+    .copy-btn:hover{background:var(--gold-light);color:var(--white);}
 
-    /* PAYMENT GATEWAY */
-    .pg-card { border:2px solid var(--beige-dark); border-radius:14px; padding:22px; margin-bottom:16px; cursor:pointer; transition:all 0.2s; position:relative; }
-    .pg-card.active { border-color:var(--gold); background:#fff9ef; }
-    .pg-card h3 { font-family:'Playfair Display',serif; color:var(--brown); font-size:1rem; margin-bottom:6px; }
-    .pg-card p { font-size:0.83rem; color:var(--text-light); line-height:1.55; }
-    .pg-badge { position:absolute; top:12px; right:12px; color:var(--white); font-size:0.7rem; font-weight:700; padding:3px 10px; border-radius:12px; text-transform:uppercase; }
-    .pg-coming { background:var(--brown-light); }
-    .pg-live { background:var(--success); }
-    .key-field { background:var(--beige); border:2px solid var(--beige-dark); border-radius:10px; padding:10px 14px; font-family:monospace; font-size:0.85rem; color:var(--text); width:100%; margin-top:8px; outline:none; }
-    .key-field:focus { border-color:var(--gold); }
+    /* PG */
+    .pg-card{border:2px solid var(--beige-dark);border-radius:14px;padding:20px;margin-bottom:14px;cursor:pointer;transition:all 0.2s;position:relative;}
+    .pg-card.active{border-color:var(--gold);background:#fff9ef;}
+    .pg-card h3{font-family:'Playfair Display',serif;color:var(--brown);font-size:0.97rem;margin-bottom:5px;}
+    .pg-card p{font-size:0.81rem;color:var(--text-light);line-height:1.5;}
+    .pg-badge{position:absolute;top:10px;right:10px;color:var(--white);font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:12px;text-transform:uppercase;}
+    .pg-live{background:var(--success);}
+    .pg-coming{background:var(--brown-light);}
+    .key-field{background:var(--beige);border:2px solid var(--beige-dark);border-radius:10px;padding:9px 13px;font-family:monospace;font-size:0.83rem;color:var(--text);width:100%;margin-top:7px;outline:none;}
+    .key-field:focus{border-color:var(--gold);}
+
+    /* ORDER DETAIL */
+    .order-detail-section{background:var(--beige);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
+    .order-detail-title{font-size:0.75rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+    .order-detail-row{display:flex;justify-content:space-between;font-size:0.83rem;margin-bottom:4px;color:var(--text);}
+    .order-detail-row span:first-child{color:var(--text-light);}
+
+    /* SEARCH */
+    .search-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+    .search-input{flex:1;min-width:200px;padding:9px 14px;border:2px solid var(--beige-dark);border-radius:22px;font-family:'Lato',sans-serif;font-size:0.85rem;outline:none;background:var(--beige);}
+    .search-input:focus{border-color:var(--gold);}
 
     /* TOAST */
-    .toast-admin { position:fixed; bottom:28px; right:28px; background:var(--brown); color:var(--white); padding:12px 24px; border-radius:24px; font-size:0.88rem; font-weight:600; z-index:3000; transform:translateY(80px); transition:transform 0.3s; pointer-events:none; }
-    .toast-admin.show { transform:translateY(0); }
-    .toast-admin.success { background:var(--success); }
-    .toast-admin.danger { background:var(--danger); }
+    .toast-admin{position:fixed;bottom:26px;right:26px;background:var(--brown);color:var(--white);padding:11px 22px;border-radius:22px;font-size:0.86rem;font-weight:600;z-index:3000;transform:translateY(80px);transition:transform 0.3s;pointer-events:none;}
+    .toast-admin.show{transform:translateY(0);}
+    .toast-admin.success{background:var(--success);}
+    .toast-admin.danger{background:var(--danger);}
 
-    @media(max-width:768px) {
-      .stats-row, .promo-stats { grid-template-columns:repeat(2,1fr); }
-      .form-row { grid-template-columns:1fr; }
-      .admin-content { padding:20px 16px; }
+    @media(max-width:768px){
+      .stats-row,.promo-stats{grid-template-columns:repeat(2,1fr);}
+      .form-row{grid-template-columns:1fr;}
+      .admin-content{padding:16px 14px;}
     }
   </style>
 </head>
@@ -141,14 +153,14 @@ admin_html = '''<!DOCTYPE html>
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">Five<span>Roam</span> Coffee</div>
-    <div class="login-sub">Admin Panel · Secure Login</div>
+    <div class="login-sub">Admin Panel &middot; Secure Login</div>
     <div class="form-group">
       <label>Username</label>
-      <input type="text" class="form-control" id="login-user" placeholder="admin" />
+      <input type="text" class="form-control" id="login-user" placeholder="admin"/>
     </div>
     <div class="form-group">
       <label>Password</label>
-      <input type="password" class="form-control" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" />
+      <input type="password" class="form-control" id="login-pass" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')doLogin()"/>
     </div>
     <button class="login-btn" onclick="doLogin()"><i class="fas fa-lock"></i> Sign In</button>
     <div class="login-hint">Default: admin / fiveroam2026</div>
@@ -159,7 +171,7 @@ admin_html = '''<!DOCTYPE html>
 <!-- ADMIN LAYOUT -->
 <div id="admin-layout">
   <div class="admin-topbar">
-    <div class="admin-topbar-brand"><i class="fas fa-coffee" style="margin-right:10px;color:var(--gold-light)"></i>Five<span>Roam</span> Admin</div>
+    <div class="admin-topbar-brand"><i class="fas fa-coffee" style="margin-right:8px;color:var(--gold-light)"></i>Five<span>Roam</span> Admin</div>
     <div class="topbar-right">
       <a href="index.html" class="topbar-link" target="_blank"><i class="fas fa-external-link-alt"></i> View Store</a>
       <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -167,127 +179,150 @@ admin_html = '''<!DOCTYPE html>
   </div>
 
   <div class="admin-content">
-    <div class="admin-greeting">Welcome back, Admin 👋</div>
-    <div class="admin-sub">Manage your coffee catalogue, promo codes, and payment settings.</div>
+    <div class="admin-greeting">Welcome back, Admin &#128075;</div>
+    <div class="admin-sub">Manage coffees, orders, promo codes, and payment settings.</div>
 
-    <!-- STATS -->
     <div class="stats-row" id="stats-row"></div>
 
-    <!-- TABS -->
     <div class="admin-tabs">
-      <button class="tab-btn active" onclick="switchTab('tab-coffees',this)"><i class="fas fa-coffee"></i> Coffee Catalogue</button>
+      <button class="tab-btn active" onclick="switchTab('tab-orders',this)"><i class="fas fa-receipt"></i> Orders</button>
+      <button class="tab-btn" onclick="switchTab('tab-coffees',this)"><i class="fas fa-coffee"></i> Coffee Catalogue</button>
       <button class="tab-btn" onclick="switchTab('tab-promos',this)"><i class="fas fa-percent"></i> Promo Codes</button>
-      <button class="tab-btn" onclick="switchTab('tab-discount',this)"><i class="fas fa-tag"></i> Discount Settings</button>
-      <button class="tab-btn" onclick="switchTab('tab-payment',this)"><i class="fas fa-credit-card"></i> Payment Gateway</button>
+      <button class="tab-btn" onclick="switchTab('tab-discount',this)"><i class="fas fa-tag"></i> Discount</button>
+      <button class="tab-btn" onclick="switchTab('tab-payment',this)"><i class="fas fa-credit-card"></i> Payment</button>
     </div>
 
-    <!-- TAB: COFFEES -->
-    <div class="tab-panel active" id="tab-coffees">
+    <!-- ORDERS TAB -->
+    <div class="tab-panel active" id="tab-orders">
       <div class="admin-section">
         <div class="section-header">
-          <h2><i class="fas fa-coffee" style="color:var(--gold);margin-right:10px"></i>Coffee Catalogue</h2>
+          <h2><i class="fas fa-receipt" style="color:var(--gold);margin-right:8px"></i>Received Orders</h2>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-export" onclick="exportOrdersExcel()"><i class="fas fa-file-excel"></i> Export to Excel</button>
+            <button class="btn btn-danger" onclick="clearOrders()"><i class="fas fa-trash"></i> Clear All</button>
+          </div>
+        </div>
+        <div class="search-bar">
+          <input type="text" class="search-input" id="order-search" placeholder="&#128269; Search by Order ID, Name, Phone..." oninput="renderOrders()"/>
+          <select class="form-control" id="order-status-filter" onchange="renderOrders()" style="width:180px;border-radius:22px">
+            <option value="">All Statuses</option>
+            <option value="New">New</option>
+            <option value="Processing">Processing</option>
+            <option value="Dispatched">Dispatched</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="admin-table">
+            <thead><tr><th>Order ID</th><th>Date</th><th>Customer</th><th>Phone</th><th>Items</th><th>Total (&#8377;)</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="orders-table-body"></tbody>
+          </table>
+        </div>
+        <div id="orders-empty" style="display:none;text-align:center;padding:40px;color:var(--text-light)">
+          <i class="fas fa-inbox" style="font-size:2.5rem;display:block;margin-bottom:12px;opacity:0.3"></i>No orders yet.
+        </div>
+      </div>
+    </div>
+
+    <!-- COFFEES TAB -->
+    <div class="tab-panel" id="tab-coffees">
+      <div class="admin-section">
+        <div class="section-header">
+          <h2><i class="fas fa-coffee" style="color:var(--gold);margin-right:8px"></i>Coffee Catalogue</h2>
           <button class="btn btn-primary" onclick="openCoffeeModal()"><i class="fas fa-plus"></i> Add New Coffee</button>
         </div>
         <div style="overflow-x:auto">
-          <table class="admin-table" id="admin-coffee-table">
-            <thead>
-              <tr><th>Image</th><th>Estate</th><th>Name</th><th>Process</th><th>Taste Notes</th><th>Price (₹)</th><th>Actions</th></tr>
-            </thead>
+          <table class="admin-table">
+            <thead><tr><th>Image</th><th>Estate</th><th>Name</th><th>Process</th><th>Taste Notes</th><th>Price (&#8377;)</th><th>Actions</th></tr></thead>
             <tbody id="admin-table-body"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- TAB: PROMO CODES -->
+    <!-- PROMOS TAB -->
     <div class="tab-panel" id="tab-promos">
       <div class="admin-section">
         <div class="section-header">
-          <h2><i class="fas fa-percent" style="color:var(--gold);margin-right:10px"></i>Promo / Influencer Codes</h2>
-          <button class="btn btn-primary" onclick="openPromoModal()"><i class="fas fa-plus"></i> Create Promo Code</button>
+          <h2><i class="fas fa-percent" style="color:var(--gold);margin-right:8px"></i>Promo / Influencer Codes</h2>
+          <button class="btn btn-primary" onclick="openPromoModal()"><i class="fas fa-plus"></i> Create Code</button>
         </div>
-        <p style="color:var(--text-light);font-size:0.87rem;margin-bottom:20px;line-height:1.65">
-          Assign unique promo codes to influencers. When a customer uses their code at checkout, a discount is applied automatically. Track usage to measure influencer performance.
-        </p>
+        <p style="color:var(--text-light);font-size:0.85rem;margin-bottom:18px;line-height:1.6">Assign unique discount codes to influencers. Usage is tracked automatically when customers redeem them.</p>
         <div class="promo-stats" id="promo-stats"></div>
         <div style="overflow-x:auto">
-          <table class="admin-table" id="promo-table">
-            <thead>
-              <tr><th>Code</th><th>Influencer / Assignee</th><th>Discount %</th><th>Uses</th><th>Status</th><th>Notes</th><th>Actions</th></tr>
-            </thead>
+          <table class="admin-table">
+            <thead><tr><th>Code</th><th>Influencer</th><th>Discount %</th><th>Uses</th><th>Status</th><th>Notes</th><th>Actions</th></tr></thead>
             <tbody id="promo-table-body"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- TAB: DISCOUNT -->
+    <!-- DISCOUNT TAB -->
     <div class="tab-panel" id="tab-discount">
       <div class="admin-section">
-        <div class="section-header">
-          <h2><i class="fas fa-tag" style="color:var(--gold);margin-right:10px"></i>Multi-Pack Discount Settings</h2>
-        </div>
-        <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <div class="section-header"><h2><i class="fas fa-tag" style="color:var(--gold);margin-right:8px"></i>Multi-Pack Discount</h2></div>
+        <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
           <div>
-            <label style="display:block;font-size:0.82rem;font-weight:600;color:var(--brown-light);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Threshold (min packets)</label>
-            <input type="number" class="form-control" id="discount-threshold" value="2" min="2" style="width:160px" />
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Threshold (min packets)</label>
+            <input type="number" class="form-control" id="discount-threshold" value="2" min="2" style="width:150px"/>
           </div>
           <div>
-            <label style="display:block;font-size:0.82rem;font-weight:600;color:var(--brown-light);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Discount Percentage (%)</label>
-            <input type="number" class="form-control" id="discount-pct" value="10" min="1" max="50" style="width:160px" />
+            <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Discount %</label>
+            <input type="number" class="form-control" id="discount-pct" value="10" min="1" max="50" style="width:150px"/>
           </div>
-          <button class="btn btn-primary" onclick="saveDiscount()" style="margin-top:26px"><i class="fas fa-save"></i> Save</button>
+          <button class="btn btn-primary" onclick="saveDiscount()" style="margin-top:24px"><i class="fas fa-save"></i> Save</button>
         </div>
-        <p style="font-size:0.82rem;color:var(--text-light);margin-top:16px;padding:12px 16px;background:var(--beige);border-radius:10px">
-          When a customer adds <strong id="disc-thresh-display">2</strong> or more packets, a <strong id="disc-pct-display">10%</strong> discount is applied automatically on the cart total. Promo code discounts are applied on top of this.
+        <p style="font-size:0.82rem;color:var(--text-light);margin-top:14px;padding:12px 16px;background:var(--beige);border-radius:10px">
+          When a customer adds <strong id="disc-thresh-display">2</strong> or more packets, a <strong id="disc-pct-display">10%</strong> discount is automatically applied. Promo discounts stack on top.
         </p>
       </div>
     </div>
 
-    <!-- TAB: PAYMENT -->
+    <!-- PAYMENT TAB -->
     <div class="tab-panel" id="tab-payment">
       <div class="admin-section">
-        <div class="section-header">
-          <h2><i class="fas fa-credit-card" style="color:var(--gold);margin-right:10px"></i>Payment Gateway</h2>
+        <div class="section-header"><h2><i class="fas fa-credit-card" style="color:var(--gold);margin-right:8px"></i>Payment Gateway</h2></div>
+        <p style="color:var(--text-light);font-size:0.86rem;margin-bottom:18px;line-height:1.6">Select your gateway and enter API keys when ready to go live. Orders are currently saved locally and confirmed without payment.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:22px">
+          <div class="pg-card active" onclick="selectPG(this,'Razorpay')"><span class="pg-badge pg-live">Recommended</span><h3><i class="fas fa-bolt" style="color:var(--gold);margin-right:6px"></i>Razorpay</h3><p>India&apos;s most popular. UPI, Cards, Net Banking, Wallets.</p></div>
+          <div class="pg-card" onclick="selectPG(this,'Cashfree')"><span class="pg-badge pg-coming">Popular</span><h3><i class="fas fa-coins" style="color:var(--gold);margin-right:6px"></i>Cashfree</h3><p>Fast settlements, UPI, cards and international payments.</p></div>
+          <div class="pg-card" onclick="selectPG(this,'PayU')"><span class="pg-badge pg-coming">Option</span><h3><i class="fas fa-wallet" style="color:var(--gold);margin-right:6px"></i>PayU</h3><p>Trusted with robust analytics and fraud protection.</p></div>
         </div>
-        <p style="color:var(--text-light);font-size:0.88rem;margin-bottom:20px;line-height:1.65">Select your preferred gateway and enter your API keys when ready to go live.</p>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:24px">
-          <div class="pg-card active" onclick="selectPG(this,'Razorpay')">
-            <span class="pg-badge pg-live">Recommended</span>
-            <h3><i class="fas fa-bolt" style="color:var(--gold);margin-right:8px"></i>Razorpay</h3>
-            <p>Most popular in India. Supports UPI, Cards, Net Banking, Wallets. Easy integration.</p>
-          </div>
-          <div class="pg-card" onclick="selectPG(this,'Cashfree')">
-            <span class="pg-badge pg-coming">Popular</span>
-            <h3><i class="fas fa-coins" style="color:var(--gold);margin-right:8px"></i>Cashfree</h3>
-            <p>Fast settlements, UPI, cards and international payments supported.</p>
-          </div>
-          <div class="pg-card" onclick="selectPG(this,'PayU')">
-            <span class="pg-badge pg-coming">Option</span>
-            <h3><i class="fas fa-wallet" style="color:var(--gold);margin-right:8px"></i>PayU</h3>
-            <p>Trusted gateway with robust analytics and fraud protection.</p>
-          </div>
-        </div>
-        <div class="admin-section" style="background:var(--beige);box-shadow:none;border:1px solid var(--beige-dark);padding:22px">
-          <h3 style="font-family:Playfair Display,serif;color:var(--brown);margin-bottom:16px;font-size:1rem" id="pg-title">Razorpay – API Keys</h3>
+        <div style="background:var(--beige);border-radius:12px;padding:20px;border:1px solid var(--beige-dark)">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--brown);margin-bottom:14px;font-size:0.97rem" id="pg-title">Razorpay &ndash; API Keys</h3>
           <div class="form-row">
-            <div class="form-group">
-              <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Key ID</label>
-              <input type="text" class="key-field" id="pg-key-id" placeholder="rzp_live_XXXXXXXXXXXX" />
-            </div>
-            <div class="form-group">
-              <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Key Secret</label>
-              <input type="password" class="key-field" id="pg-key-secret" placeholder="••••••••••••••••••" />
-            </div>
+            <div class="form-group"><label>Key ID</label><input type="text" class="key-field" id="pg-key-id" placeholder="rzp_live_XXXXXXXXXXXX"/></div>
+            <div class="form-group"><label>Key Secret</label><input type="password" class="key-field" id="pg-key-secret" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"/></div>
           </div>
-          <div style="margin-bottom:14px">
-            <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Webhook Secret (optional)</label>
-            <input type="text" class="key-field" id="pg-webhook" placeholder="whsec_XXXXXXXXXX" />
-          </div>
+          <div style="margin-bottom:12px"><label style="display:block;font-size:0.75rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:6px">Webhook Secret (optional)</label><input type="text" class="key-field" id="pg-webhook" placeholder="whsec_XXXXXXXXXX"/></div>
           <button class="btn btn-success" onclick="savePGKeys()"><i class="fas fa-save"></i> Save Keys</button>
-          <p style="font-size:0.75rem;color:var(--text-light);margin-top:10px"><i class="fas fa-info-circle"></i> Keys are stored in your browser's localStorage. Move to a secure backend for production.</p>
+          <p style="font-size:0.73rem;color:var(--text-light);margin-top:9px"><i class="fas fa-info-circle"></i> Keys are stored in localStorage only. Move to a secure backend for production.</p>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="order-detail-modal">
+  <div class="modal-box" style="max-width:560px">
+    <h2><i class="fas fa-receipt" style="color:var(--gold);margin-right:8px"></i>Order Details</h2>
+    <div id="order-detail-content"></div>
+    <div class="form-row-full" style="margin-top:14px">
+      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Update Status</label>
+      <div style="display:flex;gap:10px;align-items:center">
+        <select class="form-control" id="order-status-select" style="flex:1">
+          <option value="New">New</option>
+          <option value="Processing">Processing</option>
+          <option value="Dispatched">Dispatched</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+        <button class="btn btn-success" onclick="updateOrderStatus()"><i class="fas fa-save"></i> Save</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-danger" onclick="closeOrderDetail()"><i class="fas fa-times"></i> Close</button>
     </div>
   </div>
 </div>
@@ -295,50 +330,21 @@ admin_html = '''<!DOCTYPE html>
 <!-- COFFEE MODAL -->
 <div class="modal-overlay" id="coffee-modal">
   <div class="modal-box">
-    <h2 id="coffee-modal-title"><i class="fas fa-coffee" style="color:var(--gold);margin-right:10px"></i>Add New Coffee</h2>
-    <input type="hidden" id="edit-id" value="" />
-    <!-- CHANGE 1: No lot number field -->
+    <h2 id="coffee-modal-title"><i class="fas fa-plus" style="color:var(--gold);margin-right:8px"></i>Add New Coffee</h2>
+    <input type="hidden" id="edit-id" value=""/>
     <div class="form-row">
-      <div class="form-group">
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Estate Name *</label>
-        <input type="text" class="form-control" id="f-estate" placeholder="e.g. Bison Valley Estate" />
-      </div>
-      <div class="form-group">
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Price ₹ (per 100g) *</label>
-        <input type="number" class="form-control" id="f-price" placeholder="e.g. 599" />
-      </div>
+      <div class="form-group"><label>Estate Name *</label><input type="text" class="form-control" id="f-estate" placeholder="e.g. Bison Valley Estate"/></div>
+      <div class="form-group"><label>Price &#8377; (per 100g) *</label><input type="number" class="form-control" id="f-price" placeholder="e.g. 599"/></div>
     </div>
-    <div class="form-row-full">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Coffee Name *</label>
-      <input type="text" class="form-control" id="f-name" placeholder="e.g. Bison Valley Bright" />
-    </div>
-    <div class="form-row-full">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Process Method *</label>
-      <input type="text" class="form-control" id="f-process" placeholder="e.g. Double Fermentation Extended Slow Dry" />
-    </div>
+    <div class="form-row-full"><label>Coffee Name *</label><input type="text" class="form-control" id="f-name" placeholder="e.g. Bison Valley Bright"/></div>
+    <div class="form-row-full"><label>Process Method *</label><input type="text" class="form-control" id="f-process" placeholder="e.g. Double Fermentation"/></div>
     <div class="form-row">
-      <div class="form-group">
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Acidity</label>
-        <input type="text" class="form-control" id="f-acidity" placeholder="e.g. Refreshing, bright" />
-      </div>
-      <div class="form-group">
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Body</label>
-        <input type="text" class="form-control" id="f-body" placeholder="e.g. Well rounded, smooth" />
-      </div>
+      <div class="form-group"><label>Acidity</label><input type="text" class="form-control" id="f-acidity" placeholder="e.g. Refreshing, bright"/></div>
+      <div class="form-group"><label>Body</label><input type="text" class="form-control" id="f-body" placeholder="e.g. Well rounded, smooth"/></div>
     </div>
-    <div class="form-row-full">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Taste Notes (comma-separated)</label>
-      <input type="text" class="form-control" id="f-notes" placeholder="Golden Kiwi, White Chocolate, Mandarin Orange" />
-    </div>
-    <div class="form-row-full">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Coffee Image URL</label>
-      <input type="text" class="form-control" id="f-img-url" placeholder="https://example.com/coffee.jpg" oninput="updateImgPreview(this.value)" />
-    </div>
-    <div class="form-row-full">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Or Upload Image File</label>
-      <input type="file" class="form-control" id="f-img-file" accept="image/*" onchange="handleImgUpload(this)" />
-      <div class="img-preview" id="img-preview">☕</div>
-    </div>
+    <div class="form-row-full"><label>Taste Notes (comma-separated)</label><input type="text" class="form-control" id="f-notes" placeholder="Golden Kiwi, White Chocolate"/></div>
+    <div class="form-row-full"><label>Image URL</label><input type="text" class="form-control" id="f-img-url" placeholder="https://..." oninput="updateImgPreview(this.value)"/></div>
+    <div class="form-row-full"><label>Or Upload Image</label><input type="file" class="form-control" id="f-img-file" accept="image/*" onchange="handleImgUpload(this)"/><div class="img-preview" id="img-preview">&#9749;</div></div>
     <div class="modal-actions">
       <button class="btn btn-danger" onclick="closeCoffeeModal()"><i class="fas fa-times"></i> Cancel</button>
       <button class="btn btn-success" onclick="saveCoffee()"><i class="fas fa-save"></i> Save Coffee</button>
@@ -348,34 +354,16 @@ admin_html = '''<!DOCTYPE html>
 
 <!-- PROMO MODAL -->
 <div class="modal-overlay" id="promo-modal">
-  <div class="modal-box" style="max-width:480px">
-    <h2 id="promo-modal-title"><i class="fas fa-percent" style="color:var(--gold);margin-right:10px"></i>Create Promo Code</h2>
-    <input type="hidden" id="promo-edit-id" value="" />
-    <div class="form-row-full">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Promo Code * <span style="font-weight:400;text-transform:none;color:var(--text-light)">(customers enter this at checkout)</span></label>
-      <input type="text" class="form-control" id="p-code" placeholder="e.g. RIYA15 or COFFEE10" style="text-transform:uppercase;letter-spacing:1px;font-weight:700" oninput="this.value=this.value.toUpperCase()" />
-    </div>
+  <div class="modal-box" style="max-width:460px">
+    <h2 id="promo-modal-title"><i class="fas fa-plus" style="color:var(--gold);margin-right:8px"></i>Create Promo Code</h2>
+    <input type="hidden" id="promo-edit-id" value=""/>
+    <div class="form-row-full"><label>Promo Code *</label><input type="text" class="form-control" id="p-code" placeholder="e.g. RIYA15" style="text-transform:uppercase;letter-spacing:1px;font-weight:700" oninput="this.value=this.value.toUpperCase()"/></div>
     <div class="form-row">
-      <div class="form-group">
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Influencer / Assignee *</label>
-        <input type="text" class="form-control" id="p-influencer" placeholder="e.g. Riya Sharma" />
-      </div>
-      <div class="form-group">
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Discount % *</label>
-        <input type="number" class="form-control" id="p-discount" placeholder="e.g. 15" min="1" max="50" />
-      </div>
+      <div class="form-group"><label>Influencer / Assignee *</label><input type="text" class="form-control" id="p-influencer" placeholder="e.g. Riya Sharma"/></div>
+      <div class="form-group"><label>Discount % *</label><input type="number" class="form-control" id="p-discount" placeholder="e.g. 15" min="1" max="50"/></div>
     </div>
-    <div class="form-row-full">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Notes / Platform</label>
-      <input type="text" class="form-control" id="p-notes" placeholder="e.g. Instagram influencer, 50K followers" />
-    </div>
-    <div class="form-row-full">
-      <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Status</label>
-      <select class="form-control" id="p-active">
-        <option value="true">Active</option>
-        <option value="false">Inactive</option>
-      </select>
-    </div>
+    <div class="form-row-full"><label>Notes / Platform</label><input type="text" class="form-control" id="p-notes" placeholder="e.g. Instagram, 50K followers"/></div>
+    <div class="form-row-full"><label>Status</label><select class="form-control" id="p-active"><option value="true">Active</option><option value="false">Inactive</option></select></div>
     <div class="modal-actions">
       <button class="btn btn-danger" onclick="closePromoModal()"><i class="fas fa-times"></i> Cancel</button>
       <button class="btn btn-success" onclick="savePromo()"><i class="fas fa-save"></i> Save Code</button>
@@ -386,292 +374,383 @@ admin_html = '''<!DOCTYPE html>
 <div class="toast-admin" id="admin-toast"></div>
 
 <script>
-  // ── AUTH ──
-  function doLogin() {
-    const u = document.getElementById('login-user').value.trim();
-    const p = document.getElementById('login-pass').value.trim();
-    const err = document.getElementById('login-error');
-    if (u === 'admin' && p === 'fiveroam2026') {
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('admin-layout').style.display = 'block';
-      loadAdmin();
-    } else {
-      err.style.display = 'block';
-      setTimeout(()=>err.style.display='none',3000);
-    }
+// AUTH
+function doLogin(){
+  const u=document.getElementById('login-user').value.trim();
+  const p=document.getElementById('login-pass').value.trim();
+  const err=document.getElementById('login-error');
+  if(u==='admin'&&p==='fiveroam2026'){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('admin-layout').style.display='block';
+    loadAdmin();
+  } else {
+    err.style.display='block';
+    setTimeout(()=>err.style.display='none',3000);
   }
-  function doLogout() {
-    document.getElementById('login-screen').style.display = 'flex';
-    document.getElementById('admin-layout').style.display = 'none';
-    document.getElementById('login-user').value = '';
-    document.getElementById('login-pass').value = '';
-  }
+}
+function doLogout(){
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('admin-layout').style.display='none';
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pass').value='';
+}
 
-  // ── TABS ──
-  function switchTab(tabId, btn) {
-    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    btn.classList.add('active');
-  }
+// TABS
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
 
-  // ── DATA ──
-  const DEFAULT_COFFEES = [
-    { id:1, estate:"Bison Valley Estate", name:"Bison Valley Bright", process:"Double Fermentation", acidity:"Refreshing, bright", body:"Well rounded, smooth", notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"], price:599, img:"" },
-    { id:2, estate:"Stanmore Estate", name:"Stanmore Triple ICE", process:"Triple Fermentation ICE Blast", acidity:"Bright, sweet", body:"Medium", notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"], price:699, img:"" },
-    { id:3, estate:"Hidden Falls Estate", name:"Hidden Falls Effervescent", process:"Double Fermentation", acidity:"Sweet, effervescent", body:"Syrupy, Medium+", notes:["Muscat Grapes","Hibiscus","Dark Chocolate","Almond","Cocoa"], price:649, img:"" },
-    { id:4, estate:"Orchardale Estate", name:"Orchardale Watermelon", process:"Watermelon Process", acidity:"Sweet / Tart", body:"Light but silky", notes:["Red Currant","Mandarin Orange","Honeysuckle","Floral"], price:625, img:"" },
-    { id:5, estate:"Bison Valley Estate", name:"Bison Valley Brown Sugar", process:"Brown Sugar Process", acidity:"Medium+, Intense", body:"Medium", notes:["Brown Sugar","Berries","Nuts","Complex"], price:675, img:"" },
-    { id:6, estate:"Moganad Estate", name:"Moganad Triple ICE", process:"Triple Fermentation ICE Blast", acidity:"Complex", body:"Medium, well rounded", notes:["Mulberry","Peach","Palm Sugar","Dried Fig","Elderflower"], price:699, img:"" },
-    { id:7, estate:"Stanmore Estate", name:"Stanmore Watermelon", process:"Watermelon Process", acidity:"Sweet / Medium", body:"Velvety, smooth", notes:["Lavender","Rose Hip","Baking Chocolate","Chocolatey"], price:649, img:"" },
-    { id:8, estate:"Orchardale Estate", name:"Orchardale Hazelnut", process:"Watermelon Process", acidity:"Bright / Sweet", body:"Medium+", notes:["Hazelnut","Milk Chocolate","Honey","Cocoa","Lime Zest"], price:625, img:"" }
-  ];
+// DATA
+const DEFAULT_COFFEES=[
+  {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:""},
+  {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:""},
+  {id:3,estate:"Hidden Falls Estate",name:"Hidden Falls Effervescent",process:"Double Fermentation",acidity:"Sweet, effervescent",body:"Syrupy, Medium+",notes:["Muscat Grapes","Hibiscus","Dark Chocolate","Almond","Cocoa"],price:649,img:""},
+  {id:4,estate:"Orchardale Estate",name:"Orchardale Watermelon",process:"Watermelon Process",acidity:"Sweet / Tart",body:"Light but silky",notes:["Red Currant","Mandarin Orange","Honeysuckle","Floral"],price:625,img:""},
+  {id:5,estate:"Bison Valley Estate",name:"Bison Valley Brown Sugar",process:"Brown Sugar Process",acidity:"Medium+, Intense",body:"Medium",notes:["Brown Sugar","Berries","Nuts","Complex"],price:675,img:""},
+  {id:6,estate:"Moganad Estate",name:"Moganad Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Complex",body:"Medium, well rounded",notes:["Mulberry","Peach","Palm Sugar","Dried Fig","Elderflower"],price:699,img:""},
+  {id:7,estate:"Stanmore Estate",name:"Stanmore Watermelon",process:"Watermelon Process",acidity:"Sweet / Medium",body:"Velvety, smooth",notes:["Lavender","Rose Hip","Baking Chocolate","Chocolatey"],price:649,img:""},
+  {id:8,estate:"Orchardale Estate",name:"Orchardale Hazelnut",process:"Watermelon Process",acidity:"Bright / Sweet",body:"Medium+",notes:["Hazelnut","Milk Chocolate","Honey","Cocoa","Lime Zest"],price:625,img:""}
+];
+function getCoffees(){return JSON.parse(localStorage.getItem('frc_coffees')||'null')||DEFAULT_COFFEES;}
+function saveCoffees(d){localStorage.setItem('frc_coffees',JSON.stringify(d));}
+function getPromos(){return JSON.parse(localStorage.getItem('frc_promos')||'[]');}
+function savePromos(d){localStorage.setItem('frc_promos',JSON.stringify(d));}
+function getOrders(){return JSON.parse(localStorage.getItem('frc_orders')||'[]');}
+function saveOrders(d){localStorage.setItem('frc_orders',JSON.stringify(d));}
 
-  function getCoffees() { return JSON.parse(localStorage.getItem('frc_coffees')||'null')||DEFAULT_COFFEES; }
-  function saveCoffees(d) { localStorage.setItem('frc_coffees',JSON.stringify(d)); }
-  function getPromos() { return JSON.parse(localStorage.getItem('frc_promos')||'[]'); }
-  function savePromos(d) { localStorage.setItem('frc_promos',JSON.stringify(d)); }
+function loadAdmin(){
+  renderStats();renderTable();renderPromos();renderOrders();
+  const disc=JSON.parse(localStorage.getItem('frc_discount')||'{"threshold":2,"pct":10}');
+  document.getElementById('discount-threshold').value=disc.threshold;
+  document.getElementById('discount-pct').value=disc.pct;
+  document.getElementById('disc-thresh-display').textContent=disc.threshold;
+  document.getElementById('disc-pct-display').textContent=disc.pct+'%';
+  const pgKeys=JSON.parse(localStorage.getItem('frc_pg_keys')||'{}');
+  if(pgKeys.keyId)document.getElementById('pg-key-id').value=pgKeys.keyId;
+  if(pgKeys.keySecret)document.getElementById('pg-key-secret').value=pgKeys.keySecret;
+  if(pgKeys.webhook)document.getElementById('pg-webhook').value=pgKeys.webhook;
+}
 
-  function loadAdmin() {
-    renderStats(); renderTable(); renderPromos();
-    const disc = JSON.parse(localStorage.getItem('frc_discount')||'{"threshold":2,"pct":10}');
-    document.getElementById('discount-threshold').value = disc.threshold;
-    document.getElementById('discount-pct').value = disc.pct;
-    document.getElementById('disc-thresh-display').textContent = disc.threshold;
-    document.getElementById('disc-pct-display').textContent = disc.pct + '%';
-    const pgKeys = JSON.parse(localStorage.getItem('frc_pg_keys')||'{}');
-    if (pgKeys.keyId) document.getElementById('pg-key-id').value = pgKeys.keyId;
-    if (pgKeys.keySecret) document.getElementById('pg-key-secret').value = pgKeys.keySecret;
-    if (pgKeys.webhook) document.getElementById('pg-webhook').value = pgKeys.webhook;
-  }
+function renderStats(){
+  const coffees=getCoffees();
+  const orders=getOrders();
+  const promos=getPromos();
+  const newOrders=orders.filter(o=>(!o.status||o.status==='New')).length;
+  const revenue=orders.reduce((s,o)=>s+o.grand,0);
+  document.getElementById('stats-row').innerHTML=
+    '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-receipt"></i>Total Orders</div><div class="stat-value">'+orders.length+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-bell"></i>New Orders</div><div class="stat-value">'+newOrders+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-rupee-sign"></i>Total Revenue</div><div class="stat-value">&#8377;'+revenue.toLocaleString('en-IN')+'</div></div>'+
+    '<div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-coffee"></i>Coffees Listed</div><div class="stat-value">'+coffees.length+'</div></div>';
+}
 
-  function renderStats() {
-    const coffees = getCoffees();
-    const promos = getPromos();
-    const activePromos = promos.filter(p=>p.active).length;
-    const totalUses = promos.reduce((s,p)=>s+(p.uses||0),0);
-    const estates = [...new Set(coffees.map(c=>c.estate))].length;
-    document.getElementById('stats-row').innerHTML = `
-      <div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-coffee"></i>Total Coffees</div><div class="stat-value">${coffees.length}</div></div>
-      <div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-map-marker-alt"></i>Estates</div><div class="stat-value">${estates}</div></div>
-      <div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-percent"></i>Active Promos</div><div class="stat-value">${activePromos}</div></div>
-      <div class="stat-card"><div class="stat-label"><i class="stat-icon fas fa-users"></i>Promo Uses</div><div class="stat-value">${totalUses}</div></div>`;
-  }
+// ORDERS
+let currentOrderId=null;
+function renderOrders(){
+  const orders=getOrders();
+  const search=(document.getElementById('order-search').value||'').toLowerCase();
+  const statusFilter=document.getElementById('order-status-filter').value;
+  const filtered=orders.filter(o=>{
+    const matchSearch=!search||o.orderId.toLowerCase().includes(search)||o.name.toLowerCase().includes(search)||o.phone.includes(search);
+    const matchStatus=!statusFilter||(o.status||'New')===statusFilter;
+    return matchSearch&&matchStatus;
+  });
+  const tbody=document.getElementById('orders-table-body');
+  const empty=document.getElementById('orders-empty');
+  tbody.innerHTML='';
+  if(filtered.length===0){empty.style.display='block';return;}
+  empty.style.display='none';
+  filtered.forEach(o=>{
+    const status=o.status||'New';
+    const cls={'New':'status-new','Processing':'status-processing','Dispatched':'status-dispatched','Delivered':'status-delivered'}[status]||'status-new';
+    const date=new Date(o.timestamp).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});
+    const itemSummary=o.items.map(i=>i.name+' x'+i.qty).join(', ');
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td><strong style="font-size:0.78rem;letter-spacing:0.5px">'+o.orderId+'</strong></td>'
+      +'<td style="font-size:0.82rem">'+date+'</td>'
+      +'<td><strong>'+o.name+'</strong></td>'
+      +'<td>'+o.phone+'</td>'
+      +'<td style="font-size:0.78rem;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+itemSummary+'</td>'
+      +'<td><strong>&#8377;'+o.grand.toLocaleString('en-IN')+'</strong></td>'
+      +'<td><span class="status-pill '+cls+'">'+status+'</span></td>'
+      +'<td><button class="btn btn-primary btn-sm" onclick="openOrderDetail(\''+o.orderId+'\')"><i class="fas fa-eye"></i> View</button></td>';
+    tbody.appendChild(tr);
+  });
+}
 
-  // ── COFFEE TABLE ──
-  function renderTable() {
-    const coffees = getCoffees();
-    const tbody = document.getElementById('admin-table-body');
-    tbody.innerHTML = '';
-    coffees.forEach(c => {
-      const tr = document.createElement('tr');
-      const thumb = c.img ? `<div class="coffee-thumb"><img src="${c.img}" alt="${c.name}"></div>` : `<div class="coffee-thumb">☕</div>`;
-      const notePills = c.notes.map(n=>`<span class="notes-pill">${n}</span>`).join('');
-      tr.innerHTML = `
-        <td>${thumb}</td>
-        <td>${c.estate}</td>
-        <td><strong>${c.name}</strong></td>
-        <td style="font-size:0.82rem">${c.process}</td>
-        <td>${notePills}</td>
-        <td><strong>₹${c.price}</strong></td>
-        <td>
-          <button class="btn btn-primary btn-sm" onclick="openCoffeeModal(${c.id})"><i class="fas fa-edit"></i> Edit</button>
-          <button class="btn btn-danger btn-sm" style="margin-top:4px" onclick="deleteCoffee(${c.id})"><i class="fas fa-trash"></i> Del</button>
-        </td>`;
-      tbody.appendChild(tr);
-    });
-  }
+function openOrderDetail(orderId){
+  const orders=getOrders();
+  const o=orders.find(x=>x.orderId===orderId);
+  if(!o)return;
+  currentOrderId=orderId;
+  const status=o.status||'New';
+  document.getElementById('order-status-select').value=status;
+  const date=new Date(o.timestamp).toLocaleString('en-IN');
+  let itemsHtml='';
+  o.items.forEach(i=>{
+    itemsHtml+='<div class="order-detail-row"><span>'+i.name+' ('+i.brew+', '+i.roast+' Roast) x'+i.qty+'</span><span>&#8377;'+(i.price*i.qty).toLocaleString('en-IN')+'</span></div>';
+  });
+  const promoRow=o.promoCode?'<div class="order-detail-row"><span>Promo "'+o.promoCode+'"</span><span style="color:#2a8c4a">-&#8377;'+o.promoDiscount.toLocaleString('en-IN')+'</span></div>':'';
+  const multiRow=o.multiDiscount>0?'<div class="order-detail-row"><span>Multi-pack Discount</span><span style="color:#2a8c4a">-&#8377;'+o.multiDiscount.toLocaleString('en-IN')+'</span></div>':'';
+  document.getElementById('order-detail-content').innerHTML=
+    '<div class="order-detail-section"><div class="order-detail-title">&#128222; Customer Info</div>'
+    +'<div class="order-detail-row"><span>Order ID</span><span><strong>'+o.orderId+'</strong></span></div>'
+    +'<div class="order-detail-row"><span>Date</span><span>'+date+'</span></div>'
+    +'<div class="order-detail-row"><span>Name</span><span>'+o.name+'</span></div>'
+    +'<div class="order-detail-row"><span>Phone</span><span>'+o.phone+'</span></div>'
+    +'<div class="order-detail-row"><span>Email</span><span>'+(o.email||'&mdash;')+'</span></div>'
+    +'<div class="order-detail-row"><span>Address</span><span style="text-align:right;max-width:60%">'+o.address+'</span></div>'
+    +'</div>'
+    +'<div class="order-detail-section"><div class="order-detail-title">&#9749; Order Items</div>'+itemsHtml+'</div>'
+    +'<div class="order-detail-section"><div class="order-detail-title">&#128176; Invoice</div>'
+    +'<div class="order-detail-row"><span>Subtotal</span><span>&#8377;'+o.subtotal.toLocaleString('en-IN')+'</span></div>'
+    +multiRow+promoRow
+    +'<div class="order-detail-row"><span>Delivery</span><span>&#8377;70</span></div>'
+    +'<div class="order-detail-row"><span>GST (5%)</span><span>&#8377;'+o.gst.toLocaleString('en-IN')+'</span></div>'
+    +'<div class="order-detail-row" style="font-weight:700;color:var(--brown);border-top:1px solid var(--beige-dark);padding-top:8px;margin-top:4px"><span>Total Paid</span><span>&#8377;'+o.grand.toLocaleString('en-IN')+'</span></div>'
+    +'</div>';
+  document.getElementById('order-detail-modal').classList.add('open');
+}
+function closeOrderDetail(){document.getElementById('order-detail-modal').classList.remove('open');currentOrderId=null;}
 
-  // ── COFFEE MODAL ──
-  let imgDataUrl = '';
-  function openCoffeeModal(id) {
-    imgDataUrl = '';
-    document.getElementById('img-preview').innerHTML = '☕';
-    document.getElementById('f-img-url').value = '';
-    document.getElementById('f-img-file').value = '';
-    if (id) {
-      const c = getCoffees().find(x=>x.id===id);
-      document.getElementById('coffee-modal-title').innerHTML = '<i class="fas fa-edit" style="color:var(--gold);margin-right:10px"></i>Edit Coffee';
-      document.getElementById('edit-id').value = id;
-      document.getElementById('f-estate').value = c.estate;
-      document.getElementById('f-name').value = c.name;
-      document.getElementById('f-process').value = c.process;
-      document.getElementById('f-acidity').value = c.acidity;
-      document.getElementById('f-body').value = c.body;
-      document.getElementById('f-notes').value = c.notes.join(', ');
-      document.getElementById('f-price').value = c.price;
-      if (c.img) { document.getElementById('f-img-url').value = c.img; updateImgPreview(c.img); }
-    } else {
-      document.getElementById('coffee-modal-title').innerHTML = '<i class="fas fa-plus" style="color:var(--gold);margin-right:10px"></i>Add New Coffee';
-      document.getElementById('edit-id').value = '';
-      ['f-estate','f-name','f-process','f-acidity','f-body','f-notes','f-price'].forEach(id=>document.getElementById(id).value='');
-    }
-    document.getElementById('coffee-modal').classList.add('open');
-  }
-  function closeCoffeeModal() { document.getElementById('coffee-modal').classList.remove('open'); }
+function updateOrderStatus(){
+  if(!currentOrderId)return;
+  const orders=getOrders();
+  const idx=orders.findIndex(o=>o.orderId===currentOrderId);
+  if(idx<0)return;
+  orders[idx].status=document.getElementById('order-status-select').value;
+  saveOrders(orders);
+  closeOrderDetail();
+  renderStats();renderOrders();
+  showAdminToast('Order status updated!','success');
+}
 
-  function updateImgPreview(url) {
-    const prev = document.getElementById('img-preview');
-    prev.innerHTML = url ? `<img src="${url}" alt="preview">` : '☕';
-  }
-  function handleImgUpload(input) {
-    const file = input.files[0]; if(!file) return;
-    const reader = new FileReader();
-    reader.onload = e => { imgDataUrl = e.target.result; document.getElementById('img-preview').innerHTML = `<img src="${imgDataUrl}" alt="preview">`; };
-    reader.readAsDataURL(file);
-  }
-  function saveCoffee() {
-    const estate = document.getElementById('f-estate').value.trim();
-    const name = document.getElementById('f-name').value.trim();
-    const process = document.getElementById('f-process').value.trim();
-    const acidity = document.getElementById('f-acidity').value.trim();
-    const body = document.getElementById('f-body').value.trim();
-    const notesRaw = document.getElementById('f-notes').value.trim();
-    const price = parseInt(document.getElementById('f-price').value);
-    const imgUrl = document.getElementById('f-img-url').value.trim();
-    if (!estate||!name||!process||!price) { showAdminToast('Please fill all required fields.','danger'); return; }
-    const notes = notesRaw ? notesRaw.split(',').map(n=>n.trim()).filter(Boolean) : [];
-    const img = imgDataUrl||imgUrl||'';
-    const coffees = getCoffees();
-    const editId = document.getElementById('edit-id').value;
-    if (editId) {
-      const idx = coffees.findIndex(c=>c.id===parseInt(editId));
-      coffees[idx] = { id:parseInt(editId), estate, name, process, acidity, body, notes, price, img };
-      showAdminToast('Coffee updated!','success');
-    } else {
-      const newId = coffees.length ? Math.max(...coffees.map(c=>c.id))+1 : 1;
-      coffees.push({ id:newId, estate, name, process, acidity, body, notes, price, img });
-      showAdminToast('Coffee added!','success');
-    }
-    saveCoffees(coffees); closeCoffeeModal(); renderStats(); renderTable();
-  }
-  function deleteCoffee(id) {
-    if (!confirm('Delete this coffee?')) return;
-    saveCoffees(getCoffees().filter(c=>c.id!==id));
-    renderStats(); renderTable(); showAdminToast('Coffee deleted.','danger');
-  }
+function clearOrders(){
+  if(!confirm('Clear ALL orders? This cannot be undone.'))return;
+  saveOrders([]);renderStats();renderOrders();
+  showAdminToast('All orders cleared.','danger');
+}
 
-  // ── PROMO CODES ──
-  function renderPromos() {
-    const promos = getPromos();
-    const active = promos.filter(p=>p.active).length;
-    const totalUses = promos.reduce((s,p)=>s+(p.uses||0),0);
-    document.getElementById('promo-stats').innerHTML = `
-      <div class="promo-stat"><div class="val">${promos.length}</div><div class="lbl">Total Codes</div></div>
-      <div class="promo-stat"><div class="val">${active}</div><div class="lbl">Active Codes</div></div>
-      <div class="promo-stat"><div class="val">${totalUses}</div><div class="lbl">Total Uses</div></div>`;
-    const tbody = document.getElementById('promo-table-body');
-    tbody.innerHTML = '';
-    if (promos.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--text-light);padding:30px">No promo codes yet. Create one above!</td></tr>';
-      return;
-    }
-    promos.forEach((p,idx) => {
-      const tr = document.createElement('tr');
-      const statusPill = p.active
-        ? '<span class="status-pill status-active">Active</span>'
-        : '<span class="status-pill status-inactive">Inactive</span>';
-      tr.innerHTML = `
-        <td><strong style="letter-spacing:1px;font-size:0.95rem">${p.code}</strong><button class="copy-btn" onclick="copyCode('${p.code}')"><i class="fas fa-copy"></i> Copy</button></td>
-        <td>${p.influencer}</td>
-        <td><strong>${p.discount}%</strong></td>
-        <td>${p.uses||0}</td>
-        <td>${statusPill}</td>
-        <td style="font-size:0.82rem;color:var(--text-light)">${p.notes||'—'}</td>
-        <td>
-          <button class="btn btn-primary btn-sm" onclick="openPromoModal(${idx})"><i class="fas fa-edit"></i> Edit</button>
-          <button class="btn btn-danger btn-sm" style="margin-top:4px" onclick="deletePromo(${idx})"><i class="fas fa-trash"></i> Del</button>
-        </td>`;
-      tbody.appendChild(tr);
-    });
-  }
+// EXPORT TO EXCEL (CSV)
+function exportOrdersExcel(){
+  const orders=getOrders();
+  if(orders.length===0){showAdminToast('No orders to export.','danger');return;}
+  const headers=['Order ID','Date','Name','Phone','Email','Address','Items','Brew Methods','Roast Levels','Subtotal','Multi-Discount','Promo Code','Promo Discount','Delivery','GST','Grand Total','Status'];
+  const rows=orders.map(o=>{
+    const itemNames=o.items.map(i=>i.name+' x'+i.qty).join(' | ');
+    const brews=o.items.map(i=>i.brew).join(' | ');
+    const roasts=o.items.map(i=>i.roast+' Roast').join(' | ');
+    return [
+      o.orderId,
+      new Date(o.timestamp).toLocaleString('en-IN'),
+      o.name,o.phone,o.email||'',
+      '"'+o.address.replace(/"/g,'""')+'"',
+      '"'+itemNames+'"','"'+brews+'"','"'+roasts+'"',
+      o.subtotal,o.multiDiscount||0,o.promoCode||'',o.promoDiscount||0,
+      70,o.gst,o.grand,o.status||'New'
+    ].join(',');
+  });
+  const csv=[headers.join(','),...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='FiveRoamCoffee_Orders_'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();URL.revokeObjectURL(url);
+  showAdminToast('Orders exported to CSV/Excel!','success');
+}
 
-  function openPromoModal(idx) {
-    document.getElementById('promo-edit-id').value = (idx !== undefined) ? idx : '';
-    if (idx !== undefined) {
-      const p = getPromos()[idx];
-      document.getElementById('promo-modal-title').innerHTML = '<i class="fas fa-edit" style="color:var(--gold);margin-right:10px"></i>Edit Promo Code';
-      document.getElementById('p-code').value = p.code;
-      document.getElementById('p-influencer').value = p.influencer;
-      document.getElementById('p-discount').value = p.discount;
-      document.getElementById('p-notes').value = p.notes||'';
-      document.getElementById('p-active').value = p.active ? 'true' : 'false';
-    } else {
-      document.getElementById('promo-modal-title').innerHTML = '<i class="fas fa-plus" style="color:var(--gold);margin-right:10px"></i>Create Promo Code';
-      ['p-code','p-influencer','p-discount','p-notes'].forEach(id=>document.getElementById(id).value='');
-      document.getElementById('p-active').value = 'true';
-    }
-    document.getElementById('promo-modal').classList.add('open');
-  }
-  function closePromoModal() { document.getElementById('promo-modal').classList.remove('open'); }
+// COFFEES
+function renderTable(){
+  const coffees=getCoffees();
+  const tbody=document.getElementById('admin-table-body');
+  tbody.innerHTML='';
+  coffees.forEach(c=>{
+    const tr=document.createElement('tr');
+    const thumb=c.img?'<div class="coffee-thumb"><img src="'+c.img+'" alt="'+c.name+'"></div>':'<div class="coffee-thumb">&#9749;</div>';
+    const notePills=c.notes.map(n=>'<span class="notes-pill">'+n+'</span>').join('');
+    tr.innerHTML='<td>'+thumb+'</td><td>'+c.estate+'</td><td><strong>'+c.name+'</strong></td>'
+      +'<td style="font-size:0.8rem">'+c.process+'</td><td>'+notePills+'</td>'
+      +'<td><strong>&#8377;'+c.price+'</strong></td>'
+      +'<td><button class="btn btn-primary btn-sm" onclick="openCoffeeModal('+c.id+')"><i class="fas fa-edit"></i> Edit</button>'
+      +' <button class="btn btn-danger btn-sm" onclick="deleteCoffee('+c.id+')"><i class="fas fa-trash"></i> Del</button></td>';
+    tbody.appendChild(tr);
+  });
+}
 
-  function savePromo() {
-    const code = document.getElementById('p-code').value.trim().toUpperCase();
-    const influencer = document.getElementById('p-influencer').value.trim();
-    const discount = parseInt(document.getElementById('p-discount').value);
-    const notes = document.getElementById('p-notes').value.trim();
-    const active = document.getElementById('p-active').value === 'true';
-    if (!code||!influencer||!discount) { showAdminToast('Please fill all required fields.','danger'); return; }
-    const promos = getPromos();
-    const editIdx = document.getElementById('promo-edit-id').value;
-    if (editIdx !== '') {
-      promos[parseInt(editIdx)] = { code, influencer, discount, notes, active, uses: promos[parseInt(editIdx)].uses||0 };
-      showAdminToast('Promo code updated!','success');
-    } else {
-      const exists = promos.find(p=>p.code===code);
-      if (exists) { showAdminToast('Code already exists!','danger'); return; }
-      promos.push({ code, influencer, discount, notes, active, uses:0 });
-      showAdminToast('Promo code created!','success');
-    }
-    savePromos(promos); closePromoModal(); renderStats(); renderPromos();
+let imgDataUrl='';
+function openCoffeeModal(id){
+  imgDataUrl='';
+  document.getElementById('img-preview').innerHTML='&#9749;';
+  document.getElementById('f-img-url').value='';
+  document.getElementById('f-img-file').value='';
+  if(id){
+    const c=getCoffees().find(x=>x.id===id);
+    document.getElementById('coffee-modal-title').innerHTML='<i class="fas fa-edit" style="color:var(--gold);margin-right:8px"></i>Edit Coffee';
+    document.getElementById('edit-id').value=id;
+    document.getElementById('f-estate').value=c.estate;
+    document.getElementById('f-name').value=c.name;
+    document.getElementById('f-process').value=c.process;
+    document.getElementById('f-acidity').value=c.acidity;
+    document.getElementById('f-body').value=c.body;
+    document.getElementById('f-notes').value=c.notes.join(', ');
+    document.getElementById('f-price').value=c.price;
+    if(c.img){document.getElementById('f-img-url').value=c.img;updateImgPreview(c.img);}
+  } else {
+    document.getElementById('coffee-modal-title').innerHTML='<i class="fas fa-plus" style="color:var(--gold);margin-right:8px"></i>Add New Coffee';
+    document.getElementById('edit-id').value='';
+    ['f-estate','f-name','f-process','f-acidity','f-body','f-notes','f-price'].forEach(i=>document.getElementById(i).value='');
   }
+  document.getElementById('coffee-modal').classList.add('open');
+}
+function closeCoffeeModal(){document.getElementById('coffee-modal').classList.remove('open');}
+function updateImgPreview(url){document.getElementById('img-preview').innerHTML=url?'<img src="'+url+'" alt="preview">':'&#9749;';}
+function handleImgUpload(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{imgDataUrl=e.target.result;document.getElementById('img-preview').innerHTML='<img src="'+imgDataUrl+'" alt="preview">';};
+  reader.readAsDataURL(file);
+}
+function saveCoffee(){
+  const estate=document.getElementById('f-estate').value.trim();
+  const name=document.getElementById('f-name').value.trim();
+  const process=document.getElementById('f-process').value.trim();
+  const acidity=document.getElementById('f-acidity').value.trim();
+  const body=document.getElementById('f-body').value.trim();
+  const notesRaw=document.getElementById('f-notes').value.trim();
+  const price=parseInt(document.getElementById('f-price').value);
+  const imgUrl=document.getElementById('f-img-url').value.trim();
+  if(!estate||!name||!process||!price){showAdminToast('Please fill all required fields.','danger');return;}
+  const notes=notesRaw?notesRaw.split(',').map(n=>n.trim()).filter(Boolean):[];
+  const img=imgDataUrl||imgUrl||'';
+  const coffees=getCoffees();
+  const editId=document.getElementById('edit-id').value;
+  if(editId){
+    const idx=coffees.findIndex(c=>c.id===parseInt(editId));
+    coffees[idx]={id:parseInt(editId),estate,name,process,acidity,body,notes,price,img};
+    showAdminToast('Coffee updated!','success');
+  } else {
+    const newId=coffees.length?Math.max(...coffees.map(c=>c.id))+1:1;
+    coffees.push({id:newId,estate,name,process,acidity,body,notes,price,img});
+    showAdminToast('Coffee added!','success');
+  }
+  saveCoffees(coffees);closeCoffeeModal();renderStats();renderTable();
+}
+function deleteCoffee(id){
+  if(!confirm('Delete this coffee?'))return;
+  saveCoffees(getCoffees().filter(c=>c.id!==id));
+  renderStats();renderTable();showAdminToast('Coffee deleted.','danger');
+}
 
-  function deletePromo(idx) {
-    if (!confirm('Delete this promo code?')) return;
-    const promos = getPromos(); promos.splice(idx,1);
-    savePromos(promos); renderStats(); renderPromos();
-    showAdminToast('Promo code deleted.','danger');
+// PROMOS
+function renderPromos(){
+  const promos=getPromos();
+  const active=promos.filter(p=>p.active).length;
+  const totalUses=promos.reduce((s,p)=>s+(p.uses||0),0);
+  document.getElementById('promo-stats').innerHTML=
+    '<div class="promo-stat"><div class="val">'+promos.length+'</div><div class="lbl">Total Codes</div></div>'+
+    '<div class="promo-stat"><div class="val">'+active+'</div><div class="lbl">Active Codes</div></div>'+
+    '<div class="promo-stat"><div class="val">'+totalUses+'</div><div class="lbl">Total Uses</div></div>';
+  const tbody=document.getElementById('promo-table-body');
+  tbody.innerHTML='';
+  if(promos.length===0){
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--text-light);padding:30px">No promo codes yet.</td></tr>';
+    return;
   }
+  promos.forEach((p,idx)=>{
+    const tr=document.createElement('tr');
+    const pill=p.active?'<span class="status-pill status-active">Active</span>':'<span class="status-pill status-inactive">Inactive</span>';
+    tr.innerHTML='<td><strong style="letter-spacing:1px">'+p.code+'</strong><button class="copy-btn" onclick="copyCode(\''+p.code+'\')"><i class="fas fa-copy"></i> Copy</button></td>'
+      +'<td>'+p.influencer+'</td><td><strong>'+p.discount+'%</strong></td><td>'+(p.uses||0)+'</td><td>'+pill+'</td>'
+      +'<td style="font-size:0.8rem;color:var(--text-light)">'+(p.notes||'&mdash;')+'</td>'
+      +'<td><button class="btn btn-primary btn-sm" onclick="openPromoModal('+idx+')"><i class="fas fa-edit"></i> Edit</button>'
+      +' <button class="btn btn-danger btn-sm" onclick="deletePromo('+idx+')"><i class="fas fa-trash"></i> Del</button></td>';
+    tbody.appendChild(tr);
+  });
+}
+function openPromoModal(idx){
+  document.getElementById('promo-edit-id').value=(idx!==undefined)?idx:'';
+  if(idx!==undefined){
+    const p=getPromos()[idx];
+    document.getElementById('promo-modal-title').innerHTML='<i class="fas fa-edit" style="color:var(--gold);margin-right:8px"></i>Edit Promo Code';
+    document.getElementById('p-code').value=p.code;
+    document.getElementById('p-influencer').value=p.influencer;
+    document.getElementById('p-discount').value=p.discount;
+    document.getElementById('p-notes').value=p.notes||'';
+    document.getElementById('p-active').value=p.active?'true':'false';
+  } else {
+    document.getElementById('promo-modal-title').innerHTML='<i class="fas fa-plus" style="color:var(--gold);margin-right:8px"></i>Create Promo Code';
+    ['p-code','p-influencer','p-discount','p-notes'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('p-active').value='true';
+  }
+  document.getElementById('promo-modal').classList.add('open');
+}
+function closePromoModal(){document.getElementById('promo-modal').classList.remove('open');}
+function savePromo(){
+  const code=document.getElementById('p-code').value.trim().toUpperCase();
+  const influencer=document.getElementById('p-influencer').value.trim();
+  const discount=parseInt(document.getElementById('p-discount').value);
+  const notes=document.getElementById('p-notes').value.trim();
+  const active=document.getElementById('p-active').value==='true';
+  if(!code||!influencer||!discount){showAdminToast('Please fill required fields.','danger');return;}
+  const promos=getPromos();
+  const editIdx=document.getElementById('promo-edit-id').value;
+  if(editIdx!==''){
+    promos[parseInt(editIdx)]={code,influencer,discount,notes,active,uses:promos[parseInt(editIdx)].uses||0};
+    showAdminToast('Promo updated!','success');
+  } else {
+    if(promos.find(p=>p.code===code)){showAdminToast('Code already exists!','danger');return;}
+    promos.push({code,influencer,discount,notes,active,uses:0});
+    showAdminToast('Promo created!','success');
+  }
+  savePromos(promos);closePromoModal();renderStats();renderPromos();
+}
+function deletePromo(idx){
+  if(!confirm('Delete this promo code?'))return;
+  const promos=getPromos();promos.splice(idx,1);
+  savePromos(promos);renderStats();renderPromos();showAdminToast('Promo deleted.','danger');
+}
+function copyCode(code){
+  navigator.clipboard.writeText(code).then(()=>showAdminToast('"'+code+'" copied!','success'));
+}
 
-  function copyCode(code) {
-    navigator.clipboard.writeText(code).then(()=>showAdminToast(`Copied "${code}" to clipboard!`,'success'));
-  }
+// PAYMENT
+let selectedPGName='Razorpay';
+function selectPG(el,name){
+  document.querySelectorAll('.pg-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');selectedPGName=name;
+  document.getElementById('pg-title').textContent=name+' \u2013 API Keys';
+}
+function savePGKeys(){
+  const keyId=document.getElementById('pg-key-id').value.trim();
+  const keySecret=document.getElementById('pg-key-secret').value.trim();
+  const webhook=document.getElementById('pg-webhook').value.trim();
+  localStorage.setItem('frc_pg_keys',JSON.stringify({gateway:selectedPGName,keyId,keySecret,webhook}));
+  showAdminToast('Payment keys saved!','success');
+}
 
-  // ── PAYMENT GATEWAY ──
-  let selectedPGName = 'Razorpay';
-  function selectPG(el, name) {
-    document.querySelectorAll('.pg-card').forEach(c=>c.classList.remove('active'));
-    el.classList.add('active'); selectedPGName = name;
-    document.getElementById('pg-title').textContent = name + ' – API Keys';
-  }
-  function savePGKeys() {
-    const keyId = document.getElementById('pg-key-id').value.trim();
-    const keySecret = document.getElementById('pg-key-secret').value.trim();
-    const webhook = document.getElementById('pg-webhook').value.trim();
-    localStorage.setItem('frc_pg_keys', JSON.stringify({ gateway:selectedPGName, keyId, keySecret, webhook }));
-    showAdminToast('Payment keys saved!','success');
-  }
+// DISCOUNT
+function saveDiscount(){
+  const threshold=parseInt(document.getElementById('discount-threshold').value)||2;
+  const pct=parseInt(document.getElementById('discount-pct').value)||10;
+  localStorage.setItem('frc_discount',JSON.stringify({threshold,pct}));
+  document.getElementById('disc-thresh-display').textContent=threshold;
+  document.getElementById('disc-pct-display').textContent=pct+'%';
+  showAdminToast('Discount settings saved!','success');
+}
 
-  // ── DISCOUNT ──
-  function saveDiscount() {
-    const threshold = parseInt(document.getElementById('discount-threshold').value)||2;
-    const pct = parseInt(document.getElementById('discount-pct').value)||10;
-    localStorage.setItem('frc_discount', JSON.stringify({ threshold, pct }));
-    document.getElementById('disc-thresh-display').textContent = threshold;
-    document.getElementById('disc-pct-display').textContent = pct + '%';
-    showAdminToast('Discount settings saved!','success');
-  }
-
-  // ── TOAST ──
-  function showAdminToast(msg, type='') {
-    const t = document.getElementById('admin-toast');
-    t.textContent = msg; t.className = 'toast-admin show ' + type;
-    setTimeout(()=>t.className='toast-admin',3500);
-  }
+// TOAST
+function showAdminToast(msg,type=''){
+  const t=document.getElementById('admin-toast');
+  t.textContent=msg;t.className='toast-admin show '+type;
+  setTimeout(()=>t.className='toast-admin',3500);
+}
 </script>
 </body>
 </html>'''
 
-with open('/tmp/admin.html', 'w', encoding='utf-8') as f:
+with open('/tmp/admin.html','w',encoding='utf-8') as f:
     f.write(admin_html)
-print("admin.html written:", len(admin_html), "chars")
+print("admin.html written:", len(admin_html))
