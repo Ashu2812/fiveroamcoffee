@@ -1,4 +1,8 @@
-#removed msp & other codes from bottom
+// Check if user is logged in
+const frcUser = localStorage.getItem('frc_user');
+if (!frcUser) {
+  window.location.href = 'auth.html'; // send to login page
+}
 index_html = '''<!DOCTYPE html>
 <html lang="en">
 <head>
