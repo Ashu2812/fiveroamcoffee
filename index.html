@@ -197,6 +197,17 @@ index_html = '''<!DOCTYPE html>
   </button>
 </nav>
 
+<button onclick="logoutUser()">Logout</button>
+
+<script>
+function logoutUser() {
+  firebase.auth().signOut().then(() => {
+    localStorage.removeItem('frc_user');
+    window.location.href = 'auth.html';
+  });
+}
+</script>
+
 <section class="hero" id="home">
   <div class="hero-eyebrow">India's Finest Specialty Coffee</div>
   <h1>Where Every Sip<br/>Tells a <em>Story</em></h1>
