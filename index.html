@@ -609,12 +609,6 @@ renderCart();
 </body>
 </html>'''
 
-with open('/tmp/index.html', 'w', encoding='utf-8') as f:
-    f.write(index_html)
-
-# Verify both fixes
-msp_present = 'MSP Coffee' in index_html
-print(f"'MSP Coffee Pvt Ltd' present: {msp_present}")
 
 # Check footer is clean
 import re
