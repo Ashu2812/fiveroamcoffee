@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Login – Five Roam Coffee</title>
+</head>
+<body>
+
+<!-- TAB SWITCHER -->
+<div id="tab-phone">
+  <h2>Login with Phone</h2>
+  <input type="tel" id="phone-input" placeholder="+91 98765 43210"/>
+  <div id="recaptcha-container"></div>
+  <button onclick="sendPhoneOTP()">Send OTP</button>
+
+  <div id="otp-section" style="display:none">
+    <input type="text" id="otp-input" placeholder="Enter OTP"/>
+    <button onclick="verifyPhoneOTP()">Verify</button>
+  </div>
+</div>
+
+<div id="tab-email">
+  <h2>Login with Email</h2>
+  <input type="email" id="email-input" placeholder="you@email.com"/>
+  <button onclick="sendEmailLink()">Send Magic Link</button>
+  <p id="email-msg"></p>
+</div>
+
+<p id="status-msg"></p>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
+<script>
+// ── PASTE YOUR FIREBASE CONFIG HERE ──
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// ── PHONE OTP ──
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+  'recaptcha-container', { size: 'invisible' }
+);
+
+function sendPhoneOTP() {
+  const phone = document.getElementById('phone-input').value;
+  auth.signInWithPhoneNumber(phone, window.recaptchaVerifier)
+    .then(result => {
+      window.confirmationResult = result;
+      document.getElementById('otp-section').style.display = 'block';
+      document.getElementById('status-msg').textContent = 'OTP sent!';
+    })
+    .catch(err => {
+      document.getElementById('status-msg').textContent = err.message;
+    });
+}
+
+function verifyPhoneOTP() {
+  const code = document.getElementById('otp-input').value;
+  window.confirmationResult.confirm(code)
+    .then(result => {
+      const user = result.user;
+      localStorage.setItem('frc_user', JSON.stringify({ uid: user.uid, phone: user.phoneNumber }));
+      window.location.href = 'index.html'; // redirect after login
+    })
+    .catch(err => {
+      document.getElementById('status-msg').textContent = 'Invalid OTP. Try again.';
+    });
+}
+
+// ── EMAIL MAGIC LINK ──
+function sendEmailLink() {
+  const email = document.getElementById('email-input').value;
+  const actionCodeSettings = {
+    url: 'https://YOUR_DOMAIN.pages.dev/auth.html', // your Cloudflare URL
+    handleCodeInApp: true
+  };
+  auth.sendSignInLinkToEmail(email, actionCodeSettings)
+    .then(() => {
+      localStorage.setItem('emailForSignIn', email);
+      document.getElementById('email-msg').textContent = 'Check your email for the login link!';
+    })
+    .catch(err => {
+      document.getElementById('email-msg').textContent = err.message;
+    });
+}
+
+// ── HANDLE EMAIL LINK RETURN ──
+if (auth.isSignInWithEmailLink(window.location.href)) {
+  let email = localStorage.getItem('emailForSignIn');
+  if (!email) email = window.prompt('Please enter your email to confirm:');
+  auth.signInWithEmailLink(email, window.location.href)
+    .then(result => {
+      localStorage.setItem('frc_user', JSON.stringify({ uid: result.user.uid, email: result.user.email }));
+      localStorage.removeItem('emailForSignIn');
+      window.location.href = 'index.html';
+    });
+}
+
+// ── AUTH STATE LISTENER ──
+auth.onAuthStateChanged(user => {
+  if (user) {
+    document.getElementById('status-msg').textContent = 'Logged in as: ' + (user.phoneNumber || user.email);
+  }
+});
+</script>
+</body>
+</html>
