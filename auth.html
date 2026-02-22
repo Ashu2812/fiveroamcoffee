@@ -370,8 +370,8 @@ function handleRegister() {
     return;
   }
 
-  var emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-  if(!emailRegex.test(email)) {
+  // Fixed email validation - simpler approach
+  if(!email.includes('@') || !email.includes('.')) {
     showMessage('register-msg', 'Invalid email format', 'error');
     return;
   }
@@ -381,7 +381,7 @@ function handleRegister() {
   // Format phone if provided
   var formattedPhone = '';
   if(phone) {
-    formattedPhone = phone.startsWith('+') ? phone : '+91' + phone.replace(/\\D/g, '');
+    formattedPhone = phone.startsWith('+') ? phone : '+91' + phone.replace(/\D/g, '');
   }
 
   auth.createUserWithEmailAndPassword(email, password)
