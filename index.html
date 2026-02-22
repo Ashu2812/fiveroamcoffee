@@ -1,9 +1,8 @@
-// Check if user is logged in
-const frcUser = localStorage.getItem('frc_user');
-if (!frcUser) {
-  window.location.href = 'auth.html'; // send to login page
-}
-index_html = '''<!DOCTYPE html>
+
+# Create the complete index.html with Firebase authentication integration
+# All original functionality preserved, only auth check and logout added
+
+index_html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -190,23 +189,15 @@ index_html = '''<!DOCTYPE html>
     <a href="#coffees">Our Coffees</a>
     <a href="#story">Our Story</a>
     <a href="#why">Why Us</a>
+    <a href="#" onclick="logoutUser(); return false;" style="color:var(--gold-light)">
+      <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
   </div>
   <button class="cart-icon-btn" onclick="toggleCart()">
     <i class="fas fa-shopping-bag"></i>
     <span class="cart-badge" id="cart-badge" style="display:none">0</span>
   </button>
 </nav>
-
-<button onclick="logoutUser()">Logout</button>
-
-<script>
-function logoutUser() {
-  firebase.auth().signOut().then(() => {
-    localStorage.removeItem('frc_user');
-    window.location.href = 'auth.html';
-  });
-}
-</script>
 
 <section class="hero" id="home">
   <div class="hero-eyebrow">India's Finest Specialty Coffee</div>
@@ -375,7 +366,46 @@ function logoutUser() {
 
 <div class="toast" id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+
 <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCjTsSb2uKhZrzaaHHCOKICDeACXqg4v48",
+  authDomain: "fiveroamcoffee-f6636.firebaseapp.com",
+  projectId: "fiveroamcoffee-f6636",
+  storageBucket: "fiveroamcoffee-f6636.firebasestorage.app",
+  messagingSenderId: "911376181749",
+  appId: "1:911376181749:web:fbfc3949e8ed0dff26d8bc"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// ═══════════════════════════════════════════════════════
+// AUTHENTICATION CHECK - REDIRECT IF NOT LOGGED IN
+// ═══════════════════════════════════════════════════════
+const frcUser = localStorage.getItem('frc_user');
+if (!frcUser) {
+  window.location.href = 'auth.html';
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGOUT FUNCTION
+// ═══════════════════════════════════════════════════════
+function logoutUser() {
+  auth.signOut().then(function() {
+    localStorage.removeItem('frc_user');
+    window.location.href = 'auth.html';
+  }).catch(function(error) {
+    console.error('Logout error:', error);
+    alert('Error logging out. Please try again.');
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// ORIGINAL CODE - UNCHANGED BELOW THIS LINE
+// ═══════════════════════════════════════════════════════
 var DEFAULT_COFFEES = [
   {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:""},
   {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:""},
@@ -397,7 +427,7 @@ function getDiscount(){ return JSON.parse(localStorage.getItem("frc_discount")||
 var cart = [];
 var appliedPromo = null;
 
-function fmt(n){ return "\u20B9"+Number(n).toLocaleString("en-IN"); }
+function fmt(n){ return "₹"+Number(n).toLocaleString("en-IN"); }
 
 function renderGrid(){
   var coffees = getCoffees();
@@ -571,7 +601,7 @@ function placeOrder(){
   var email = document.getElementById("co-email").value.trim();
   var address = document.getElementById("co-address").value.trim();
   if(!name){ showToast("Please enter your name."); return; }
-  if(!/^[6-9]\d{9}$/.test(phone)){ showToast("Enter a valid 10-digit mobile number."); return; }
+  if(!/^[6-9]\\d{9}$/.test(phone)){ showToast("Enter a valid 10-digit mobile number."); return; }
   if(!address){ showToast("Please enter your delivery address."); return; }
   var totals = calcTotals();
   var orderId = "FRC-"+Date.now().toString(36).toUpperCase()+"-"+Math.random().toString(36).substr(2,4).toUpperCase();
@@ -620,5 +650,5 @@ renderGrid();
 renderCart();
 </script>
 </body>
-</html>'''
+</html>"""
 
