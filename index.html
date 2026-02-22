@@ -609,14 +609,3 @@ renderCart();
 </body>
 </html>'''
 
-
-# Check footer is clean
-import re
-footer = re.search(r'<footer.*?</footer>', index_html, re.DOTALL).group()
-#print("\nFINAL FOOTER:")
-#print(footer)
-
-# Check nothing after </html>
-after_html = index_html.split('</html>')
-#print(f"\nContent after </html>: '{after_html[-1].strip()}'")
-#print(f"\nFile size: {len(index_html)} chars")
