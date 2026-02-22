@@ -1,6 +1,5 @@
 
-# Create fixed auth.html that properly handles the auth state
-auth_html_fixed = """<!DOCTYPE html>
+auth_simplified = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -164,8 +163,8 @@ auth_html_fixed = """<!DOCTYPE html>
   <!-- ════════════════════════════════════════════════════ -->
   <div id="tab-login" class="tab-content active">
     <div class="form-group">
-      <label class="form-label">Email or Phone</label>
-      <input type="text" class="form-input" id="login-email" placeholder="email@example.com or +919876543210"/>
+      <label class="form-label">Email</label>
+      <input type="email" class="form-input" id="login-email" placeholder="you@example.com"/>
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
@@ -189,10 +188,6 @@ auth_html_fixed = """<!DOCTYPE html>
     <div class="form-group">
       <label class="form-label">Email Address</label>
       <input type="email" class="form-input" id="reg-email" placeholder="you@example.com"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Phone Number (Optional)</label>
-      <input type="tel" class="form-input" id="reg-phone" placeholder="+91 9876543210"/>
     </div>
     <div class="form-group">
       <label class="form-label">Password</label>
@@ -223,10 +218,9 @@ auth_html_fixed = """<!DOCTYPE html>
 
 </div>
 
-<!-- Firebase SDKs -->
+<!-- Firebase SDKs - ONLY Authentication (NO Firestore) -->
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
 <script>
 // ═══════════════════════════════════════════════════════
@@ -243,10 +237,9 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-const db = firebase.firestore();
 
 // ═══════════════════════════════════════════════════════
-// PREVENT REDIRECT LOOP - CRITICAL FIX
+// PREVENT REDIRECT LOOP
 // ═══════════════════════════════════════════════════════
 var isAuthenticating = false;
 
@@ -283,64 +276,34 @@ function showMessage(elementId, message, type) {
 }
 
 // ═══════════════════════════════════════════════════════
-// LOGIN
+// LOGIN - SIMPLIFIED (NO FIRESTORE)
 // ═══════════════════════════════════════════════════════
 function handleLogin() {
-  var emailOrPhone = document.getElementById('login-email').value.trim();
+  var email = document.getElementById('login-email').value.trim();
   var password = document.getElementById('login-password').value.trim();
 
-  if(!emailOrPhone || !password) {
-    showMessage('login-msg', 'Please enter both email/phone and password', 'error');
+  if(!email || !password) {
+    showMessage('login-msg', 'Please enter both email and password', 'error');
     return;
   }
 
   isAuthenticating = true;
   showMessage('login-msg', 'Logging in...', 'info');
 
-  // Check if input is phone number (starts with + or digits)
-  var isPhone = /^[+\\d]/.test(emailOrPhone);
-  
-  if(isPhone) {
-    // If phone number provided, fetch email from Firestore
-    var phone = emailOrPhone.startsWith('+') ? emailOrPhone : '+91' + emailOrPhone;
-    
-    db.collection('users').where('phone', '==', phone).get()
-      .then(function(querySnapshot) {
-        if(querySnapshot.empty) {
-          isAuthenticating = false;
-          showMessage('login-msg', 'No account found with this phone number', 'error');
-          return;
-        }
-        var email = querySnapshot.docs[0].data().email;
-        loginWithEmail(email, password);
-      })
-      .catch(function(error) {
-        isAuthenticating = false;
-        showMessage('login-msg', 'Error: ' + error.message, 'error');
-      });
-  } else {
-    // Direct email login
-    loginWithEmail(emailOrPhone, password);
-  }
-}
-
-function loginWithEmail(email, password) {
   auth.signInWithEmailAndPassword(email, password)
     .then(function(userCredential) {
-      // Fetch user profile
-      return db.collection('users').doc(userCredential.user.uid).get();
-    })
-    .then(function(doc) {
-      var userData = doc.exists ? doc.data() : {};
+      var user = userCredential.user;
+      
+      // Store minimal user data in localStorage
       localStorage.setItem('frc_user', JSON.stringify({
-        uid: auth.currentUser.uid,
-        email: auth.currentUser.email,
-        name: userData.name || '',
-        phone: userData.phone || ''
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName || email.split('@')[0]
       }));
+      
       showMessage('login-msg', 'Login successful! Redirecting...', 'success');
       
-      // CRITICAL: Wait before redirect to ensure localStorage is written
+      // Redirect after short delay
       setTimeout(function() {
         window.location.href = 'index.html';
       }, 1500);
@@ -350,18 +313,18 @@ function loginWithEmail(email, password) {
       var msg = error.code === 'auth/wrong-password' ? 'Incorrect password' :
                 error.code === 'auth/user-not-found' ? 'No account found with this email' :
                 error.code === 'auth/invalid-email' ? 'Invalid email format' :
+                error.code === 'auth/too-many-requests' ? 'Too many attempts. Try again later.' :
                 error.message;
       showMessage('login-msg', msg, 'error');
     });
 }
 
 // ═══════════════════════════════════════════════════════
-// REGISTRATION
+// REGISTRATION - SIMPLIFIED (NO FIRESTORE)
 // ═══════════════════════════════════════════════════════
 function handleRegister() {
   var name = document.getElementById('reg-name').value.trim();
   var email = document.getElementById('reg-email').value.trim();
-  var phone = document.getElementById('reg-phone').value.trim();
   var password = document.getElementById('reg-password').value.trim();
   var confirm = document.getElementById('reg-confirm').value.trim();
 
@@ -380,7 +343,6 @@ function handleRegister() {
     return;
   }
 
-  // Simple email validation
   if(!email.includes('@') || !email.includes('.')) {
     showMessage('register-msg', 'Invalid email format', 'error');
     return;
@@ -388,44 +350,35 @@ function handleRegister() {
 
   showMessage('register-msg', 'Creating account...', 'info');
 
-  // Format phone if provided
-  var formattedPhone = '';
-  if(phone) {
-    formattedPhone = phone.startsWith('+') ? phone : '+91' + phone.replace(/\\D/g, '');
-  }
-
   auth.createUserWithEmailAndPassword(email, password)
     .then(function(userCredential) {
       var user = userCredential.user;
       
-      // Send email verification
-      user.sendEmailVerification();
-      
-      // Store user profile in Firestore
-      return db.collection('users').doc(user.uid).set({
-        name: name,
-        email: email,
-        phone: formattedPhone,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      // Update profile with display name
+      return user.updateProfile({
+        displayName: name
+      }).then(function() {
+        // Send verification email
+        return user.sendEmailVerification();
       });
     })
     .then(function() {
-      showMessage('register-msg', 'Account created! Verification email sent. Redirecting to login...', 'success');
+      showMessage('register-msg', 'Account created! Verification email sent. Please check your inbox.', 'success');
       
-      // Clear form fields
+      // Clear form
       document.getElementById('reg-name').value = '';
       document.getElementById('reg-email').value = '';
-      document.getElementById('reg-phone').value = '';
       document.getElementById('reg-password').value = '';
       document.getElementById('reg-confirm').value = '';
       
       setTimeout(function() {
         switchTab('login');
-      }, 2500);
+      }, 3000);
     })
     .catch(function(error) {
       var msg = error.code === 'auth/email-already-in-use' ? 'Email already registered' :
                 error.code === 'auth/weak-password' ? 'Password is too weak' :
+                error.code === 'auth/invalid-email' ? 'Invalid email format' :
                 error.message;
       showMessage('register-msg', msg, 'error');
     });
@@ -446,7 +399,7 @@ function handleForgotPassword() {
 
   auth.sendPasswordResetEmail(email)
     .then(function() {
-      showMessage('forgot-msg', 'Password reset link sent to ' + email + '. Check your inbox!', 'success');
+      showMessage('forgot-msg', 'Password reset link sent! Check your email inbox.', 'success');
     })
     .catch(function(error) {
       var msg = error.code === 'auth/user-not-found' ? 'No account found with this email' :
@@ -457,13 +410,11 @@ function handleForgotPassword() {
 }
 
 // ═══════════════════════════════════════════════════════
-// AUTO-REDIRECT IF ALREADY LOGGED IN - FIXED
+// AUTO-REDIRECT IF ALREADY LOGGED IN
 // ═══════════════════════════════════════════════════════
 auth.onAuthStateChanged(function(user) {
-  // Only redirect if NOT currently authenticating and user exists
   if (user && !isAuthenticating) {
     var frcUser = localStorage.getItem('frc_user');
-    // Only redirect if localStorage has the user data
     if(frcUser) {
       window.location.href = 'index.html';
     }
@@ -473,15 +424,3 @@ auth.onAuthStateChanged(function(user) {
 </body>
 </html>"""
 
-with open('auth_fixed.html', 'w', encoding='utf-8') as f:
-    f.write(auth_html_fixed)
-
-print("✅ Fixed auth.html created!")
-print("\n🔧 Critical Fixes Applied:")
-print("1. Added 'isAuthenticating' flag to prevent redirect loop")
-print("2. Increased redirect delay to 1.5s (ensures localStorage writes)")
-print("3. Auth state listener now checks both user AND localStorage")
-print("4. Fixed email validation (simple check)")
-print("5. Added form field clearing after registration")
-print("\n📝 Replace your current auth.html with this fixed version")
-print("File ready: auth_fixed.html")
