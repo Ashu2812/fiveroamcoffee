@@ -4,112 +4,355 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Login – Five Roam Coffee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --beige:#f5f0e8;--brown:#3e2a1a;--gold:#b8860b;--gold-light:#d4a843;
+      --text:#2c1a0e;--white:#fffdf8;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:"Lato",sans-serif;
+      background:linear-gradient(135deg,#1a0f07 0%,#3e2a1a 50%,#2c1a0e 100%);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+    .auth-container{
+      background:var(--white);
+      border-radius:24px;
+      padding:40px 36px;
+      max-width:420px;
+      width:100%;
+      box-shadow:0 20px 60px rgba(0,0,0,0.4);
+    }
+    .logo{
+      font-family:"Playfair Display",serif;
+      font-size:2rem;
+      text-align:center;
+      margin-bottom:8px;
+      color:var(--brown);
+    }
+    .logo span{color:var(--gold);}
+    .tagline{
+      text-align:center;
+      font-size:0.88rem;
+      color:#6b5040;
+      margin-bottom:32px;
+    }
+    .tabs{
+      display:flex;
+      gap:12px;
+      margin-bottom:24px;
+      border-bottom:2px solid var(--beige);
+    }
+    .tab-btn{
+      flex:1;
+      padding:12px;
+      background:none;
+      border:none;
+      font-family:"Lato",sans-serif;
+      font-size:0.9rem;
+      font-weight:600;
+      color:#9b8070;
+      cursor:pointer;
+      position:relative;
+      transition:color 0.2s;
+    }
+    .tab-btn.active{
+      color:var(--brown);
+    }
+    .tab-btn.active::after{
+      content:"";
+      position:absolute;
+      bottom:-2px;
+      left:0;
+      right:0;
+      height:2px;
+      background:var(--gold);
+    }
+    .tab-content{display:none;}
+    .tab-content.active{display:block;}
+    .form-group{margin-bottom:16px;}
+    .form-label{
+      display:block;
+      font-size:0.8rem;
+      font-weight:700;
+      color:var(--brown);
+      margin-bottom:6px;
+    }
+    .form-input{
+      width:100%;
+      padding:12px 14px;
+      border:1.5px solid #e8dfc8;
+      border-radius:12px;
+      font-family:"Lato",sans-serif;
+      font-size:0.92rem;
+      outline:none;
+      transition:border-color 0.2s;
+    }
+    .form-input:focus{border-color:var(--gold);}
+    .btn{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:24px;
+      font-family:"Playfair Display",serif;
+      font-size:1rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:all 0.25s;
+    }
+    .btn-primary{
+      background:var(--gold);
+      color:var(--white);
+    }
+    .btn-primary:hover{
+      background:var(--gold-light);
+      transform:translateY(-2px);
+    }
+    .otp-section{
+      margin-top:20px;
+      padding-top:20px;
+      border-top:1px solid #e8dfc8;
+      display:none;
+    }
+    .otp-section.show{display:block;}
+    .status-msg{
+      margin-top:16px;
+      padding:10px 14px;
+      border-radius:10px;
+      font-size:0.85rem;
+      text-align:center;
+    }
+    .status-msg.success{background:#d4edda;color:#1a6b38;}
+    .status-msg.error{background:#f8d7da;color:#8b1a1a;}
+    .status-msg.info{background:#d1ecf1;color:#0c5460;}
+    #recaptcha-container{margin:16px 0;}
+  </style>
 </head>
 <body>
 
-<!-- TAB SWITCHER -->
-<div id="tab-phone">
-  <h2>Login with Phone</h2>
-  <input type="tel" id="phone-input" placeholder="+91 98765 43210"/>
-  <div id="recaptcha-container"></div>
-  <button onclick="sendPhoneOTP()">Send OTP</button>
+<div class="auth-container">
+  <div class="logo">Five<span>Roam</span></div>
+  <div class="tagline">India's Finest Specialty Coffee</div>
 
-  <div id="otp-section" style="display:none">
-    <input type="text" id="otp-input" placeholder="Enter OTP"/>
-    <button onclick="verifyPhoneOTP()">Verify</button>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('phone')">Phone Login</button>
+    <button class="tab-btn" onclick="switchTab('email')">Email Login</button>
   </div>
-</div>
 
-<div id="tab-email">
-  <h2>Login with Email</h2>
-  <input type="email" id="email-input" placeholder="you@email.com"/>
-  <button onclick="sendEmailLink()">Send Magic Link</button>
-  <p id="email-msg"></p>
-</div>
+  <!-- PHONE TAB -->
+  <div id="tab-phone" class="tab-content active">
+    <div class="form-group">
+      <label class="form-label">Mobile Number</label>
+      <input type="tel" class="form-input" id="phone-input" placeholder="+91 98765 43210"/>
+    </div>
+    <div id="recaptcha-container"></div>
+    <button class="btn btn-primary" onclick="sendPhoneOTP()">Send OTP</button>
 
-<p id="status-msg"></p>
+    <div id="otp-section" class="otp-section">
+      <div class="form-group">
+        <label class="form-label">Enter OTP</label>
+        <input type="text" class="form-input" id="otp-input" placeholder="6-digit code" maxlength="6"/>
+      </div>
+      <button class="btn btn-primary" onclick="verifyPhoneOTP()">Verify & Login</button>
+    </div>
+  </div>
+
+  <!-- EMAIL TAB -->
+  <div id="tab-email" class="tab-content">
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <input type="email" class="form-input" id="email-input" placeholder="you@example.com"/>
+    </div>
+    <button class="btn btn-primary" onclick="sendEmailLink()">Send Magic Link</button>
+  </div>
+
+  <div id="status-msg"></div>
+</div>
 
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 
 <script>
-// ── PASTE YOUR FIREBASE CONFIG HERE ──
+
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCjTsSb2uKhZrzaaHHCOKICDeACXqg4v48",
+  authDomain: "fiveroamcoffee-f6636.firebaseapp.com",
+  projectId: "fiveroamcoffee-f6636",
+  storageBucket: "fiveroamcoffee-f6636.firebasestorage.app",
+  messagingSenderId: "911376181749",
+  appId: "1:911376181749:web:fbfc3949e8ed0dff26d8bc"
 };
+
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// ── PHONE OTP ──
+// Tab switching
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(function(btn){btn.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(content){content.classList.remove('active');});
+  if(tab==='phone'){
+    document.querySelectorAll('.tab-btn')[0].classList.add('active');
+    document.getElementById('tab-phone').classList.add('active');
+  } else {
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+    document.getElementById('tab-email').classList.add('active');
+  }
+  clearStatus();
+}
+
+function showStatus(msg, type) {
+  var el = document.getElementById('status-msg');
+  el.className = 'status-msg ' + type;
+  el.textContent = msg;
+}
+
+function clearStatus() {
+  document.getElementById('status-msg').className = 'status-msg';
+  document.getElementById('status-msg').textContent = '';
+}
+
+// ─────────────────────────────────────────────────────
+// PHONE OTP
+// ─────────────────────────────────────────────────────
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-  'recaptcha-container', { size: 'invisible' }
+  'recaptcha-container', { 
+    size: 'invisible',
+    callback: function() {
+      console.log('reCAPTCHA solved');
+    }
+  }
 );
 
 function sendPhoneOTP() {
-  const phone = document.getElementById('phone-input').value;
+  var phone = document.getElementById('phone-input').value.trim();
+  if(!phone) {
+    showStatus('Please enter your phone number', 'error');
+    return;
+  }
+  
+  // Ensure phone starts with +
+  if(!phone.startsWith('+')) {
+    phone = '+91' + phone;
+  }
+
+  clearStatus();
+  showStatus('Sending OTP...', 'info');
+
   auth.signInWithPhoneNumber(phone, window.recaptchaVerifier)
-    .then(result => {
-      window.confirmationResult = result;
-      document.getElementById('otp-section').style.display = 'block';
-      document.getElementById('status-msg').textContent = 'OTP sent!';
+    .then(function(confirmationResult) {
+      window.confirmationResult = confirmationResult;
+      document.getElementById('otp-section').classList.add('show');
+      showStatus('OTP sent to ' + phone, 'success');
     })
-    .catch(err => {
-      document.getElementById('status-msg').textContent = err.message;
+    .catch(function(error) {
+      console.error('Phone auth error:', error);
+      showStatus('Error: ' + error.message, 'error');
+      // Reset reCAPTCHA
+      window.recaptchaVerifier.render().then(function(widgetId) {
+        grecaptcha.reset(widgetId);
+      });
     });
 }
 
 function verifyPhoneOTP() {
-  const code = document.getElementById('otp-input').value;
+  var code = document.getElementById('otp-input').value.trim();
+  if(!code) {
+    showStatus('Please enter the OTP', 'error');
+    return;
+  }
+
+  showStatus('Verifying...', 'info');
+
   window.confirmationResult.confirm(code)
-    .then(result => {
-      const user = result.user;
-      localStorage.setItem('frc_user', JSON.stringify({ uid: user.uid, phone: user.phoneNumber }));
-      window.location.href = 'index.html'; // redirect after login
+    .then(function(result) {
+      var user = result.user;
+      localStorage.setItem('frc_user', JSON.stringify({
+        uid: user.uid,
+        phone: user.phoneNumber,
+        loginMethod: 'phone'
+      }));
+      showStatus('Login successful! Redirecting...', 'success');
+      setTimeout(function() {
+        window.location.href = 'index.html';
+      }, 1000);
     })
-    .catch(err => {
-      document.getElementById('status-msg').textContent = 'Invalid OTP. Try again.';
+    .catch(function(error) {
+      console.error('OTP verification error:', error);
+      showStatus('Invalid OTP. Please try again.', 'error');
     });
 }
 
-// ── EMAIL MAGIC LINK ──
+// ─────────────────────────────────────────────────────
+// EMAIL MAGIC LINK
+// ─────────────────────────────────────────────────────
 function sendEmailLink() {
-  const email = document.getElementById('email-input').value;
-  const actionCodeSettings = {
-    url: 'https://YOUR_DOMAIN.pages.dev/auth.html', // your Cloudflare URL
+  var email = document.getElementById('email-input').value.trim();
+  if(!email) {
+    showStatus('Please enter your email', 'error');
+    return;
+  }
+
+  clearStatus();
+  showStatus('Sending magic link...', 'info');
+
+  var actionCodeSettings = {
+    url: window.location.origin + '/auth.html', // YOUR CLOUDFLARE DOMAIN
     handleCodeInApp: true
   };
+
   auth.sendSignInLinkToEmail(email, actionCodeSettings)
-    .then(() => {
+    .then(function() {
       localStorage.setItem('emailForSignIn', email);
-      document.getElementById('email-msg').textContent = 'Check your email for the login link!';
+      showStatus('Magic link sent! Check your email inbox.', 'success');
     })
-    .catch(err => {
-      document.getElementById('email-msg').textContent = err.message;
+    .catch(function(error) {
+      console.error('Email link error:', error);
+      showStatus('Error: ' + error.message, 'error');
     });
 }
 
-// ── HANDLE EMAIL LINK RETURN ──
+// ─────────────────────────────────────────────────────
+// HANDLE EMAIL LINK RETURN
+// ─────────────────────────────────────────────────────
 if (auth.isSignInWithEmailLink(window.location.href)) {
-  let email = localStorage.getItem('emailForSignIn');
-  if (!email) email = window.prompt('Please enter your email to confirm:');
+  var email = localStorage.getItem('emailForSignIn');
+  if (!email) {
+    email = window.prompt('Please enter your email to confirm:');
+  }
+  
+  showStatus('Completing login...', 'info');
+  
   auth.signInWithEmailLink(email, window.location.href)
-    .then(result => {
-      localStorage.setItem('frc_user', JSON.stringify({ uid: result.user.uid, email: result.user.email }));
+    .then(function(result) {
+      localStorage.setItem('frc_user', JSON.stringify({
+        uid: result.user.uid,
+        email: result.user.email,
+        loginMethod: 'email'
+      }));
       localStorage.removeItem('emailForSignIn');
-      window.location.href = 'index.html';
+      showStatus('Login successful! Redirecting...', 'success');
+      setTimeout(function() {
+        window.location.href = 'index.html';
+      }, 1000);
+    })
+    .catch(function(error) {
+      console.error('Email link verification error:', error);
+      showStatus('Error: ' + error.message, 'error');
     });
 }
 
-// ── AUTH STATE LISTENER ──
-auth.onAuthStateChanged(user => {
-  if (user) {
-    document.getElementById('status-msg').textContent = 'Logged in as: ' + (user.phoneNumber || user.email);
+// ─────────────────────────────────────────────────────
+// AUTO-REDIRECT IF ALREADY LOGGED IN
+// ─────────────────────────────────────────────────────
+auth.onAuthStateChanged(function(user) {
+  if (user && !auth.isSignInWithEmailLink(window.location.href)) {
+    window.location.href = 'index.html';
   }
 });
 </script>
