@@ -421,7 +421,7 @@ function getCoffees(){ return JSON.parse(localStorage.getItem("frc_coffees")||"n
 function getPromos(){ return JSON.parse(localStorage.getItem("frc_promos")||"[]"); }
 function getDiscount(){ return JSON.parse(localStorage.getItem("frc_discount")||'{"threshold":2,"pct":10}'); }
 
-var cart = [];
+var cart = JSON.parse(localStorage.getItem('frc_cart') || '[]');
 var appliedPromo = null;
 
 function fmt(n){ return "₹"+Number(n).toLocaleString("en-IN"); }
@@ -470,12 +470,14 @@ function addToCart(id){
   var existing = cart.find(function(i){ return i.key===key; });
   if(existing){ existing.qty++; }
   else{ cart.push({key:key,id:id,name:c.name,estate:c.estate,price:c.price,brew:brew,roast:roast,img:c.img,qty:1}); }
+  localStorage.setItem('frc_cart', JSON.stringify(cart));
   renderCart();
   showToast(c.name+" added to cart!","success");
 }
 
 function removeFromCart(key){
   cart = cart.filter(function(i){ return i.key!==key; });
+  localStorage.setItem('frc_cart', JSON.stringify(cart));
   if(cart.length===0) appliedPromo=null;
   renderCart();
 }
@@ -484,6 +486,7 @@ function changeQty(key,delta){
   var item = cart.find(function(i){ return i.key===key; });
   if(!item) return;
   item.qty += delta;
+  localStorage.setItem('frc_cart', JSON.stringify(cart));
   if(item.qty<=0) removeFromCart(key);
   else renderCart();
 }
@@ -593,6 +596,18 @@ function openCheckout(){
 }
 
 function placeOrder(){
+  if (cart.length === 0) return;
+const user = localStorage.getItem('frc_user');
+if (!user) {
+  // Guest user — show login/register modal
+  showAuthModal();
+  return;
+}
+// User is logged in — proceed to place order
+submitOrder();
+}
+
+function submitOrder() {
   var name = document.getElementById("co-name").value.trim();
   var phone = document.getElementById("co-phone").value.trim();
   var email = document.getElementById("co-email").value.trim();
