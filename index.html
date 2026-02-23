@@ -897,7 +897,8 @@ function handleModalLogin(){
       frcUser = JSON.parse(localStorage.getItem("frc_user"));
       updateNav();
       closeAuthModal();
-      showToast("Welcome back! Logged in.", "success");
+      var userName = uc.user.displayName || email.split("@")[0];
+      showToast("Welcome back, " + userName + "! ☕", "success");
       if(_authPostLoginCheckout){ setTimeout(function(){ openCheckout(); }, 400); }
     })
     .catch(function(err){
@@ -933,7 +934,7 @@ function handleModalRegister(){
         showAuthMsg("ar-msg","Account created! Verification email sent.","success");
         setTimeout(function(){
           closeAuthModal();
-          showToast("Welcome to Five Roam Coffee!", "success");
+          showToast("Welcome to Five Roam Coffee, " + name + "!", "success");
           if(_authPostLoginCheckout){ setTimeout(function(){ openCheckout(); }, 400); }
         }, 2000);
       });
