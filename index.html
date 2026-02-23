@@ -1,8 +1,4 @@
-
-# Create the complete index.html with Firebase authentication integration
-# All original functionality preserved, only auth check and logout added
-
-index_html_content = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -136,7 +132,11 @@ index_html_content = """<!DOCTYPE html>
     .promo-msg{font-size:0.76rem;margin-bottom:8px;padding:6px 10px;border-radius:8px;}
     .promo-msg.ok{background:#d4edda;color:#1a6b38;}
     .promo-msg.err{background:#f8d7da;color:#8b1a1a;}
-    .checkout-btn{width:100%;background:var(--gold);color:var(--white);border:none;border-radius:28px;padding:14px;font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 16px rgba(184,134,11,0.35);}
+    /* CHANGE 4: Two-button cart footer layout */
+    .cart-action-btns{display:flex;gap:10px;margin-top:4px;}
+    .cancel-cart-btn{flex:1;background:var(--beige);color:var(--brown);border:1.5px solid var(--beige-dark);border-radius:28px;padding:13px;font-family:"Playfair Display",serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+    .cancel-cart-btn:hover{background:var(--beige-dark);}
+    .checkout-btn{flex:2;background:var(--gold);color:var(--white);border:none;border-radius:28px;padding:13px;font-family:"Playfair Display",serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 16px rgba(184,134,11,0.35);}
     .checkout-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
 
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px;}
@@ -171,6 +171,33 @@ index_html_content = """<!DOCTYPE html>
     .toast.show{transform:translateX(-50%) translateY(0);}
     .toast.success{background:var(--success);}
 
+    /* AUTH MODAL */
+    .auth-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}
+    .auth-modal-overlay.open{display:flex;}
+    .auth-modal-box{background:var(--white);border-radius:24px;padding:36px 32px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.5);position:relative;max-height:90vh;overflow-y:auto;}
+    .auth-modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-muted);line-height:1;}
+    .auth-modal-close:hover{color:var(--brown);}
+    .auth-modal-logo{font-family:"Playfair Display",serif;font-size:1.7rem;text-align:center;color:var(--brown);margin-bottom:4px;}
+    .auth-modal-logo span{color:var(--gold);}
+    .auth-modal-sub{text-align:center;font-size:0.82rem;color:var(--text-muted);margin-bottom:22px;}
+    .auth-tabs{display:flex;border-bottom:2px solid var(--beige-dark);margin-bottom:20px;}
+    .auth-tab-btn{flex:1;padding:10px;background:none;border:none;font-family:"Lato",sans-serif;font-size:0.88rem;font-weight:600;color:var(--text-muted);cursor:pointer;position:relative;transition:color 0.2s;}
+    .auth-tab-btn.active{color:var(--brown);font-weight:700;}
+    .auth-tab-btn.active::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--gold);}
+    .auth-form-group{margin-bottom:13px;}
+    .auth-form-label{display:block;font-size:0.76rem;font-weight:700;color:var(--brown-light);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.4px;}
+    .auth-form-input{width:100%;padding:11px 13px;border:1.5px solid var(--beige-dark);border-radius:10px;font-family:"Lato",sans-serif;font-size:0.9rem;color:var(--text);outline:none;background:var(--beige);transition:border-color 0.2s;}
+    .auth-form-input:focus{border-color:var(--gold);}
+    .auth-submit-btn{width:100%;padding:13px;background:var(--gold);color:var(--white);border:none;border-radius:24px;font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.25s;margin-top:4px;}
+    .auth-submit-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+    .auth-link{text-align:center;margin-top:12px;font-size:0.82rem;color:var(--text-muted);}
+    .auth-link a{color:var(--gold);cursor:pointer;font-weight:600;text-decoration:none;}
+    .auth-link a:hover{text-decoration:underline;}
+    .auth-msg{margin-top:12px;padding:9px 12px;border-radius:9px;font-size:0.82rem;text-align:center;display:none;}
+    .auth-msg.success{background:#d4edda;color:#1a6b38;display:block;}
+    .auth-msg.error{background:#f8d7da;color:#8b1a1a;display:block;}
+    .auth-msg.info{background:#d1ecf1;color:#0c5460;display:block;}
+
     @media(max-width:768px){
       nav{padding:0 16px;}
       .nav-links{display:none;}
@@ -181,28 +208,6 @@ index_html_content = """<!DOCTYPE html>
     }
   </style>
 </head>
-
-<div id="auth-modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:#fffdf8;border-radius:24px;padding:40px 36px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.5);position:relative;max-height:90vh;overflow-y:auto;">
-
-    <!-- Close Button -->
-    <button onclick="closeAuthModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#6b5040;">✕</button>
-
-    <!-- Logo -->
-    <div style="font-family:'Playfair Display',serif;font-size:1.8rem;text-align:center;margin-bottom:6px;color:#3e2a1a;">Five<span style="color:#b8860b;">Roam</span></div>
-    <div style="text-align:center;font-size:0.82rem;color:#6b5040;margin-bottom:24px;">Login or Register to place your order</div>
-
-    <!-- Tabs -->
-    <div style="display:flex;gap:0;margin-bottom:24px;border-bottom:2px solid #f5f0e8;" id="auth-tabs">
-      <button class="auth-tab-btn active" onclick="switchAuthTab('login')" style="flex:1;padding:10px;background:none;border:none;font-family:'Lato',sans-serif;font-size:0.88rem;font-weight:700;color:#3e2a1a;cursor:pointer;position:relative;">Login</button>
-      <button class="auth-tab-btn" onclick="switchAuthTab('register')" style="flex:1;padding:10px;background:none;border:none;font-family:'Lato',sans-serif;font-size:0.88rem;font-weight:600;color:#9b8070;cursor:pointer;position:relative;">Register</button>
-    </div>
-
-    <!-- LOGIN FORM -->
-    <div id="modal-login" style="display:block;">
-      <div style="margin-bottom:14px;">
-        <label style="display:block;font-size:0.78rem;font-weig
-  
 <body>
 
 <nav>
@@ -211,8 +216,8 @@ index_html_content = """<!DOCTYPE html>
     <a href="#coffees">Our Coffees</a>
     <a href="#story">Our Story</a>
     <a href="#why">Why Us</a>
-    <a href="#" onclick="logoutUser(); return false;" style="color:var(--gold-light)">
-      <i class="fas fa-sign-out-alt"></i> Logout
+    <a href="#" id="nav-auth-link" onclick="handleNavAuth(); return false;" style="color:var(--gold-light)">
+      <i class="fas fa-user" id="nav-auth-icon"></i> <span id="nav-auth-text">Login</span>
     </a>
   </div>
   <button class="cart-icon-btn" onclick="toggleCart()">
@@ -261,7 +266,7 @@ index_html_content = """<!DOCTYPE html>
         </div>
         <div class="story-step">
           <div class="step-num">2</div>
-          <div class="step-text"><h4>Place Your Order</h4><p>Fill in your details at checkout. No account needed — quick, simple, secure.</p></div>
+          <div class="step-text"><h4>Place Your Order</h4><p>Fill in your details at checkout. Login required — quick, simple, secure.</p></div>
         </div>
         <div class="story-step">
           <div class="step-num">3</div>
@@ -321,6 +326,7 @@ index_html_content = """<!DOCTYPE html>
   </p>
 </footer>
 
+<!-- CART DRAWER -->
 <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
 <div class="cart-drawer" id="cart-drawer">
   <div class="cart-header">
@@ -336,12 +342,19 @@ index_html_content = """<!DOCTYPE html>
     </div>
     <div id="promo-msg"></div>
     <div class="cart-totals" id="cart-totals"></div>
-    <button class="checkout-btn" onclick="openCheckout()">
-      <i class="fas fa-lock" style="margin-right:6px"></i>Proceed to Checkout
-    </button>
+    <!-- CHANGE 4: Cancel + Checkout buttons -->
+    <div class="cart-action-btns">
+      <button class="cancel-cart-btn" onclick="toggleCart()">
+        <i class="fas fa-arrow-left" style="margin-right:5px"></i>Continue
+      </button>
+      <button class="checkout-btn" onclick="openCheckout()">
+        <i class="fas fa-lock" style="margin-right:5px"></i>Checkout
+      </button>
+    </div>
   </div>
 </div>
 
+<!-- CHECKOUT MODAL -->
 <div class="modal-overlay" id="checkout-modal">
   <div class="modal-box">
     <h2><i class="fas fa-lock" style="color:var(--gold);margin-right:8px"></i>Complete Your Order</h2>
@@ -365,23 +378,13 @@ index_html_content = """<!DOCTYPE html>
       <textarea class="form-control" id="co-address" placeholder="House / Flat, Street, City, PIN Code"></textarea>
     </div>
     <div class="invoice-box" id="checkout-invoice"></div>
-    <div style="display:flex;gap:10px;padding:16px;">
-      <button onclick="toggleCart()"
-        style="flex:1;padding:13px;background:#f5f0e8;color:#3e2a1a;border:1.5px solid #e8dfc8;
-               border-radius:24px;font-family:'Playfair Display',serif;font-size:0.95rem;
-               font-weight:700;cursor:pointer;">
-        ← Continue Shopping
-      </button>
-      <button onclick="placeOrder()"
-        style="flex:1;padding:13px;background:#b8860b;color:#fffdf8;border:none;
-               border-radius:24px;font-family:'Playfair Display',serif;font-size:0.95rem;
-               font-weight:700;cursor:pointer;">
-        Place Order
-      </button>
-    </div>
+    <button class="place-order-btn" onclick="placeOrder()">
+      <i class="fas fa-check-circle" style="margin-right:6px"></i>Place Order
+    </button>
   </div>
 </div>
 
+<!-- SUCCESS MODAL -->
 <div class="modal-overlay" id="success-modal">
   <div class="modal-box" style="max-width:440px">
     <div class="success-box">
@@ -397,12 +400,85 @@ index_html_content = """<!DOCTYPE html>
   </div>
 </div>
 
+<!-- AUTH MODAL (inline — no redirect) -->
+<div class="auth-modal-overlay" id="auth-modal-overlay">
+  <div class="auth-modal-box">
+    <button class="auth-modal-close" onclick="closeAuthModal()">&times;</button>
+    <div class="auth-modal-logo">Five<span>Roam</span></div>
+    <div class="auth-modal-sub" id="auth-modal-sub">Login or Register to place your order</div>
+
+    <div class="auth-tabs" id="auth-tabs">
+      <button class="auth-tab-btn active" onclick="switchAuthTab('login')">Login</button>
+      <button class="auth-tab-btn" onclick="switchAuthTab('register')">Register</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="auth-panel-login">
+      <div class="auth-form-group">
+        <label class="auth-form-label">Email</label>
+        <input type="email" class="auth-form-input" id="al-email" placeholder="you@example.com"/>
+      </div>
+      <div class="auth-form-group">
+        <label class="auth-form-label">Password</label>
+        <input type="password" class="auth-form-input" id="al-password" placeholder="Your password"/>
+      </div>
+      <button class="auth-submit-btn" onclick="handleModalLogin()">
+        <i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Login
+      </button>
+      <div class="auth-link"><a onclick="switchAuthTab('forgot')">Forgot Password?</a></div>
+      <div class="auth-msg" id="al-msg"></div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="auth-panel-register" style="display:none">
+      <div class="auth-form-group">
+        <label class="auth-form-label">Full Name</label>
+        <input type="text" class="auth-form-input" id="ar-name" placeholder="Your full name"/>
+      </div>
+      <div class="auth-form-group">
+        <label class="auth-form-label">Email</label>
+        <input type="email" class="auth-form-input" id="ar-email" placeholder="you@example.com"/>
+      </div>
+      <div class="auth-form-group">
+        <label class="auth-form-label">Password</label>
+        <input type="password" class="auth-form-input" id="ar-password" placeholder="Min 6 characters"/>
+      </div>
+      <div class="auth-form-group">
+        <label class="auth-form-label">Confirm Password</label>
+        <input type="password" class="auth-form-input" id="ar-confirm" placeholder="Re-enter password"/>
+      </div>
+      <button class="auth-submit-btn" onclick="handleModalRegister()">
+        <i class="fas fa-user-plus" style="margin-right:6px"></i>Create Account
+      </button>
+      <div class="auth-msg" id="ar-msg"></div>
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+    <div id="auth-panel-forgot" style="display:none">
+      <div class="auth-form-group">
+        <label class="auth-form-label">Email Address</label>
+        <input type="email" class="auth-form-input" id="af-email" placeholder="your@email.com"/>
+      </div>
+      <button class="auth-submit-btn" onclick="handleModalForgot()">
+        <i class="fas fa-paper-plane" style="margin-right:6px"></i>Send Reset Link
+      </button>
+      <div class="auth-link"><a onclick="switchAuthTab('login')">&#8592; Back to Login</a></div>
+      <div class="auth-msg" id="af-msg"></div>
+    </div>
+
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
+<!-- Firebase Auth only (no Firestore needed) -->
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 
 <script>
+// ═══════════════════════════════════════════
+// FIREBASE CONFIG
+// ═══════════════════════════════════════════
 const firebaseConfig = {
   apiKey: "AIzaSyCjTsSb2uKhZrzaaHHCOKICDeACXqg4v48",
   authDomain: "fiveroamcoffee-f6636.firebaseapp.com",
@@ -411,31 +487,56 @@ const firebaseConfig = {
   messagingSenderId: "911376181749",
   appId: "1:911376181749:web:fbfc3949e8ed0dff26d8bc"
 };
-
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// ═══════════════════════════════════════════════════════
-// AUTHENTICATION CHECK - REDIRECT IF NOT LOGGED IN
-// ═══════════════════════════════════════════════════════
-let frcUser = localStorage.getItem('frc_user');
+// ═══════════════════════════════════════════
+// CHANGE 1: NO FORCED REDIRECT — browse freely
+// ═══════════════════════════════════════════
+let frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
 
-// ═══════════════════════════════════════════════════════
-// LOGOUT FUNCTION
-// ═══════════════════════════════════════════════════════
-function logoutUser() {
-  auth.signOut().then(function() {
-    localStorage.removeItem('frc_user');
-    window.location.href = 'auth.html';
-  }).catch(function(error) {
-    console.error('Logout error:', error);
-    alert('Error logging out. Please try again.');
-  });
+// Update nav login/logout button
+function updateNav() {
+  frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
+  var icon = document.getElementById("nav-auth-icon");
+  var text = document.getElementById("nav-auth-text");
+  if (frcUser) {
+    icon.className = "fas fa-sign-out-alt";
+    text.textContent = "Logout";
+  } else {
+    icon.className = "fas fa-user";
+    text.textContent = "Login";
+  }
 }
 
-// ═══════════════════════════════════════════════════════
-// ORIGINAL CODE - UNCHANGED BELOW THIS LINE
-// ═══════════════════════════════════════════════════════
+function handleNavAuth() {
+  frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
+  if (frcUser) {
+    // Logged in — logout
+    auth.signOut().then(function() {
+      localStorage.removeItem("frc_user");
+      updateNav();
+      showToast("Logged out successfully.");
+    });
+  } else {
+    // Guest — open auth modal
+    openAuthModal("login", false);
+  }
+}
+
+// ═══════════════════════════════════════════
+// CHANGE 2 & 3: CART PERSISTS IN LOCALSTORAGE
+// ═══════════════════════════════════════════
+var cart = JSON.parse(localStorage.getItem("frc_cart") || "[]");
+var appliedPromo = null;
+
+function saveCart() {
+  localStorage.setItem("frc_cart", JSON.stringify(cart));
+}
+
+// ═══════════════════════════════════════════
+// COFFEE DATA
+// ═══════════════════════════════════════════
 var DEFAULT_COFFEES = [
   {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:""},
   {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:""},
@@ -454,10 +555,7 @@ function getCoffees(){ return JSON.parse(localStorage.getItem("frc_coffees")||"n
 function getPromos(){ return JSON.parse(localStorage.getItem("frc_promos")||"[]"); }
 function getDiscount(){ return JSON.parse(localStorage.getItem("frc_discount")||'{"threshold":2,"pct":10}'); }
 
-var cart = JSON.parse(localStorage.getItem('frc_cart') || '[]');
-var appliedPromo = null;
-
-function fmt(n){ return "₹"+Number(n).toLocaleString("en-IN"); }
+function fmt(n){ return "\u20b9"+Number(n).toLocaleString("en-IN"); }
 
 function renderGrid(){
   var coffees = getCoffees();
@@ -486,7 +584,7 @@ function renderGrid(){
       +"</div>"
       +"<div class='coffee-card-footer'>"
       +  "<div class='coffee-price'>"+fmt(c.price)+" <span>/ 100g</span></div>"
-      +  "<button class='add-btn' onclick='addToCart("+c.id+")'><i class='fas fa-plus'></i> Add</button>"
+      +  "<button class='add-btn' onclick='addToCart("+c.id+")'>\u002b Add</button>"
       +"</div>";
     grid.appendChild(card);
   });
@@ -503,15 +601,15 @@ function addToCart(id){
   var existing = cart.find(function(i){ return i.key===key; });
   if(existing){ existing.qty++; }
   else{ cart.push({key:key,id:id,name:c.name,estate:c.estate,price:c.price,brew:brew,roast:roast,img:c.img,qty:1}); }
-  localStorage.setItem('frc_cart', JSON.stringify(cart));
+  saveCart(); // CHANGE 3
   renderCart();
   showToast(c.name+" added to cart!","success");
 }
 
 function removeFromCart(key){
   cart = cart.filter(function(i){ return i.key!==key; });
-  localStorage.setItem('frc_cart', JSON.stringify(cart));
   if(cart.length===0) appliedPromo=null;
+  saveCart(); // CHANGE 3
   renderCart();
 }
 
@@ -519,9 +617,8 @@ function changeQty(key,delta){
   var item = cart.find(function(i){ return i.key===key; });
   if(!item) return;
   item.qty += delta;
-  localStorage.setItem('frc_cart', JSON.stringify(cart));
   if(item.qty<=0) removeFromCart(key);
-  else renderCart();
+  else { saveCart(); renderCart(); } // CHANGE 3
 }
 
 function calcTotals(){
@@ -605,8 +702,26 @@ function applyPromo(){
   }
 }
 
+// CHANGE 2: openCheckout now checks auth first
 function openCheckout(){
   if(cart.length===0) return;
+  frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
+  if(!frcUser){
+    // Close cart, open auth modal, after login -> reopen checkout
+    toggleCart();
+    openAuthModal("login", true);
+    return;
+  }
+  // Logged in — auto-fill known details
+  var u = frcUser;
+  if(u.displayName){ document.getElementById("co-name").value = u.displayName; }
+  if(u.email){ document.getElementById("co-email").value = u.email; }
+  buildInvoice();
+  document.getElementById("checkout-modal").classList.add("open");
+  toggleCart();
+}
+
+function buildInvoice(){
   var totals = calcTotals();
   var disc = getDiscount();
   var itemRows = cart.map(function(i){
@@ -616,37 +731,22 @@ function openCheckout(){
     ? "<div class='invoice-row discount'><span>Multi-pack "+disc.pct+"% off</span><span>-"+fmt(totals.multiDiscount)+"</span></div>" : "";
   var promoRow = totals.promoDiscount>0
     ? "<div class='invoice-row discount'><span>Promo \""+appliedPromo.code+"\"</span><span>-"+fmt(totals.promoDiscount)+"</span></div>" : "";
-  var invoiceHtml =
+  document.getElementById("checkout-invoice").innerHTML =
     "<div class='invoice-title'>Order Summary</div>"
     +itemRows
     +"<div class='invoice-row'><span>Subtotal</span><span>"+fmt(totals.subtotal)+"</span></div>"
     +multiRow+promoRow
     +"<div class='invoice-free-delivery'><i class='fas fa-truck'></i> Delivery Free on every order</div>"
     +"<div class='invoice-row total'><span>Total Payable</span><span>"+fmt(totals.grand)+"</span></div>";
-  document.getElementById("checkout-invoice").innerHTML = invoiceHtml;
-  document.getElementById("checkout-modal").classList.add("open");
-  toggleCart();
 }
 
 function placeOrder(){
-  if (cart.length === 0) return;
-const user = localStorage.getItem('frc_user');
-if (!user) {
-  // Guest user — show login/register modal
-  showAuthModal();
-  return;
-}
-// User is logged in — proceed to place order
-submitOrder();
-}
-
-function submitOrder() {
   var name = document.getElementById("co-name").value.trim();
   var phone = document.getElementById("co-phone").value.trim();
   var email = document.getElementById("co-email").value.trim();
   var address = document.getElementById("co-address").value.trim();
   if(!name){ showToast("Please enter your name."); return; }
-  if(!/^[6-9]\\d{9}$/.test(phone)){ showToast("Enter a valid 10-digit mobile number."); return; }
+  if(!/^[6-9]\d{9}$/.test(phone)){ showToast("Enter a valid 10-digit mobile number."); return; }
   if(!address){ showToast("Please enter your delivery address."); return; }
   var totals = calcTotals();
   var orderId = "FRC-"+Date.now().toString(36).toUpperCase()+"-"+Math.random().toString(36).substr(2,4).toUpperCase();
@@ -665,6 +765,7 @@ function submitOrder() {
   document.getElementById("success-order-id").textContent = orderId;
   document.getElementById("success-modal").classList.add("open");
   cart=[]; appliedPromo=null;
+  saveCart(); // CHANGE 3 - clear cart in localStorage too
   ["co-name","co-phone","co-email","co-address"].forEach(function(id){ document.getElementById(id).value=""; });
   document.getElementById("promo-input").value="";
   document.getElementById("promo-msg").innerHTML="";
@@ -691,9 +792,143 @@ function showToast(msg,type){
   setTimeout(function(){ t.className="toast"; },3000);
 }
 
+// ═══════════════════════════════════════════
+// AUTH MODAL FUNCTIONS
+// ═══════════════════════════════════════════
+var _authPostLoginCheckout = false;
+
+function openAuthModal(tab, proceedToCheckout) {
+  _authPostLoginCheckout = proceedToCheckout || false;
+  var sub = document.getElementById("auth-modal-sub");
+  sub.textContent = proceedToCheckout
+    ? "Login or Register to place your order"
+    : "Welcome back to Five Roam Coffee";
+  document.getElementById("auth-modal-overlay").classList.add("open");
+  switchAuthTab(tab || "login");
+}
+
+function closeAuthModal() {
+  document.getElementById("auth-modal-overlay").classList.remove("open");
+  clearAuthMsgs();
+}
+
+// Close on overlay click
+document.getElementById("auth-modal-overlay").addEventListener("click", function(e){
+  if(e.target === this) closeAuthModal();
+});
+
+function switchAuthTab(tab) {
+  document.getElementById("auth-panel-login").style.display    = "none";
+  document.getElementById("auth-panel-register").style.display = "none";
+  document.getElementById("auth-panel-forgot").style.display   = "none";
+  document.querySelectorAll(".auth-tab-btn").forEach(function(b){ b.classList.remove("active"); });
+  clearAuthMsgs();
+  if(tab==="login"){
+    document.getElementById("auth-panel-login").style.display = "block";
+    document.querySelectorAll(".auth-tab-btn")[0].classList.add("active");
+  } else if(tab==="register"){
+    document.getElementById("auth-panel-register").style.display = "block";
+    document.querySelectorAll(".auth-tab-btn")[1].classList.add("active");
+  } else if(tab==="forgot"){
+    document.getElementById("auth-panel-forgot").style.display = "block";
+  }
+}
+
+function clearAuthMsgs(){
+  ["al-msg","ar-msg","af-msg"].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el){ el.className="auth-msg"; el.textContent=""; }
+  });
+}
+
+function showAuthMsg(id, msg, type){
+  var el = document.getElementById(id);
+  el.className = "auth-msg "+type;
+  el.textContent = msg;
+}
+
+function handleModalLogin(){
+  var email    = document.getElementById("al-email").value.trim();
+  var password = document.getElementById("al-password").value.trim();
+  if(!email||!password){ showAuthMsg("al-msg","Please enter email and password","error"); return; }
+  showAuthMsg("al-msg","Logging in...","info");
+  auth.signInWithEmailAndPassword(email, password)
+    .then(function(uc){
+      localStorage.setItem("frc_user", JSON.stringify({
+        uid: uc.user.uid,
+        email: uc.user.email,
+        displayName: uc.user.displayName || email.split("@")[0]
+      }));
+      frcUser = JSON.parse(localStorage.getItem("frc_user"));
+      updateNav();
+      closeAuthModal();
+      showToast("Welcome back! Logged in.", "success");
+      if(_authPostLoginCheckout){ setTimeout(function(){ openCheckout(); }, 400); }
+    })
+    .catch(function(err){
+      var msg = err.code==="auth/wrong-password"    ? "Incorrect password" :
+                err.code==="auth/user-not-found"    ? "No account with this email" :
+                err.code==="auth/invalid-email"     ? "Invalid email format" :
+                err.code==="auth/too-many-requests" ? "Too many attempts. Try later." :
+                err.message;
+      showAuthMsg("al-msg", msg, "error");
+    });
+}
+
+function handleModalRegister(){
+  var name     = document.getElementById("ar-name").value.trim();
+  var email    = document.getElementById("ar-email").value.trim();
+  var password = document.getElementById("ar-password").value.trim();
+  var confirm  = document.getElementById("ar-confirm").value.trim();
+  if(!name||!email||!password||!confirm){ showAuthMsg("ar-msg","Please fill all fields","error"); return; }
+  if(password!==confirm){ showAuthMsg("ar-msg","Passwords do not match","error"); return; }
+  if(password.length<6){ showAuthMsg("ar-msg","Password must be at least 6 characters","error"); return; }
+  showAuthMsg("ar-msg","Creating account...","info");
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(function(uc){
+      return uc.user.updateProfile({displayName:name}).then(function(){
+        localStorage.setItem("frc_user", JSON.stringify({
+          uid: uc.user.uid,
+          email: uc.user.email,
+          displayName: name
+        }));
+        frcUser = JSON.parse(localStorage.getItem("frc_user"));
+        updateNav();
+        uc.user.sendEmailVerification();
+        showAuthMsg("ar-msg","Account created! Verification email sent.","success");
+        setTimeout(function(){
+          closeAuthModal();
+          showToast("Welcome to Five Roam Coffee!", "success");
+          if(_authPostLoginCheckout){ setTimeout(function(){ openCheckout(); }, 400); }
+        }, 2000);
+      });
+    })
+    .catch(function(err){
+      var msg = err.code==="auth/email-already-in-use" ? "Email already registered" :
+                err.code==="auth/weak-password"        ? "Password too weak" :
+                err.message;
+      showAuthMsg("ar-msg", msg, "error");
+    });
+}
+
+function handleModalForgot(){
+  var email = document.getElementById("af-email").value.trim();
+  if(!email){ showAuthMsg("af-msg","Please enter your email","error"); return; }
+  showAuthMsg("af-msg","Sending reset link...","info");
+  auth.sendPasswordResetEmail(email)
+    .then(function(){ showAuthMsg("af-msg","Reset link sent! Check your inbox.","success"); })
+    .catch(function(err){
+      var msg = err.code==="auth/user-not-found" ? "No account with this email" : err.message;
+      showAuthMsg("af-msg", msg, "error");
+    });
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
 renderGrid();
 renderCart();
+updateNav();
 </script>
 </body>
-</html>"""
-
+</html>
