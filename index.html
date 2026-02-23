@@ -982,6 +982,10 @@ function handleModalForgot(){
   var email = document.getElementById("af-email").value.trim();
   if(!email){ showAuthMsg("af-msg","Please enter your email","error"); return; }
   showAuthMsg("af-msg","Sending reset link...","info");
+  var actionCodeSettings = {
+    url: 'https://fiveroamcoffee.com',
+    handleCodeInApp: false
+  };
   auth.sendPasswordResetEmail(email)
     .then(function(){ showAuthMsg("af-msg","Reset link sent! Check your inbox.","success"); })
     .catch(function(err){
