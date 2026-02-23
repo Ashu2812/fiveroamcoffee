@@ -385,10 +385,7 @@ const auth = firebase.auth();
 // ═══════════════════════════════════════════════════════
 // AUTHENTICATION CHECK - REDIRECT IF NOT LOGGED IN
 // ═══════════════════════════════════════════════════════
-const frcUser = localStorage.getItem('frc_user');
-if (!frcUser) {
-  window.location.href = 'auth.html';
-}
+let frcUser = localStorage.getItem('frc_user');
 
 // ═══════════════════════════════════════════════════════
 // LOGOUT FUNCTION
