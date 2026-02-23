@@ -337,7 +337,8 @@
   <div class="cart-footer" id="cart-footer" style="display:none">
     <div class="promo-row">
       <input type="text" class="promo-input" id="promo-input" placeholder="Promo Code"
-             style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"/>
+             style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"
+       autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <button class="promo-apply-btn" onclick="applyPromo()">Apply</button>
     </div>
     <div id="promo-msg"></div>
@@ -429,7 +430,8 @@
       </div>
       <div class="auth-form-group">
         <label class="auth-form-label">Password</label>
-        <input type="password" class="auth-form-input" id="al-password" placeholder="Your password"/>
+        <input type="password" class="auth-form-input" id="al-password" placeholder="Your password"
+       autocomplete="new-password"/>
       </div>
       <button class="auth-submit-btn" onclick="handleModalLogin()">
         <i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Login
@@ -790,8 +792,17 @@ function toggleCart(){
   var drawer = document.getElementById("cart-drawer");
   var overlay = document.getElementById("cart-overlay");
   var isOpen = drawer.classList.contains("open");
-  if(isOpen){ drawer.classList.remove("open"); overlay.classList.remove("open"); }
-  else{ renderCart(); drawer.classList.add("open"); overlay.classList.add("open"); }
+  if(isOpen){
+    drawer.classList.remove("open");
+    overlay.classList.remove("open");
+  } else {
+    // Clear promo field when opening cart
+    document.getElementById("promo-input").value = "";
+    document.getElementById("promo-msg").innerHTML = "";
+    renderCart();
+    drawer.classList.add("open");
+    overlay.classList.add("open");
+  }
 }
 
 function showToast(msg,type){
@@ -808,6 +819,11 @@ var _authPostLoginCheckout = false;
 
 function openAuthModal(tab, proceedToCheckout) {
   _authPostLoginCheckout = proceedToCheckout || false;
+  // Clear all fields every time modal opens
+  ["al-email","al-password","ar-name","ar-email","ar-password","ar-confirm","af-email"].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.value = "";
+  });
   var sub = document.getElementById("auth-modal-sub");
   sub.textContent = proceedToCheckout
     ? "Login or Register to place your order"
@@ -832,6 +848,16 @@ function switchAuthTab(tab) {
   document.getElementById("auth-panel-forgot").style.display   = "none";
   document.querySelectorAll(".auth-tab-btn").forEach(function(b){ b.classList.remove("active"); });
   clearAuthMsgs();
+  
+  // Clear all auth input fields on every tab switch
+  document.getElementById("al-email").value    = "";
+  document.getElementById("al-password").value = "";
+  document.getElementById("ar-name").value     = "";
+  document.getElementById("ar-email").value    = "";
+  document.getElementById("ar-password").value = "";
+  document.getElementById("ar-confirm").value  = "";
+  document.getElementById("af-email").value    = "";
+  
   if(tab==="login"){
     document.getElementById("auth-panel-login").style.display = "block";
     document.querySelectorAll(".auth-tab-btn")[0].classList.add("active");
