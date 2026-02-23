@@ -320,11 +320,40 @@
 </section>
 
 <footer>
-  <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:8px">Five Roam Coffee</p>
-  <p style="margin-top:10px">
-    <span>&copy; 2026 Five Roam Coffee. All rights reserved.</span>
-  </p>
+  <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:16px">Five Roam Coffee</p>
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+
+    <!-- Bottom Left: Copyright -->
+    <span style="color:rgba(255,255,255,0.5);font-size:0.82rem;">
+      &copy; 2026 Five Roam Coffee. All rights reserved.
+    </span>
+
+    <!-- Bottom Right: Social Media -->
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span style="color:rgba(255,255,255,0.5);font-size:0.82rem;font-weight:600;letter-spacing:0.5px;">Follow Us</span>
+
+      <!-- Instagram -->
+      <a href="https://www.instagram.com/fiveroamcoffee/" target="_blank" rel="noopener"
+         title="Five Roam Coffee on Instagram"
+         style="color:rgba(255,255,255,0.6);font-size:1.4rem;text-decoration:none;transition:color 0.2s;"
+         onmouseover="this.style.color='#E1306C';"
+         onmouseout="this.style.color='rgba(255,255,255,0.6)';">
+        <i class="fab fa-instagram"></i>
+      </a>
+
+      <!-- Facebook -->
+      <a href="https://www.facebook.com/profile.php?id=61585702059341" target="_blank" rel="noopener"
+         title="Five Roam Coffee on Facebook"
+         style="color:rgba(255,255,255,0.6);font-size:1.4rem;text-decoration:none;transition:color 0.2s;"
+         onmouseover="this.style.color='#1877F2';"
+         onmouseout="this.style.color='rgba(255,255,255,0.6)';">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </div>
+
+  </div>
 </footer>
+
 
 <!-- CART DRAWER -->
 <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
