@@ -316,7 +316,7 @@
     <div class="why-card">
       <div class="why-icon"><i class="fas fa-shipping-fast"></i></div>
       <h3>Free Delivery</h3>
-      <p>No minimum order. No delivery charges. Ever. On every single order.</p>
+      <p>No minimum order. No delivery charges.</p>
     </div>
     <div class="why-card">
       <div class="why-icon"><i class="fas fa-leaf"></i></div>
@@ -724,7 +724,7 @@ function renderCart(){
   if(totals.promoDiscount>0){
     html += "<div class='cart-total-row discount'><span><i class='fas fa-percent' style='margin-right:4px'></i>Promo \""+appliedPromo.code+"\"</span><span>-"+fmt(totals.promoDiscount)+"</span></div>";
   }
-  html += "<div class='cart-total-row'><span class='free-delivery-note'><i class='fas fa-truck'></i> Delivery Free on every order</span></div>";
+  html += "<div class='cart-total-row'><span class='free-delivery-note'><i class='fas fa-truck'></i> Free Shipping </span></div>";
   html += "<div class='cart-total-row grand'><span>Total Payable</span><span>"+fmt(totals.grand)+"</span></div>";
   document.getElementById("cart-totals").innerHTML = html;
 }
