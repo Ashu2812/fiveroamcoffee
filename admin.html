@@ -355,12 +355,6 @@ admin_html = '''<!DOCTYPE html>
       <div class="form-group"><label>Body</label><input type="text" class="form-control" id="f-body" placeholder="e.g. Well rounded, smooth"/></div>
     </div>
     <div class="form-row-full"><label>Taste Notes (comma-separated)</label><input type="text" class="form-control" id="f-notes" placeholder="Golden Kiwi, White Chocolate"/></div>
-    <div class="form-row-full"><label>Image URL</label><input type="text" class="form-control" id="f-img-url" placeholder="https://..." oninput="updateImgPreview(this.value)"/></div>
-    <div class="form-row-full">
-      <label>Or Upload Image</label>
-      <input type="file" class="form-control" id="f-img-file" accept="image/*" onchange="handleImgUpload(this)"/>
-      <div class="img-preview" id="img-preview">&#9749;</div>
-    </div>
     <div class="modal-actions">
       <button class="btn btn-danger" onclick="closeCoffeeModal()"><i class="fas fa-times"></i> Cancel</button>
       <button class="btn btn-success" onclick="saveCoffee()"><i class="fas fa-save"></i> Save Coffee</button>
@@ -584,7 +578,6 @@ function exportOrdersCSV() {
   showAdminToast("Orders exported!", "success");
 }
 
-var imgDataUrl = "";
 function renderTable() {
   var coffees = getCoffees();
   var tbody = document.getElementById("admin-table-body");
@@ -605,10 +598,6 @@ function renderTable() {
 }
 
 function openCoffeeModal(id) {
-  imgDataUrl = "";
-  document.getElementById("img-preview").innerHTML = "&#9749;";
-  document.getElementById("f-img-url").value = "";
-  document.getElementById("f-img-file").value = "";
   if (id) {
     var c = getCoffees().find(function(x) { return x.id === id; });
     document.getElementById("coffee-modal-title").innerHTML = "<i class='fas fa-edit' style='color:var(--gold);margin-right:8px'></i>Edit Coffee";
@@ -630,13 +619,7 @@ function openCoffeeModal(id) {
 }
 
 function closeCoffeeModal() { document.getElementById("coffee-modal").classList.remove("open"); }
-function updateImgPreview(url) { document.getElementById("img-preview").innerHTML = url ? "<img src='" + url + "' alt='preview'>" : "&#9749;"; }
-function handleImgUpload(input) {
-  var file = input.files[0]; if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function(e) { imgDataUrl = e.target.result; document.getElementById("img-preview").innerHTML = "<img src='" + imgDataUrl + "' alt='preview'>"; };
-  reader.readAsDataURL(file);
-}
+
 
 function saveCoffee() {
   var estate = document.getElementById("f-estate").value.trim();
@@ -655,7 +638,7 @@ function saveCoffee() {
     var existing = getCoffees().find(function(c){ return c.id === parseInt(editId); });
     existingImg = existing ? existing.img : "";
   }
-  var img = imgDataUrl || imgUrl || existingImg || "";
+  var img = existingImg || "";
   var coffees = getCoffees();
   if (editId) {
     var idx = coffees.findIndex(function(c) { return c.id === parseInt(editId); });
