@@ -657,7 +657,6 @@ function saveCoffee() {
   }
   var img = imgDataUrl || imgUrl || existingImg || "";
   var coffees = getCoffees();
-  var editId = document.getElementById("edit-id").value;
   if (editId) {
     var idx = coffees.findIndex(function(c) { return c.id === parseInt(editId); });
     coffees[idx] = {id:parseInt(editId), estate:estate, name:name, process:process, acidity:acidity, body:body, notes:notes, price:price, img:img};
