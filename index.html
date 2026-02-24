@@ -58,13 +58,13 @@
     .coffees-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px;max-width:1200px;margin:0 auto;}
     .coffee-card{background:var(--white);border:1.5px solid var(--beige-dark);border-radius:20px;overflow:hidden;transition:all 0.3s;box-shadow:0 4px 18px var(--shadow);}
     .coffee-card:hover{transform:translateY(-6px);box-shadow:0 14px 40px rgba(62,42,26,0.18);border-color:var(--gold-light);}
-    .coffee-card-img{height:180px;background:linear-gradient(135deg,var(--gold-light),var(--brown-light));display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden;}
+    .coffee-card-img{height:260px;background:linear-gradient(135deg,var(--gold-light),var(--brown-light));display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;overflow:hidden;}
     .coffee-card-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
     .coffee-card-body{padding:20px;}
     .coffee-estate{font-size:0.72rem;font-weight:700;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;}
     .coffee-name{font-family:"Playfair Display",serif;font-size:1.1rem;color:var(--brown);margin-bottom:6px;font-weight:700;}
     .coffee-process{font-size:0.78rem;color:var(--text-light);margin-bottom:10px;line-height:1.5;}
-    .coffee-notes{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
+    .coffee-notes{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;}
     .note-pill{background:var(--beige-mid);color:var(--brown-light);padding:3px 9px;border-radius:10px;font-size:0.71rem;font-weight:600;}
     .coffee-card-footer{display:flex;align-items:center;justify-content:space-between;padding:0 20px 16px;}
     .coffee-price{font-family:"Playfair Display",serif;font-size:1.15rem;color:var(--brown);font-weight:700;}
@@ -710,11 +710,11 @@ function renderGrid(){
       +  "<div class='coffee-process'><i class='fas fa-flask' style='color:var(--gold);margin-right:4px'></i>"+c.process+"</div>"
       +  "<div class='coffee-notes'>"+notePills+"</div>"
       +"</div>"
-      +"<div class='card-selectors'>"
-      +  "<div><div class='card-sel-label'>Brew Method</div>"
-      +    "<select class='card-sel' id='brew-"+c.id+"'><option value=''>Select brew method...</option>"+brewOpts+"</select></div>"
-      +  "<div><div class='card-sel-label'>Roast Level</div>"
-      +    "<select class='card-sel' id='roast-"+c.id+"'><option value=''>Select roast level...</option>"+roastOpts+"</select></div>"
+      +"<div class='card-selectors' style='flex-direction:row;gap:10px;padding:0 20px 10px;'>"
+      +  "<div style='flex:1;'><div class='card-sel-label'>Brew Method</div>"
+      +    "<select class='card-sel' id='brew-"+c.id+"'><option value=''>Select brew...</option>"+brewOpts+"</select></div>"
+      +  "<div style='flex:1;'><div class='card-sel-label'>Roast Level</div>"
+      +    "<select class='card-sel' id='roast-"+c.id+"'><option value=''>Select roast...</option>"+roastOpts+"</select></div>"
       +"</div>"
       +"<div class='coffee-card-footer'>"
       +  "<div class='coffee-price'>"+fmt(c.price)+" <span>/ 250g</span></div>"
