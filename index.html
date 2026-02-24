@@ -173,7 +173,7 @@
     .continue-btn{background:var(--gold);color:var(--white);border:none;border-radius:24px;padding:12px 32px;font-family:"Playfair Display",serif;font-size:0.95rem;font-weight:700;cursor:pointer;margin-top:14px;transition:background 0.2s;}
     .continue-btn:hover{background:var(--gold-light);}
 
-    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--brown);color:var(--white);padding:11px 24px;border-radius:24px;font-size:0.88rem;font-weight:600;z-index:2000;transition:transform 0.3s;white-space:nowrap;pointer-events:none;}
+    .toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-120px);background:var(--brown);color:var(--white);padding:13px 28px;border-radius:28px;font-size:0.9rem;font-weight:600;z-index:2000;transition:transform 0.35s cubic-bezier(.4,0,.2,1);white-space:nowrap;pointer-events:none;box-shadow:0 6px 24px rgba(0,0,0,0.25);display:flex;align-items:center;gap:8px;}
     .toast.show{transform:translateX(-50%) translateY(0);}
     .toast.success{background:var(--success);}
 
@@ -849,13 +849,16 @@ function toggleCart(){
   }
 }
 
-function showToast(msg,type){
+function showToast(msg, type){
   var t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = "toast show "+(type||"");
-  setTimeout(function(){ t.className="toast"; },3000);
+  var icon = type === "success"
+    ? "<i class='fas fa-check-circle' style='margin-right:6px'></i>"
+    : "<i class='fas fa-info-circle' style='margin-right:6px'></i>";
+  t.innerHTML = icon + msg;
+  t.className = "toast show " + (type || "");
+  setTimeout(function(){ t.className = "toast"; }, 3000);
 }
-
+  
 // ═══════════════════════════════════════════
 // AUTH MODAL FUNCTIONS
 // ═══════════════════════════════════════════
