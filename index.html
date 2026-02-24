@@ -686,7 +686,14 @@ var DEFAULT_COFFEES = [
 var BREW_OPTIONS = ["Espresso","Pour Over / V60","AeroPress","French Press","Moka Pot","Cold Brew"];
 var ROAST_OPTIONS = ["Light Roast","Medium Roast","Dark Roast"];
 
-function getCoffees(){ return JSON.parse(localStorage.getItem("frc_coffees")||"null")||DEFAULT_COFFEES; }
+var DATA_VERSION = "v2";
+if(localStorage.getItem("frc_data_version") !== DATA_VERSION){
+  localStorage.removeItem("frc_coffees");
+  localStorage.setItem("frc_data_version", DATA_VERSION);
+}
+function getCoffees(){
+  return JSON.parse(localStorage.getItem("frc_coffees")) || DEFAULT_COFFEES;
+}
 function getPromos(){ return JSON.parse(localStorage.getItem("frc_promos")||"[]"); }
 function getDiscount(){ return JSON.parse(localStorage.getItem("frc_discount")||'{"threshold":2,"pct":10}'); }
 
