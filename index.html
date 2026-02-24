@@ -204,6 +204,45 @@
     .auth-msg.error{background:#f8d7da;color:#8b1a1a;display:block;}
     .auth-msg.info{background:#d1ecf1;color:#0c5460;display:block;}
 
+
+    /* ═══════════════════════════════════════
+       2-STEP CHECKOUT STEPPER
+    ═══════════════════════════════════════ */
+    .co-stepper{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:24px;}
+    .co-step{display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;}
+    .co-step-circle{width:32px;height:32px;border-radius:50%;border:2px solid var(--beige-dark);background:var(--white);color:var(--text-muted);font-size:0.82rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-family:"Playfair Display",serif;}
+    .co-step.active .co-step-circle{background:var(--gold);border-color:var(--gold);color:var(--white);}
+    .co-step.done .co-step-circle{background:var(--success);border-color:var(--success);color:var(--white);}
+    .co-step-label{font-size:0.68rem;color:var(--text-muted);font-weight:600;letter-spacing:0.3px;white-space:nowrap;}
+    .co-step.active .co-step-label{color:var(--gold);font-weight:700;}
+    .co-step.done .co-step-label{color:var(--success);}
+    .co-step-line{width:60px;height:2px;background:var(--beige-dark);margin:0 4px;margin-bottom:16px;transition:background 0.3s;}
+    .co-step-line.done{background:var(--success);}
+    .co-panel{display:none;}
+    .co-panel.active{display:block;}
+    .co-nav-row{display:flex;gap:10px;margin-top:16px;}
+    .co-back-btn{flex:1;padding:12px;border:1.5px solid var(--beige-dark);border-radius:28px;background:var(--white);color:var(--brown);font-family:"Playfair Display",serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.2s;}
+    .co-back-btn:hover{background:var(--beige);}
+    .co-next-btn{flex:2;padding:12px;border:none;border-radius:28px;background:var(--gold);color:var(--white);font-family:"Playfair Display",serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 16px rgba(184,134,11,0.3);}
+    .co-next-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
+    /* GST Invoice */
+    .gst-invoice{background:var(--beige);border-radius:14px;padding:18px 20px;margin-bottom:16px;border:1px solid var(--beige-dark);}
+    .gst-invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;padding-bottom:10px;border-bottom:1.5px solid var(--beige-dark);}
+    .gst-brand{font-family:"Playfair Display",serif;font-size:1rem;color:var(--brown);font-weight:700;}
+    .gst-brand span{color:var(--gold);}
+    .gst-label{font-size:0.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+    .gst-invoice-title{font-size:0.68rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;}
+    .gst-row{display:flex;justify-content:space-between;font-size:0.82rem;color:var(--text-light);margin-bottom:5px;}
+    .gst-row.item-row{color:var(--text);font-weight:600;}
+    .gst-row.item-meta{font-size:0.72rem;color:var(--text-muted);margin-bottom:8px;margin-left:4px;}
+    .gst-divider{height:1px;background:var(--beige-dark);margin:8px 0;}
+    .gst-row.subtotal{font-weight:600;color:var(--text);}
+    .gst-row.gst{color:var(--text-light);}
+    .gst-row.discount{color:var(--success);}
+    .gst-row.total{font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;color:var(--brown);border-top:2px solid var(--brown-light);padding-top:10px;margin-top:6px;}
+    .gst-free-delivery{font-size:0.75rem;color:var(--success);font-weight:700;display:flex;align-items:center;gap:5px;margin:6px 0;}
+    .gst-note{font-size:0.68rem;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;}
+
     @media(max-width:768px){
       nav{padding:0 16px;}
       .nav-links{display:none;}
@@ -399,9 +438,11 @@
   </div>
 </div>
 
-<!-- CHECKOUT MODAL -->
+<!-- CHECKOUT MODAL — 2 STEP -->
 <div class="modal-overlay" id="checkout-modal">
-  <div class="modal-box" style="position:relative;">
+  <div class="modal-box" style="position:relative;max-width:520px;">
+
+    <!-- Close button -->
     <button onclick="document.getElementById('checkout-modal').classList.remove('open')"
       style="position:absolute;top:14px;right:16px;background:none;border:none;
              font-size:1.5rem;cursor:pointer;color:#9b8070;line-height:1;
@@ -411,30 +452,68 @@
       onmouseout="this.style.background='none';this.style.color='#9b8070';">
       &times;
     </button>
-    <h2><i class="fas fa-lock" style="color:var(--gold);margin-right:8px"></i>Complete Your Order</h2>
-    <p class="modal-sub">Fill in your details and we'll get your coffee roasted &amp; shipped.</p>
-    <div class="form-group">
-      <label>Full Name *</label>
-      <input type="text" class="form-control" id="co-name" placeholder="Your full name"/>
-    </div>
-    <div class="form-row-2">
-      <div class="form-group">
-        <label>Phone *</label>
-        <input type="tel" class="form-control" id="co-phone" placeholder="10-digit mobile"/>
+
+    <!-- Stepper -->
+    <div class="co-stepper" id="co-stepper">
+      <div class="co-step active" id="co-step-1">
+        <div class="co-step-circle">1</div>
+        <div class="co-step-label">Your Details</div>
       </div>
-      <div class="form-group">
-        <label>Email Address</label>
-        <input type="email" class="form-control" id="co-email" placeholder="you@email.com"/>
+      <div class="co-step-line" id="co-step-line"></div>
+      <div class="co-step" id="co-step-2">
+        <div class="co-step-circle">2</div>
+        <div class="co-step-label">Order Summary</div>
       </div>
     </div>
-    <div class="form-group">
-      <label>Delivery Address *</label>
-      <textarea class="form-control" id="co-address" placeholder="House / Flat, Street, City, PIN Code"></textarea>
+
+    <!-- ══ STEP 1: User Info ══ -->
+    <div class="co-panel active" id="co-panel-1">
+      <h2 style="font-size:1.15rem;margin-bottom:4px;">
+        <i class="fas fa-user" style="color:var(--gold);margin-right:8px"></i>Your Details
+      </h2>
+      <p class="modal-sub">Tell us where to deliver your freshly roasted coffee.</p>
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" class="form-control" id="co-name" placeholder="Your full name"/>
+      </div>
+      <div class="form-row-2">
+        <div class="form-group">
+          <label>Phone *</label>
+          <input type="tel" class="form-control" id="co-phone" placeholder="10-digit mobile"/>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" class="form-control" id="co-email" placeholder="you@email.com"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Delivery Address *</label>
+        <textarea class="form-control" id="co-address" placeholder="House / Flat, Street, City, PIN Code"></textarea>
+      </div>
+      <div class="co-nav-row">
+        <button class="co-next-btn" onclick="goToStep2()" style="flex:1;">
+          Next — Review Order <i class="fas fa-arrow-right" style="margin-left:6px"></i>
+        </button>
+      </div>
     </div>
-    <div class="invoice-box" id="checkout-invoice"></div>
-    <button class="place-order-btn" onclick="placeOrder()">
-      <i class="fas fa-check-circle" style="margin-right:6px"></i>Place Order
-    </button>
+
+    <!-- ══ STEP 2: GST Invoice Summary ══ -->
+    <div class="co-panel" id="co-panel-2">
+      <h2 style="font-size:1.15rem;margin-bottom:4px;">
+        <i class="fas fa-receipt" style="color:var(--gold);margin-right:8px"></i>Order Summary
+      </h2>
+      <p class="modal-sub">Review your order before placing it.</p>
+      <div class="gst-invoice" id="gst-invoice-box"></div>
+      <div class="co-nav-row">
+        <button class="co-back-btn" onclick="goToStep1()">
+          <i class="fas fa-arrow-left" style="margin-right:5px"></i>Back
+        </button>
+        <button class="co-next-btn" onclick="placeOrder()">
+          <i class="fas fa-check-circle" style="margin-right:6px"></i>Place Order
+        </button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -762,19 +841,86 @@ function openCheckout(){
   if(cart.length===0) return;
   frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
   if(!frcUser){
-    // Close cart, open auth modal, after login -> reopen checkout
     toggleCart();
     openAuthModal("login", true);
     return;
   }
-  // Logged in — auto-fill known details
-  var u = frcUser;
-  if(u.displayName){ document.getElementById("co-name").value = u.displayName; }
-  if(u.email){ document.getElementById("co-email").value = u.email; }
-  buildInvoice();
+  if(frcUser){
+    document.getElementById("co-name").value  = frcUser.displayName || "";
+    document.getElementById("co-email").value = frcUser.email || "";
+  }
+  goToStep1();
   document.getElementById("checkout-modal").classList.add("open");
   toggleCart();
 }
+
+function goToStep1(){
+  document.getElementById("co-panel-1").classList.add("active");
+  document.getElementById("co-panel-2").classList.remove("active");
+  document.getElementById("co-step-1").className = "co-step active";
+  document.getElementById("co-step-2").className = "co-step";
+  document.getElementById("co-step-line").className = "co-step-line";
+}
+
+function goToStep2(){
+  var name    = document.getElementById("co-name").value.trim();
+  var phone   = document.getElementById("co-phone").value.trim();
+  var address = document.getElementById("co-address").value.trim();
+  if(!name){    showToast("Please enter your full name."); return; }
+  if(!/^[6-9]\d{9}$/.test(phone)){ showToast("Enter a valid 10-digit mobile number."); return; }
+  if(!address){ showToast("Please enter your delivery address."); return; }
+  buildGstInvoice();
+  document.getElementById("co-panel-1").classList.remove("active");
+  document.getElementById("co-panel-2").classList.add("active");
+  document.getElementById("co-step-1").className = "co-step done";
+  document.getElementById("co-step-2").className = "co-step active";
+  document.getElementById("co-step-line").className = "co-step-line done";
+}
+
+function buildGstInvoice(){
+  var totals  = calcTotals();
+  var disc    = getDiscount();
+  var email   = document.getElementById("co-email").value.trim();
+  var name    = document.getElementById("co-name").value.trim();
+  var phone   = document.getElementById("co-phone").value.trim();
+  var grandRaw = totals.grand;
+  var baseAmt  = Math.round(grandRaw / 1.05);
+  var gstAmt   = grandRaw - baseAmt;
+  var totalQty = cart.reduce(function(s,i){ return s+i.qty; },0);
+
+  var itemRows = cart.map(function(i){
+    return "<div class='gst-row item-row'><span>"+i.name+" &times;"+i.qty+"</span><span>"+fmt(i.price*i.qty)+"</span></div>"
+      +"<div class='gst-row item-meta'><span>"+i.brew+" &middot; "+i.roast+"</span><span style='color:var(--text-muted)'>"+fmt(i.price)+" / 250g</span></div>";
+  }).join("");
+
+  var multiRow = totals.multiDiscount>0
+    ? "<div class='gst-row discount'><span><i class='fas fa-tag' style='margin-right:3px'></i>Multi-pack "+disc.pct+"% off</span><span>-"+fmt(totals.multiDiscount)+"</span></div>" : "";
+  var promoRow = totals.promoDiscount>0
+    ? "<div class='gst-row discount'><span><i class='fas fa-percent' style='margin-right:3px'></i>Promo \""+appliedPromo.code+"\"</span><span>-"+fmt(totals.promoDiscount)+"</span></div>" : "";
+
+  document.getElementById("gst-invoice-box").innerHTML =
+    "<div class='gst-invoice-header'>"
+    +"<div><div class='gst-brand'>Five<span>Roam</span> Coffee</div><div class='gst-label'>Tax Invoice</div></div>"
+    +"<div style='text-align:right'>"
+    +"<div style='font-size:0.7rem;color:var(--text-muted)'>Date: "+new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})+"</div>"
+    +"<div style='font-size:0.7rem;color:var(--text-muted)'>GSTIN: 29AADCF1234R1ZT</div>"
+    +"</div></div>"
+    +"<div style='font-size:0.72rem;color:var(--text-muted);margin-bottom:10px;'>"
+    +"<span style='font-weight:700;color:var(--brown)'>Bill To: </span>"+name+(email?" &middot; "+email:"")+" &middot; "+phone+"</div>"
+    +"<div class='gst-invoice-title'>Items Ordered</div>"
+    +itemRows
+    +"<div class='gst-divider'></div>"
+    +"<div class='gst-row subtotal'><span>Subtotal ("+totalQty+" item"+(totalQty>1?"s":"")+")</span><span>"+fmt(totals.subtotal)+"</span></div>"
+    +multiRow+promoRow
+    +"<div class='gst-free-delivery'><i class='fas fa-truck'></i> Free Delivery on every order</div>"
+    +"<div class='gst-divider'></div>"
+    +"<div class='gst-row'><span>Taxable Value (excl. GST)</span><span>"+fmt(baseAmt)+"</span></div>"
+    +"<div class='gst-row gst'><span>GST @ 5% (CGST 2.5% + SGST 2.5%)</span><span>+"+fmt(gstAmt)+"</span></div>"
+    +"<div class='gst-divider'></div>"
+    +"<div class='gst-row total'><span>Total Payable (incl. GST)</span><span>"+fmt(grandRaw)+"</span></div>"
+    +"<div class='gst-note'>* Prices inclusive of 5% GST &nbsp;|&nbsp; Amounts in INR</div>";
+}
+
 
 function buildInvoice(){
   var totals = calcTotals();
@@ -858,7 +1004,7 @@ function showToast(msg, type){
   t.className = "toast show " + (type || "");
   setTimeout(function(){ t.className = "toast"; }, 3000);
 }
-  
+
 // ═══════════════════════════════════════════
 // AUTH MODAL FUNCTIONS
 // ═══════════════════════════════════════════
