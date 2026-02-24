@@ -649,7 +649,13 @@ function saveCoffee() {
   var imgUrl = document.getElementById("f-img-url").value.trim();
   if (!estate || !name || !process || !price) { showAdminToast("Please fill all required fields.", "danger"); return; }
   var notes = notesRaw ? notesRaw.split(",").map(function(n) { return n.trim(); }).filter(Boolean) : [];
-  var img = imgDataUrl || imgUrl || "";
+  var existingImg = "";
+  var editId = document.getElementById("edit-id").value;
+  if(editId){
+    var existing = getCoffees().find(function(c){ return c.id === parseInt(editId); });
+    existingImg = existing ? existing.img : "";
+  }
+  var img = imgDataUrl || imgUrl || existingImg || "";
   var coffees = getCoffees();
   var editId = document.getElementById("edit-id").value;
   if (editId) {
