@@ -28,6 +28,12 @@
     .admin-topbar{background:var(--brown);color:var(--white);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.2);}
     .admin-topbar-brand{font-family:"Playfair Display",serif;font-size:1.2rem;}
     .admin-topbar-brand span{color:var(--gold-light);}
+    .sync-indicator{font-size:0.75rem;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:5px;}
+    .sync-dot{width:7px;height:7px;border-radius:50%;background:#aaa;display:inline-block;transition:background 0.3s;}
+    .sync-dot.synced{background:var(--gold-light);}
+    .sync-dot.saving{background:#f0c040;animation:pulse 0.8s infinite;}
+    .sync-dot.error{background:var(--danger);}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
     .topbar-right{display:flex;align-items:center;gap:18px;}
     .topbar-link{font-size:0.85rem;color:rgba(255,255,255,0.75);cursor:pointer;text-decoration:none;transition:color 0.2s;}
     .topbar-link:hover{color:var(--gold-light);}
@@ -109,10 +115,21 @@
     .toast-admin.success{background:var(--success);}
     .toast-admin.danger{background:var(--danger);}
     .img-note{font-size:0.78rem;color:var(--text-light);background:var(--beige);border-radius:8px;padding:10px 14px;border-left:3px solid var(--gold);margin-bottom:14px;}
+    .cloud-banner{background:linear-gradient(135deg,#e8f5e9,#f1f8e9);border:1.5px solid #81c784;border-radius:12px;padding:12px 16px;margin-bottom:22px;font-size:0.83rem;color:#2e7d32;display:flex;align-items:center;gap:10px;}
+    .loading-overlay{position:fixed;inset:0;background:rgba(62,42,26,0.7);z-index:5000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;}
+    .loading-spinner{width:48px;height:48px;border:5px solid rgba(255,255,255,0.2);border-top-color:var(--gold-light);border-radius:50%;animation:spin 0.8s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .loading-text{color:var(--white);font-family:"Playfair Display",serif;font-size:1rem;}
     @media(max-width:768px){.stats-row,.promo-stats{grid-template-columns:repeat(2,1fr);}.form-row{grid-template-columns:1fr;}.admin-content{padding:16px 14px;}}
   </style>
 </head>
 <body>
+
+<!-- LOADING OVERLAY -->
+<div id="loading-overlay" class="loading-overlay" style="display:none;">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Syncing with Cloud...</div>
+</div>
 
 <div id="login-screen">
   <div class="login-box">
@@ -134,12 +151,20 @@
 <div id="admin-layout">
   <div class="admin-topbar">
     <div class="admin-topbar-brand"><i class="fas fa-coffee" style="margin-right:8px;color:var(--gold-light)"></i>Five<span>Roam</span> Admin</div>
+    <div class="sync-indicator" id="sync-indicator">
+      <span class="sync-dot" id="sync-dot"></span>
+      <span id="sync-text">Connecting...</span>
+    </div>
     <div class="topbar-right">
       <a href="index.html" class="topbar-link" target="_blank"><i class="fas fa-external-link-alt"></i> View Store</a>
       <button class="logout-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
     </div>
   </div>
   <div class="admin-content">
+    <div class="cloud-banner">
+      <i class="fas fa-cloud" style="font-size:1.1rem"></i>
+      <span><strong>Cloud Sync Active</strong> &mdash; All changes to Coffee Catalogue, Promos, and Discount settings are saved to Firebase and reflect instantly on all devices &amp; customers.</span>
+    </div>
     <div class="admin-greeting">Welcome back, Admin &#128075;</div>
     <div class="admin-sub">Manage coffees, orders, promo codes, and payment settings.</div>
     <div class="stats-row" id="stats-row"></div>
@@ -150,6 +175,8 @@
       <button class="tab-btn" onclick="switchTab('tab-discount',this)"><i class="fas fa-tag"></i> Discount</button>
       <button class="tab-btn" onclick="switchTab('tab-payment',this)"><i class="fas fa-credit-card"></i> Payment</button>
     </div>
+
+    <!-- ORDERS TAB -->
     <div class="tab-panel active" id="tab-orders">
       <div class="admin-section">
         <div class="section-header">
@@ -162,8 +189,10 @@
         <div class="search-bar">
           <input type="text" class="search-input" id="order-search" placeholder="Search by Order ID, Name, Phone..." oninput="renderOrders()"/>
           <select class="form-control" id="order-status-filter" onchange="renderOrders()" style="width:180px;border-radius:22px">
-            <option value="">All Statuses</option><option value="New">New</option>
-            <option value="Processing">Processing</option><option value="Dispatched">Dispatched</option>
+            <option value="">All Statuses</option>
+            <option value="New">New</option>
+            <option value="Processing">Processing</option>
+            <option value="Dispatched">Dispatched</option>
             <option value="Delivered">Delivered</option>
           </select>
         </div>
@@ -178,10 +207,12 @@
         </div>
       </div>
     </div>
+
+    <!-- COFFEES TAB -->
     <div class="tab-panel" id="tab-coffees">
       <div class="admin-section">
         <div class="section-header">
-          <h2><i class="fas fa-coffee" style="color:var(--gold);margin-right:8px"></i>Coffee Catalogue</h2>
+          <h2><i class="fas fa-coffee" style="color:var(--gold);margin-right:8px"></i>Coffee Catalogue <span style="font-size:0.75rem;color:var(--success);font-family:Lato,sans-serif;font-weight:600;margin-left:8px"><i class="fas fa-cloud"></i> Cloud Synced</span></h2>
           <button class="btn btn-primary" onclick="openCoffeeModal()"><i class="fas fa-plus"></i> Add New Coffee</button>
         </div>
         <div style="overflow-x:auto">
@@ -192,10 +223,12 @@
         </div>
       </div>
     </div>
+
+    <!-- PROMOS TAB -->
     <div class="tab-panel" id="tab-promos">
       <div class="admin-section">
         <div class="section-header">
-          <h2><i class="fas fa-percent" style="color:var(--gold);margin-right:8px"></i>Promo / Influencer Codes</h2>
+          <h2><i class="fas fa-percent" style="color:var(--gold);margin-right:8px"></i>Promo / Influencer Codes <span style="font-size:0.75rem;color:var(--success);font-family:Lato,sans-serif;font-weight:600;margin-left:8px"><i class="fas fa-cloud"></i> Cloud Synced</span></h2>
           <button class="btn btn-primary" onclick="openPromoModal()"><i class="fas fa-plus"></i> Create Code</button>
         </div>
         <p style="color:var(--text-light);font-size:0.85rem;margin-bottom:18px;line-height:1.6">Assign unique discount codes to influencers. Usage is tracked automatically.</p>
@@ -208,9 +241,13 @@
         </div>
       </div>
     </div>
+
+    <!-- DISCOUNT TAB -->
     <div class="tab-panel" id="tab-discount">
       <div class="admin-section">
-        <div class="section-header"><h2><i class="fas fa-tag" style="color:var(--gold);margin-right:8px"></i>Multi-Pack Discount</h2></div>
+        <div class="section-header">
+          <h2><i class="fas fa-tag" style="color:var(--gold);margin-right:8px"></i>Multi-Pack Discount <span style="font-size:0.75rem;color:var(--success);font-family:Lato,sans-serif;font-weight:600;margin-left:8px"><i class="fas fa-cloud"></i> Cloud Synced</span></h2>
+        </div>
         <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
           <div>
             <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Threshold (min packets)</label>
@@ -220,13 +257,15 @@
             <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);margin-bottom:7px;text-transform:uppercase">Discount %</label>
             <input type="number" class="form-control" id="discount-pct" value="10" min="1" max="50" style="width:150px"/>
           </div>
-          <button class="btn btn-primary" onclick="saveDiscount()" style="margin-top:24px"><i class="fas fa-save"></i> Save</button>
+          <button class="btn btn-primary" onclick="saveDiscount()" style="margin-top:24px"><i class="fas fa-save"></i> Save &amp; Sync</button>
         </div>
         <p style="font-size:0.82rem;color:var(--text-light);margin-top:14px;padding:12px 16px;background:var(--beige);border-radius:10px">
           When a customer adds <strong id="disc-thresh-display">2</strong> or more packets, a <strong id="disc-pct-display">10%</strong> discount is applied.
         </p>
       </div>
     </div>
+
+    <!-- PAYMENT TAB -->
     <div class="tab-panel" id="tab-payment">
       <div class="admin-section">
         <div class="section-header"><h2><i class="fas fa-credit-card" style="color:var(--gold);margin-right:8px"></i>Payment Gateway</h2></div>
@@ -265,6 +304,7 @@
   </div>
 </div>
 
+<!-- ORDER DETAIL MODAL -->
 <div class="modal-overlay" id="order-detail-modal">
   <div class="modal-box" style="max-width:560px">
     <h2><i class="fas fa-receipt" style="color:var(--gold);margin-right:8px"></i>Order Details</h2>
@@ -273,8 +313,10 @@
       <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--brown-light);text-transform:uppercase;margin-bottom:7px">Update Status</label>
       <div style="display:flex;gap:10px;align-items:center">
         <select class="form-control" id="order-status-select" style="flex:1">
-          <option value="New">New</option><option value="Processing">Processing</option>
-          <option value="Dispatched">Dispatched</option><option value="Delivered">Delivered</option>
+          <option value="New">New</option>
+          <option value="Processing">Processing</option>
+          <option value="Dispatched">Dispatched</option>
+          <option value="Delivered">Delivered</option>
         </select>
         <button class="btn btn-success" onclick="updateOrderStatus()"><i class="fas fa-save"></i> Save</button>
       </div>
@@ -285,6 +327,7 @@
   </div>
 </div>
 
+<!-- COFFEE MODAL -->
 <div class="modal-overlay" id="coffee-modal">
   <div class="modal-box">
     <h2 id="coffee-modal-title"><i class="fas fa-plus" style="color:var(--gold);margin-right:8px"></i>Add New Coffee</h2>
@@ -303,11 +346,12 @@
     <div class="form-row-full"><label>Taste Notes (comma-separated)</label><input type="text" class="form-control" id="f-notes" placeholder="Golden Kiwi, White Chocolate"/></div>
     <div class="modal-actions">
       <button class="btn btn-danger" onclick="closeCoffeeModal()"><i class="fas fa-times"></i> Cancel</button>
-      <button class="btn btn-success" onclick="saveCoffee()"><i class="fas fa-save"></i> Save Coffee</button>
+      <button class="btn btn-success" onclick="saveCoffee()"><i class="fas fa-save"></i> Save &amp; Sync</button>
     </div>
   </div>
 </div>
 
+<!-- PROMO MODAL -->
 <div class="modal-overlay" id="promo-modal">
   <div class="modal-box" style="max-width:460px">
     <h2 id="promo-modal-title"><i class="fas fa-plus" style="color:var(--gold);margin-right:8px"></i>Create Promo Code</h2>
@@ -324,7 +368,8 @@
     <div class="form-row-full">
       <label>Status</label>
       <select class="form-control" id="p-active">
-        <option value="true">Active</option><option value="false">Inactive</option>
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
       </select>
     </div>
     <div class="modal-actions">
@@ -336,7 +381,39 @@
 
 <div class="toast-admin" id="admin-toast"></div>
 
+<!-- FIREBASE SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
 <script>
+// ============================================================
+//  FIREBASE INIT
+// ============================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyCjTsSb2uKhZrzaaHHCOKICDeACXqg4v48",
+  authDomain: "fiveroamcoffee-f6636.firebaseapp.com",
+  projectId: "fiveroamcoffee-f6636",
+  storageBucket: "fiveroamcoffee-f6636.firebasestorage.app",
+  messagingSenderId: "911376181749",
+  appId: "1:911376181749:web:fbfc3949e8ed0dff26d8bc"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// ============================================================
+//  SYNC STATUS UI
+// ============================================================
+function setSyncStatus(state, text) {
+  var dot = document.getElementById("sync-dot");
+  var txt = document.getElementById("sync-text");
+  dot.className = "sync-dot " + state;
+  txt.textContent = text;
+}
+
+// ============================================================
+//  LOGIN / LOGOUT
+// ============================================================
 function doLogin() {
   var u = document.getElementById("login-user").value.trim();
   var p = document.getElementById("login-pass").value.trim();
@@ -369,6 +446,9 @@ function switchTab(id, btn) {
   btn.classList.add("active");
 }
 
+// ============================================================
+//  DEFAULT COFFEES (fallback if Firestore empty)
+// ============================================================
 var DEFAULT_COFFEES = [
   {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:"images/bison-valley-bright.jpg"},
   {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:"images/stanmore-triple-ice.jpg"},
@@ -380,44 +460,127 @@ var DEFAULT_COFFEES = [
   {id:8,estate:"Orchardale Estate",name:"Orchardale Hazelnut",process:"Watermelon Process",acidity:"Bright / Sweet",body:"Medium+",notes:["Hazelnut","Milk Chocolate","Honey","Cocoa","Lime Zest"],price:625,img:"images/orchardale-hazelnut.jpg"}
 ];
 
-function getCoffees() { return JSON.parse(localStorage.getItem("frc_coffees") || "null") || DEFAULT_COFFEES; }
-function saveCoffees(d) { localStorage.setItem("frc_coffees", JSON.stringify(d)); }
-function getPromos() { return JSON.parse(localStorage.getItem("frc_promos") || "[]"); }
-function savePromos(d) { localStorage.setItem("frc_promos", JSON.stringify(d)); }
+// ============================================================
+//  IN-MEMORY CACHE (loaded from Firestore on login)
+// ============================================================
+var _coffees = [];
+var _promos = [];
+var _orders = [];
+var _discount = {threshold:2, pct:10};
+
+// ============================================================
+//  FIRESTORE HELPERS
+// ============================================================
+function showLoading(msg) {
+  var el = document.getElementById("loading-overlay");
+  el.querySelector(".loading-text").textContent = msg || "Syncing with Cloud...";
+  el.style.display = "flex";
+}
+function hideLoading() {
+  document.getElementById("loading-overlay").style.display = "none";
+}
+
+// Save entire coffees array to Firestore as one document
+function fsSetCoffees(data, cb) {
+  setSyncStatus("saving", "Saving...");
+  db.collection("frc_settings").doc("coffees").set({list: data})
+    .then(function() { setSyncStatus("synced", "Synced"); if(cb) cb(); })
+    .catch(function(e) { setSyncStatus("error", "Save failed"); showAdminToast("Cloud save failed: " + e.message, "danger"); });
+}
+
+function fsSetPromos(data, cb) {
+  setSyncStatus("saving", "Saving...");
+  db.collection("frc_settings").doc("promos").set({list: data})
+    .then(function() { setSyncStatus("synced", "Synced"); if(cb) cb(); })
+    .catch(function(e) { setSyncStatus("error", "Save failed"); showAdminToast("Cloud save failed: " + e.message, "danger"); });
+}
+
+function fsSetDiscount(data, cb) {
+  setSyncStatus("saving", "Saving...");
+  db.collection("frc_settings").doc("discount").set(data)
+    .then(function() { setSyncStatus("synced", "Synced"); if(cb) cb(); })
+    .catch(function(e) { setSyncStatus("error", "Save failed"); showAdminToast("Cloud save failed: " + e.message, "danger"); });
+}
+
+// Orders stay in localStorage (per-device order viewing is fine; orders come from front-end)
 function getOrders() { return JSON.parse(localStorage.getItem("frc_orders") || "[]"); }
 function saveOrders(d) { localStorage.setItem("frc_orders", JSON.stringify(d)); }
 
+// Payment keys stay local (sensitive)
+function savePGKeysLocal(d) { localStorage.setItem("frc_pg_keys", JSON.stringify(d)); }
+function getPGKeys() { return JSON.parse(localStorage.getItem("frc_pg_keys") || "{}"); }
+
+// ============================================================
+//  LOAD ADMIN — fetch everything from Firestore
+// ============================================================
 function loadAdmin() {
-  renderStats(); renderTable(); renderPromos(); renderOrders();
-  var disc = JSON.parse(localStorage.getItem("frc_discount") || '{"threshold":2,"pct":10}');
-  document.getElementById("discount-threshold").value = disc.threshold;
-  document.getElementById("discount-pct").value = disc.pct;
-  document.getElementById("disc-thresh-display").textContent = disc.threshold;
-  document.getElementById("disc-pct-display").textContent = disc.pct + "%";
-  var pgKeys = JSON.parse(localStorage.getItem("frc_pg_keys") || "{}");
-  if (pgKeys.keyId) document.getElementById("pg-key-id").value = pgKeys.keyId;
-  if (pgKeys.keySecret) document.getElementById("pg-key-secret").value = pgKeys.keySecret;
-  if (pgKeys.webhook) document.getElementById("pg-webhook").value = pgKeys.webhook;
+  showLoading("Loading data from Cloud...");
+  setSyncStatus("saving", "Loading...");
+  var p1 = db.collection("frc_settings").doc("coffees").get();
+  var p2 = db.collection("frc_settings").doc("promos").get();
+  var p3 = db.collection("frc_settings").doc("discount").get();
+  Promise.all([p1, p2, p3]).then(function(results) {
+    var cDoc = results[0], pDoc = results[1], dDoc = results[2];
+    // Coffees
+    if (cDoc.exists && cDoc.data().list && cDoc.data().list.length > 0) {
+      _coffees = cDoc.data().list;
+    } else {
+      _coffees = DEFAULT_COFFEES.slice();
+      // First-time: push defaults to Firestore
+      fsSetCoffees(_coffees, null);
+    }
+    // Promos
+    _promos = (pDoc.exists && pDoc.data().list) ? pDoc.data().list : [];
+    // Discount
+    _discount = dDoc.exists ? dDoc.data() : {threshold:2, pct:10};
+    // PG keys (local only)
+    var pgKeys = getPGKeys();
+    document.getElementById("discount-threshold").value = _discount.threshold;
+    document.getElementById("discount-pct").value = _discount.pct;
+    document.getElementById("disc-thresh-display").textContent = _discount.threshold;
+    document.getElementById("disc-pct-display").textContent = _discount.pct + "%";
+    if (pgKeys.keyId) document.getElementById("pg-key-id").value = pgKeys.keyId;
+    if (pgKeys.keySecret) document.getElementById("pg-key-secret").value = pgKeys.keySecret;
+    if (pgKeys.webhook) document.getElementById("pg-webhook").value = pgKeys.webhook;
+    renderStats(); renderTable(); renderPromos(); renderOrders();
+    setSyncStatus("synced", "Synced");
+    hideLoading();
+  }).catch(function(e) {
+    hideLoading();
+    setSyncStatus("error", "Load failed");
+    showAdminToast("Failed to load from cloud: " + e.message, "danger");
+    // Fallback to localStorage for coffees
+    _coffees = JSON.parse(localStorage.getItem("frc_coffees") || "null") || DEFAULT_COFFEES.slice();
+    _promos = JSON.parse(localStorage.getItem("frc_promos") || "[]");
+    _discount = JSON.parse(localStorage.getItem("frc_discount") || '{"threshold":2,"pct":10}');
+    renderStats(); renderTable(); renderPromos(); renderOrders();
+  });
 }
 
+// ============================================================
+//  STATS
+// ============================================================
 function renderStats() {
-  var orders = getOrders(), coffees = getCoffees();
+  var orders = getOrders();
   var newOrders = orders.filter(function(o) { return !o.status || o.status === "New"; }).length;
-  var revenue = orders.reduce(function(s, o) { return s + o.grand; }, 0);
+  var revenue = orders.reduce(function(s, o) { return s + (o.grand || 0); }, 0);
   document.getElementById("stats-row").innerHTML =
     "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-receipt'></i>Total Orders</div><div class='stat-value'>" + orders.length + "</div></div>" +
     "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-bell'></i>New Orders</div><div class='stat-value'>" + newOrders + "</div></div>" +
     "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-rupee-sign'></i>Total Revenue</div><div class='stat-value'>" + fmt(revenue) + "</div></div>" +
-    "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-coffee'></i>Coffees Listed</div><div class='stat-value'>" + coffees.length + "</div></div>";
+    "<div class='stat-card'><div class='stat-label'><i class='stat-icon fas fa-coffee'></i>Coffees Listed</div><div class='stat-value'>" + _coffees.length + "</div></div>";
 }
 
+// ============================================================
+//  ORDERS (localStorage - orders are placed on front-end)
+// ============================================================
 var currentOrderId = null;
 function renderOrders() {
   var orders = getOrders();
   var search = (document.getElementById("order-search").value || "").toLowerCase();
   var statusFilter = document.getElementById("order-status-filter").value;
   var filtered = orders.filter(function(o) {
-    var ms = !search || o.orderId.toLowerCase().includes(search) || o.name.toLowerCase().includes(search) || o.phone.includes(search);
+    var ms = !search || o.orderId.toLowerCase().includes(search) || o.name.toLowerCase().includes(search) || (o.phone||"").includes(search);
     var mf = !statusFilter || (o.status || "New") === statusFilter;
     return ms && mf;
   });
@@ -512,11 +675,13 @@ function exportOrdersCSV() {
   showAdminToast("Orders exported!", "success");
 }
 
+// ============================================================
+//  COFFEE CATALOGUE — Firestore backed
+// ============================================================
 function renderTable() {
-  var coffees = getCoffees();
   var tbody = document.getElementById("admin-table-body");
   tbody.innerHTML = "";
-  coffees.forEach(function(c) {
+  _coffees.forEach(function(c) {
     var tr = document.createElement("tr");
     var thumb = c.img ? "<div class='coffee-thumb'><img src='" + c.img + "' alt='" + c.name + "'></div>" : "<div class='coffee-thumb'>&#9749;</div>";
     var pills = c.notes.map(function(n) { return "<span class='notes-pill'>" + n + "</span>"; }).join("");
@@ -533,7 +698,7 @@ function renderTable() {
 
 function openCoffeeModal(id) {
   if (id) {
-    var c = getCoffees().find(function(x) { return x.id === id; });
+    var c = _coffees.find(function(x) { return x.id === id; });
     if (!c) return;
     document.getElementById("coffee-modal-title").innerHTML = "<i class='fas fa-edit' style='color:var(--gold);margin-right:8px'></i>Edit Coffee";
     document.getElementById("edit-id").value = id;
@@ -569,44 +734,49 @@ function saveCoffee() {
   var editId = document.getElementById("edit-id").value;
   var existingImg = "";
   if (editId) {
-    var existing = getCoffees().find(function(c) { return c.id === parseInt(editId); });
+    var existing = _coffees.find(function(c) { return c.id === parseInt(editId); });
     existingImg = existing ? (existing.img || "") : "";
   }
-  var coffees = getCoffees();
   if (editId) {
-    var idx = coffees.findIndex(function(c) { return c.id === parseInt(editId); });
-    coffees[idx] = {id:parseInt(editId),estate:estate,name:name,process:process,acidity:acidity,body:body,notes:notes,price:price,img:existingImg};
-    showAdminToast("Coffee updated!", "success");
+    var idx = _coffees.findIndex(function(c) { return c.id === parseInt(editId); });
+    _coffees[idx] = {id:parseInt(editId),estate:estate,name:name,process:process,acidity:acidity,body:body,notes:notes,price:price,img:existingImg};
   } else {
-    var newId = coffees.length ? Math.max.apply(null, coffees.map(function(c) { return c.id; })) + 1 : 1;
-    coffees.push({id:newId,estate:estate,name:name,process:process,acidity:acidity,body:body,notes:notes,price:price,img:""});
-    showAdminToast("Coffee added!", "success");
+    var newId = _coffees.length ? Math.max.apply(null, _coffees.map(function(c) { return c.id; })) + 1 : 1;
+    _coffees.push({id:newId,estate:estate,name:name,process:process,acidity:acidity,body:body,notes:notes,price:price,img:""});
   }
-  saveCoffees(coffees); closeCoffeeModal(); renderStats(); renderTable();
+  closeCoffeeModal();
+  renderStats(); renderTable();
+  fsSetCoffees(_coffees, function() {
+    showAdminToast(editId ? "Coffee updated & synced to all devices!" : "Coffee added & synced!", "success");
+  });
 }
 
 function deleteCoffee(id) {
-  if (!confirm("Delete this coffee?")) return;
-  saveCoffees(getCoffees().filter(function(c) { return c.id !== id; }));
+  if (!confirm("Delete this coffee? It will be removed from ALL devices.")) return;
+  _coffees = _coffees.filter(function(c) { return c.id !== id; });
   renderStats(); renderTable();
-  showAdminToast("Coffee deleted.", "danger");
+  fsSetCoffees(_coffees, function() {
+    showAdminToast("Coffee deleted & synced.", "danger");
+  });
 }
 
+// ============================================================
+//  PROMO CODES — Firestore backed
+// ============================================================
 function renderPromos() {
-  var promos = getPromos();
-  var active = promos.filter(function(p) { return p.active; }).length;
-  var totalUses = promos.reduce(function(s, p) { return s + (p.uses || 0); }, 0);
+  var active = _promos.filter(function(p) { return p.active; }).length;
+  var totalUses = _promos.reduce(function(s, p) { return s + (p.uses || 0); }, 0);
   document.getElementById("promo-stats").innerHTML =
-    "<div class='promo-stat'><div class='val'>" + promos.length + "</div><div class='lbl'>Total Codes</div></div>" +
+    "<div class='promo-stat'><div class='val'>" + _promos.length + "</div><div class='lbl'>Total Codes</div></div>" +
     "<div class='promo-stat'><div class='val'>" + active + "</div><div class='lbl'>Active Codes</div></div>" +
     "<div class='promo-stat'><div class='val'>" + totalUses + "</div><div class='lbl'>Total Uses</div></div>";
   var tbody = document.getElementById("promo-table-body");
   tbody.innerHTML = "";
-  if (promos.length === 0) {
+  if (_promos.length === 0) {
     tbody.innerHTML = "<tr><td colspan='7' style='text-align:center;color:var(--text-light);padding:30px'>No promo codes yet.</td></tr>";
     return;
   }
-  promos.forEach(function(p, idx) {
+  _promos.forEach(function(p, idx) {
     var pill = p.active ? "<span class='status-pill status-active'>Active</span>" : "<span class='status-pill status-inactive'>Inactive</span>";
     var tr = document.createElement("tr");
     var safeCode = p.code.replace(/"/g, "&quot;");
@@ -626,7 +796,7 @@ function renderPromos() {
 function openPromoModal(idx) {
   document.getElementById("promo-edit-id").value = (idx !== undefined) ? idx : "";
   if (idx !== undefined) {
-    var p = getPromos()[idx];
+    var p = _promos[idx];
     document.getElementById("promo-modal-title").innerHTML = "<i class='fas fa-edit' style='color:var(--gold);margin-right:8px'></i>Edit Promo Code";
     document.getElementById("p-code").value = p.code;
     document.getElementById("p-influencer").value = p.influencer;
@@ -650,30 +820,50 @@ function savePromo() {
   var notes = document.getElementById("p-notes").value.trim();
   var active = document.getElementById("p-active").value === "true";
   if (!code || !influencer || !discount) { showAdminToast("Please fill required fields.", "danger"); return; }
-  var promos = getPromos();
   var editIdx = document.getElementById("promo-edit-id").value;
   if (editIdx !== "") {
-    promos[parseInt(editIdx)] = {code:code,influencer:influencer,discount:discount,notes:notes,active:active,uses:promos[parseInt(editIdx)].uses||0};
-    showAdminToast("Promo updated!", "success");
+    _promos[parseInt(editIdx)] = {code:code,influencer:influencer,discount:discount,notes:notes,active:active,uses:_promos[parseInt(editIdx)].uses||0};
   } else {
-    if (promos.find(function(p) { return p.code === code; })) { showAdminToast("Code already exists!", "danger"); return; }
-    promos.push({code:code,influencer:influencer,discount:discount,notes:notes,active:active,uses:0});
-    showAdminToast("Promo created!", "success");
+    if (_promos.find(function(p) { return p.code === code; })) { showAdminToast("Code already exists!", "danger"); return; }
+    _promos.push({code:code,influencer:influencer,discount:discount,notes:notes,active:active,uses:0});
   }
-  savePromos(promos); closePromoModal(); renderStats(); renderPromos();
+  closePromoModal();
+  renderStats(); renderPromos();
+  fsSetPromos(_promos, function() {
+    showAdminToast(editIdx !== "" ? "Promo updated & synced!" : "Promo created & synced!", "success");
+  });
 }
 
 function deletePromo(idx) {
   if (!confirm("Delete this promo code?")) return;
-  var promos = getPromos(); promos.splice(idx, 1);
-  savePromos(promos); renderStats(); renderPromos();
-  showAdminToast("Promo deleted.", "danger");
+  _promos.splice(idx, 1);
+  renderStats(); renderPromos();
+  fsSetPromos(_promos, function() {
+    showAdminToast("Promo deleted & synced.", "danger");
+  });
 }
 
 function copyCode(code) {
   navigator.clipboard.writeText(code).then(function() { showAdminToast(code + " copied!", "success"); });
 }
 
+// ============================================================
+//  DISCOUNT — Firestore backed
+// ============================================================
+function saveDiscount() {
+  var threshold = parseInt(document.getElementById("discount-threshold").value) || 2;
+  var pct = parseInt(document.getElementById("discount-pct").value) || 10;
+  _discount = {threshold:threshold, pct:pct};
+  document.getElementById("disc-thresh-display").textContent = threshold;
+  document.getElementById("disc-pct-display").textContent = pct + "%";
+  fsSetDiscount(_discount, function() {
+    showAdminToast("Discount saved & synced to all devices!", "success");
+  });
+}
+
+// ============================================================
+//  PAYMENT GATEWAY — local only (keys are sensitive)
+// ============================================================
 var selectedPGName = "Razorpay";
 function selectPG(el, name) {
   document.querySelectorAll(".pg-card").forEach(function(c) { c.classList.remove("active"); });
@@ -685,19 +875,13 @@ function savePGKeys() {
   var keyId = document.getElementById("pg-key-id").value.trim();
   var keySecret = document.getElementById("pg-key-secret").value.trim();
   var webhook = document.getElementById("pg-webhook").value.trim();
-  localStorage.setItem("frc_pg_keys", JSON.stringify({gateway:selectedPGName,keyId:keyId,keySecret:keySecret,webhook:webhook}));
+  savePGKeysLocal({gateway:selectedPGName,keyId:keyId,keySecret:keySecret,webhook:webhook});
   showAdminToast("Payment keys saved!", "success");
 }
 
-function saveDiscount() {
-  var threshold = parseInt(document.getElementById("discount-threshold").value) || 2;
-  var pct = parseInt(document.getElementById("discount-pct").value) || 10;
-  localStorage.setItem("frc_discount", JSON.stringify({threshold:threshold,pct:pct}));
-  document.getElementById("disc-thresh-display").textContent = threshold;
-  document.getElementById("disc-pct-display").textContent = pct + "%";
-  showAdminToast("Discount settings saved!", "success");
-}
-
+// ============================================================
+//  TOAST
+// ============================================================
 function showAdminToast(msg, type) {
   var t = document.getElementById("admin-toast");
   t.textContent = msg;
