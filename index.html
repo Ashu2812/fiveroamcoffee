@@ -24,7 +24,6 @@
     *{margin:0;padding:0;box-sizing:border-box;}
     html{scroll-behavior:smooth;}
     body{font-family:"Lato",sans-serif;background:var(--beige);color:var(--text);overflow-x:hidden;}
-
     nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(62,42,26,0.97);backdrop-filter:blur(10px);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 20px rgba(0,0,0,0.3);}
     .nav-brand{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--white);letter-spacing:1px;}
     .nav-brand span{color:var(--gold-light);}
@@ -33,7 +32,6 @@
     .nav-links a:hover{color:var(--gold-light);}
     .cart-icon-btn{background:none;border:none;cursor:pointer;color:var(--white);font-size:1.2rem;position:relative;padding:6px;}
     .cart-badge{position:absolute;top:-2px;right:-6px;background:var(--gold-light);color:var(--brown);font-size:0.65rem;font-weight:700;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;}
-
     .hero{min-height:100vh;background:linear-gradient(135deg,#1a0f07 0%,#3e2a1a 50%,#2c1a0e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden;}
     .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(184,134,11,0.15) 0%,transparent 60%);pointer-events:none;}
     .hero-eyebrow{font-size:0.78rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:18px;opacity:0.9;}
@@ -47,12 +45,10 @@
     .btn-outline-hero:hover{border-color:var(--gold-light);color:var(--gold-light);}
     .hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.4);font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bounce 2s infinite;}
     @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
-
     section{padding:80px 24px;}
     .section-label{font-size:0.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
     .section-title{font-family:"Playfair Display",serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--brown);margin-bottom:16px;line-height:1.2;}
     .section-desc{color:var(--text-light);font-size:0.95rem;line-height:1.8;max-width:580px;}
-
     #coffees{background:var(--white);}
     .coffees-header{text-align:center;margin-bottom:52px;}
     .coffees-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px;max-width:1200px;margin:0 auto;}
@@ -75,7 +71,6 @@
     .card-sel:focus{border-color:var(--gold);}
     .add-btn{background:var(--brown);color:var(--white);border:none;border-radius:22px;padding:9px 20px;font-family:"Lato",sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
     .add-btn:hover{background:var(--gold);transform:scale(1.04);}
-
     #story{background:linear-gradient(135deg,#2c1a0e,#3e2a1a);}
     .story-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
     .story-text .section-title{color:var(--white);}
@@ -90,7 +85,6 @@
     .stat-num{font-family:"Playfair Display",serif;font-size:2.4rem;color:var(--gold-light);font-weight:700;}
     .stat-label-text{font-size:0.78rem;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1px;margin-top:4px;}
     .divider-line{height:1px;background:rgba(255,255,255,0.1);}
-
     #why{background:var(--beige);}
     .why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px;max-width:1100px;margin:40px auto 0;}
     .why-card{background:var(--white);border-radius:18px;padding:28px 22px;text-align:center;box-shadow:0 4px 18px var(--shadow);transition:transform 0.2s;}
@@ -98,10 +92,8 @@
     .why-icon{font-size:2rem;margin-bottom:14px;color:var(--gold);}
     .why-card h3{font-family:"Playfair Display",serif;font-size:1rem;color:var(--brown);margin-bottom:8px;}
     .why-card p{font-size:0.82rem;color:var(--text-light);line-height:1.6;}
-
     footer{background:#1a0f07;color:rgba(255,255,255,0.6);text-align:center;padding:32px 24px;font-size:0.82rem;line-height:1.8;}
     footer a{color:var(--gold-light);text-decoration:none;}
-
     .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:800;display:none;opacity:0;transition:opacity 0.3s;}
     .cart-overlay.open{display:block;opacity:1;}
     .cart-drawer{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:100vw;background:var(--white);z-index:900;transform:translateX(100%);transition:transform 0.35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,0.2);}
@@ -138,13 +130,11 @@
     .promo-msg{font-size:0.76rem;margin-bottom:8px;padding:6px 10px;border-radius:8px;}
     .promo-msg.ok{background:#d4edda;color:#1a6b38;}
     .promo-msg.err{background:#f8d7da;color:#8b1a1a;}
-    /* CHANGE 4: Two-button cart footer layout */
     .cart-action-btns{display:flex;gap:10px;margin-top:4px;}
     .cancel-cart-btn{flex:1;background:var(--beige);color:var(--brown);border:1.5px solid var(--beige-dark);border-radius:28px;padding:11px 6px;font-family:"Playfair Display",serif;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
     .cancel-cart-btn:hover{background:var(--beige-dark);}
     .checkout-btn{flex:1;background:var(--gold);color:var(--white);border:none;border-radius:28px;padding:11px 6px;font-family:"Playfair Display",serif;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all 0.25s;box-shadow:0 4px 16px rgba(184,134,11,0.35);}
     .checkout-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
-
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px;}
     .modal-overlay.open{display:flex;}
     .modal-box{background:var(--white);border-radius:22px;max-width:560px;width:100%;padding:32px 28px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);}
@@ -164,7 +154,6 @@
     .invoice-free-delivery{font-size:0.78rem;color:var(--success);font-weight:700;display:flex;align-items:center;gap:5px;margin-bottom:5px;}
     .place-order-btn{width:100%;background:var(--brown);color:var(--white);border:none;border-radius:28px;padding:14px;font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all 0.25s;}
     .place-order-btn:hover{background:var(--gold);}
-
     .success-box{text-align:center;padding:16px 0;}
     .success-icon{font-size:3.5rem;margin-bottom:16px;}
     .success-box h2{font-family:"Playfair Display",serif;color:var(--brown);font-size:1.5rem;margin-bottom:8px;}
@@ -172,12 +161,9 @@
     .order-id-display{font-family:monospace;font-size:1.1rem;background:var(--beige-mid);padding:8px 18px;border-radius:10px;display:inline-block;margin:10px 0;color:var(--brown);font-weight:700;}
     .continue-btn{background:var(--gold);color:var(--white);border:none;border-radius:24px;padding:12px 32px;font-family:"Playfair Display",serif;font-size:0.95rem;font-weight:700;cursor:pointer;margin-top:14px;transition:background 0.2s;}
     .continue-btn:hover{background:var(--gold-light);}
-
     .toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-120px);background:var(--brown);color:var(--white);padding:13px 28px;border-radius:28px;font-size:0.9rem;font-weight:600;z-index:2000;transition:transform 0.35s cubic-bezier(.4,0,.2,1);white-space:nowrap;pointer-events:none;box-shadow:0 6px 24px rgba(0,0,0,0.25);display:flex;align-items:center;gap:8px;}
     .toast.show{transform:translateX(-50%) translateY(0);}
     .toast.success{background:var(--success);}
-
-    /* AUTH MODAL */
     .auth-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.72);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}
     .auth-modal-overlay.open{display:flex;}
     .auth-modal-box{background:var(--white);border-radius:24px;padding:36px 32px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.5);position:relative;max-height:90vh;overflow-y:auto;}
@@ -203,11 +189,6 @@
     .auth-msg.success{background:#d4edda;color:#1a6b38;display:block;}
     .auth-msg.error{background:#f8d7da;color:#8b1a1a;display:block;}
     .auth-msg.info{background:#d1ecf1;color:#0c5460;display:block;}
-
-
-    /* ═══════════════════════════════════════
-       2-STEP CHECKOUT STEPPER
-    ═══════════════════════════════════════ */
     .co-stepper{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:24px;}
     .co-step{display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;}
     .co-step-circle{width:32px;height:32px;border-radius:50%;border:2px solid var(--beige-dark);background:var(--white);color:var(--text-muted);font-size:0.82rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-family:"Playfair Display",serif;}
@@ -225,7 +206,6 @@
     .co-back-btn:hover{background:var(--beige);}
     .co-next-btn{flex:2;padding:12px;border:none;border-radius:28px;background:var(--gold);color:var(--white);font-family:"Playfair Display",serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 16px rgba(184,134,11,0.3);}
     .co-next-btn:hover{background:var(--gold-light);transform:translateY(-1px);}
-    /* GST Invoice */
     .gst-invoice{background:var(--beige);border-radius:14px;padding:18px 20px;margin-bottom:16px;border:1px solid var(--beige-dark);}
     .gst-invoice-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;padding-bottom:10px;border-bottom:1.5px solid var(--beige-dark);}
     .gst-brand{font-family:"Playfair Display",serif;font-size:1rem;color:var(--brown);font-weight:700;}
@@ -242,15 +222,7 @@
     .gst-row.total{font-family:"Playfair Display",serif;font-size:1rem;font-weight:700;color:var(--brown);border-top:2px solid var(--brown-light);padding-top:10px;margin-top:6px;}
     .gst-free-delivery{font-size:0.75rem;color:var(--success);font-weight:700;display:flex;align-items:center;gap:5px;margin:6px 0;}
     .gst-note{font-size:0.68rem;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;}
-
-    @media(max-width:768px){
-      nav{padding:0 16px;}
-      .nav-links{display:none;}
-      .story-inner{grid-template-columns:1fr;}
-      .story-visual{display:none;}
-      .form-row-2{grid-template-columns:1fr;}
-      .cart-drawer{width:100vw;}
-    }
+    @media(max-width:768px){nav{padding:0 16px;}.nav-links{display:none;}.story-inner{grid-template-columns:1fr;}.story-visual{display:none;}.form-row-2{grid-template-columns:1fr;}.cart-drawer{width:100vw;}}
   </style>
 </head>
 <body>
@@ -264,10 +236,7 @@
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
     <a href="#" id="nav-auth-link" onclick="handleNavAuth(); return false;"
-       style="color:var(--white);text-decoration:none;font-size:0.88rem;
-              font-weight:600;letter-spacing:0.5px;display:flex;align-items:center;
-              gap:6px;white-space:nowrap;background:var(--gold);padding:7px 18px;
-              border-radius:20px;transition:background 0.2s;"
+       style="color:var(--white);text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:0.5px;display:flex;align-items:center;gap:6px;white-space:nowrap;background:var(--gold);padding:7px 18px;border-radius:20px;transition:background 0.2s;"
        onmouseover="this.style.background='var(--gold-light)'"
        onmouseout="this.style.background='var(--gold)'">
       <i class="fas fa-user" id="nav-auth-icon"></i>
@@ -314,22 +283,10 @@
       <h2 class="section-title">Farm to Cup,<br/>Simplified</h2>
       <p class="section-desc">We work directly with India's top specialty estates, cutting out middlemen to bring you fresher coffee at honest prices.</p>
       <div class="story-steps">
-        <div class="story-step">
-          <div class="step-num">1</div>
-          <div class="step-text"><h4>Browse &amp; Select</h4><p>Choose your coffees, select your preferred brew method and roast level right on the product card.</p></div>
-        </div>
-        <div class="story-step">
-          <div class="step-num">2</div>
-          <div class="step-text"><h4>Place Your Order</h4><p>Fill in your details at checkout. Login required — quick, simple, secure.</p></div>
-        </div>
-        <div class="story-step">
-          <div class="step-num">3</div>
-          <div class="step-text"><h4>Roasted &amp; Shipped</h4><p>Your coffee is roasted fresh to your roast preference and dispatched with free delivery.</p></div>
-        </div>
-        <div class="story-step">
-          <div class="step-num">4</div>
-          <div class="step-text"><h4>Brew &amp; Enjoy</h4><p>Experience India's finest specialty coffee in your own cup — exactly the way you want it.</p></div>
-        </div>
+        <div class="story-step"><div class="step-num">1</div><div class="step-text"><h4>Browse &amp; Select</h4><p>Choose your coffees, select your preferred brew method and roast level right on the product card.</p></div></div>
+        <div class="story-step"><div class="step-num">2</div><div class="step-text"><h4>Place Your Order</h4><p>Fill in your details at checkout. Login required — quick, simple, secure.</p></div></div>
+        <div class="story-step"><div class="step-num">3</div><div class="step-text"><h4>Roasted &amp; Shipped</h4><p>Your coffee is roasted fresh to your roast preference and dispatched with free delivery.</p></div></div>
+        <div class="story-step"><div class="step-num">4</div><div class="step-text"><h4>Brew &amp; Enjoy</h4><p>Experience India's finest specialty coffee in your own cup — exactly the way you want it.</p></div></div>
       </div>
     </div>
     <div class="story-visual">
@@ -350,64 +307,28 @@
     <h2 class="section-title">Built for Coffee Lovers</h2>
   </div>
   <div class="why-grid">
-    <div class="why-card">
-      <div class="why-icon"><i class="fas fa-award"></i></div>
-      <h3>Award-Winning Estates</h3>
-      <p>Every lot is sourced from estates with proven cup scores of 84 and above.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-icon"><i class="fas fa-fire"></i></div>
-      <h3>Roasted to Order</h3>
-      <p>Roasted fresh to your exact specification — light, medium, or dark — before dispatch.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-icon"><i class="fas fa-shipping-fast"></i></div>
-      <h3>Free Delivery</h3>
-      <p>No minimum order. No delivery charges.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-icon"><i class="fas fa-leaf"></i></div>
-      <h3>100% Arabica</h3>
-      <p>Only the finest washed and specialty-processed Arabica beans from Indian highlands.</p>
-    </div>
+    <div class="why-card"><div class="why-icon"><i class="fas fa-award"></i></div><h3>Award-Winning Estates</h3><p>Every lot is sourced from estates with proven cup scores of 84 and above.</p></div>
+    <div class="why-card"><div class="why-icon"><i class="fas fa-fire"></i></div><h3>Roasted to Order</h3><p>Roasted fresh to your exact specification — light, medium, or dark — before dispatch.</p></div>
+    <div class="why-card"><div class="why-icon"><i class="fas fa-shipping-fast"></i></div><h3>Free Delivery</h3><p>No minimum order. No delivery charges.</p></div>
+    <div class="why-card"><div class="why-icon"><i class="fas fa-leaf"></i></div><h3>100% Arabica</h3><p>Only the finest washed and specialty-processed Arabica beans from Indian highlands.</p></div>
   </div>
 </section>
 
 <footer>
   <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light);margin-bottom:16px">Five Roam Coffee</p>
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;max-width:1200px;margin:0 auto;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
-
-    <!-- Bottom Left: Copyright -->
-    <span style="color:rgba(255,255,255,0.5);font-size:0.82rem;">
-      &copy; 2026 Five Roam Coffee. All rights reserved.
-    </span>
-
-    <!-- Bottom Right: Social Media -->
+    <span style="color:rgba(255,255,255,0.5);font-size:0.82rem;">&copy; 2026 Five Roam Coffee. All rights reserved.</span>
     <div style="display:flex;align-items:center;gap:16px;">
       <span style="color:rgba(255,255,255,0.5);font-size:0.82rem;font-weight:600;letter-spacing:0.5px;">Follow Us</span>
-
-      <!-- Instagram -->
-      <a href="https://www.instagram.com/fiveroamcoffee/" target="_blank" rel="noopener"
-         title="Five Roam Coffee on Instagram"
+      <a href="https://www.instagram.com/fiveroamcoffee/" target="_blank" rel="noopener" title="Five Roam Coffee on Instagram"
          style="color:rgba(255,255,255,0.6);font-size:1.4rem;text-decoration:none;transition:color 0.2s;"
-         onmouseover="this.style.color='#E1306C';"
-         onmouseout="this.style.color='rgba(255,255,255,0.6)';">
-        <i class="fab fa-instagram"></i>
-      </a>
-
-      <!-- Facebook -->
-      <a href="https://www.facebook.com/profile.php?id=61585702059341" target="_blank" rel="noopener"
-         title="Five Roam Coffee on Facebook"
+         onmouseover="this.style.color='#E1306C';" onmouseout="this.style.color='rgba(255,255,255,0.6)';"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=61585702059341" target="_blank" rel="noopener" title="Five Roam Coffee on Facebook"
          style="color:rgba(255,255,255,0.6);font-size:1.4rem;text-decoration:none;transition:color 0.2s;"
-         onmouseover="this.style.color='#1877F2';"
-         onmouseout="this.style.color='rgba(255,255,255,0.6)';">
-        <i class="fab fa-facebook"></i>
-      </a>
+         onmouseover="this.style.color='#1877F2';" onmouseout="this.style.color='rgba(255,255,255,0.6)';"><i class="fab fa-facebook"></i></a>
     </div>
-
   </div>
 </footer>
-
 
 <!-- CART DRAWER -->
 <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
@@ -421,99 +342,50 @@
     <div class="promo-row">
       <input type="text" class="promo-input" id="promo-input" placeholder="Promo Code"
              style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()"
-       autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+             autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <button class="promo-apply-btn" onclick="applyPromo()">Apply</button>
     </div>
     <div id="promo-msg"></div>
     <div class="cart-totals" id="cart-totals"></div>
-    <!-- CHANGE 4: Cancel + Checkout buttons -->
     <div class="cart-action-btns">
-      <button class="cancel-cart-btn" onclick="toggleCart()">
-        <i class="fas fa-arrow-left" style="margin-right:5px"></i>Continue Shopping
-      </button>
-      <button class="checkout-btn" onclick="openCheckout()">
-        <i class="fas fa-lock" style="margin-right:5px"></i>Checkout
-      </button>
+      <button class="cancel-cart-btn" onclick="toggleCart()"><i class="fas fa-arrow-left" style="margin-right:5px"></i>Continue Shopping</button>
+      <button class="checkout-btn" onclick="openCheckout()"><i class="fas fa-lock" style="margin-right:5px"></i>Checkout</button>
     </div>
   </div>
 </div>
 
-<!-- CHECKOUT MODAL — 2 STEP -->
+<!-- CHECKOUT MODAL -->
 <div class="modal-overlay" id="checkout-modal">
   <div class="modal-box" style="position:relative;max-width:520px;">
-
-    <!-- Close button -->
     <button onclick="document.getElementById('checkout-modal').classList.remove('open')"
-      style="position:absolute;top:14px;right:16px;background:none;border:none;
-             font-size:1.5rem;cursor:pointer;color:#9b8070;line-height:1;
-             width:32px;height:32px;display:flex;align-items:center;
-             justify-content:center;border-radius:50%;transition:all 0.2s;"
+      style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#9b8070;line-height:1;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.2s;"
       onmouseover="this.style.background='#f5f0e8';this.style.color='#3e2a1a';"
-      onmouseout="this.style.background='none';this.style.color='#9b8070';">
-      &times;
-    </button>
-
-    <!-- Stepper -->
+      onmouseout="this.style.background='none';this.style.color='#9b8070';">&times;</button>
     <div class="co-stepper" id="co-stepper">
-      <div class="co-step active" id="co-step-1">
-        <div class="co-step-circle">1</div>
-        <div class="co-step-label">Your Details</div>
-      </div>
+      <div class="co-step active" id="co-step-1"><div class="co-step-circle">1</div><div class="co-step-label">Your Details</div></div>
       <div class="co-step-line" id="co-step-line"></div>
-      <div class="co-step" id="co-step-2">
-        <div class="co-step-circle">2</div>
-        <div class="co-step-label">Order Summary</div>
-      </div>
+      <div class="co-step" id="co-step-2"><div class="co-step-circle">2</div><div class="co-step-label">Order Summary</div></div>
     </div>
-
-    <!-- ══ STEP 1: User Info ══ -->
     <div class="co-panel active" id="co-panel-1">
-      <h2 style="font-size:1.15rem;margin-bottom:4px;">
-        <i class="fas fa-user" style="color:var(--gold);margin-right:8px"></i>Your Details
-      </h2>
+      <h2 style="font-size:1.15rem;margin-bottom:4px;"><i class="fas fa-user" style="color:var(--gold);margin-right:8px"></i>Your Details</h2>
       <p class="modal-sub">Tell us where to deliver your freshly roasted coffee.</p>
-      <div class="form-group">
-        <label>Full Name *</label>
-        <input type="text" class="form-control" id="co-name" placeholder="Your full name"/>
-      </div>
+      <div class="form-group"><label>Full Name *</label><input type="text" class="form-control" id="co-name" placeholder="Your full name"/></div>
       <div class="form-row-2">
-        <div class="form-group">
-          <label>Phone *</label>
-          <input type="tel" class="form-control" id="co-phone" placeholder="10-digit mobile"/>
-        </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" class="form-control" id="co-email" placeholder="you@email.com"/>
-        </div>
+        <div class="form-group"><label>Phone *</label><input type="tel" class="form-control" id="co-phone" placeholder="10-digit mobile"/></div>
+        <div class="form-group"><label>Email Address</label><input type="email" class="form-control" id="co-email" placeholder="you@email.com"/></div>
       </div>
-      <div class="form-group">
-        <label>Delivery Address *</label>
-        <textarea class="form-control" id="co-address" placeholder="House / Flat, Street, City, PIN Code"></textarea>
-      </div>
-      <div class="co-nav-row">
-        <button class="co-next-btn" onclick="goToStep2()" style="flex:1;">
-          Review Order <i class="fas fa-arrow-right" style="margin-left:6px"></i>
-        </button>
-      </div>
+      <div class="form-group"><label>Delivery Address *</label><textarea class="form-control" id="co-address" placeholder="House / Flat, Street, City, PIN Code"></textarea></div>
+      <div class="co-nav-row"><button class="co-next-btn" onclick="goToStep2()" style="flex:1;">Review Order <i class="fas fa-arrow-right" style="margin-left:6px"></i></button></div>
     </div>
-
-    <!-- ══ STEP 2: GST Invoice Summary ══ -->
     <div class="co-panel" id="co-panel-2">
-      <h2 style="font-size:1.15rem;margin-bottom:4px;">
-        <i class="fas fa-receipt" style="color:var(--gold);margin-right:8px"></i>Order Summary
-      </h2>
+      <h2 style="font-size:1.15rem;margin-bottom:4px;"><i class="fas fa-receipt" style="color:var(--gold);margin-right:8px"></i>Order Summary</h2>
       <p class="modal-sub">Review your order before placing it.</p>
       <div class="gst-invoice" id="gst-invoice-box"></div>
       <div class="co-nav-row">
-        <button class="co-back-btn" onclick="goToStep1()">
-          <i class="fas fa-arrow-left" style="margin-right:5px"></i>Back
-        </button>
-        <button class="co-next-btn" onclick="placeOrder()">
-          <i class="fas fa-check-circle" style="margin-right:6px"></i>Place Order
-        </button>
+        <button class="co-back-btn" onclick="goToStep1()"><i class="fas fa-arrow-left" style="margin-right:5px"></i>Back</button>
+        <button class="co-next-btn" onclick="placeOrder()"><i class="fas fa-check-circle" style="margin-right:6px"></i>Place Order</button>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -526,90 +398,54 @@
       <p>Thank you for your order. Your coffee will be roasted fresh and dispatched soon.</p>
       <div class="order-id-display" id="success-order-id"></div>
       <p style="font-size:0.82rem">We'll be in touch on your phone number with shipping details.</p>
-      <button class="continue-btn" onclick="closeSuccess()">
-        <i class="fas fa-arrow-right" style="margin-right:6px"></i>Continue Shopping
-      </button>
+      <button class="continue-btn" onclick="closeSuccess()"><i class="fas fa-arrow-right" style="margin-right:6px"></i>Continue Shopping</button>
     </div>
   </div>
 </div>
 
-<!-- AUTH MODAL (inline — no redirect) -->
+<!-- AUTH MODAL -->
 <div class="auth-modal-overlay" id="auth-modal-overlay">
   <div class="auth-modal-box">
     <button class="auth-modal-close" onclick="closeAuthModal()">&times;</button>
     <div class="auth-modal-logo">Five<span>Roam</span></div>
     <div class="auth-modal-sub" id="auth-modal-sub">Login or Register to place your order</div>
-
     <div class="auth-tabs" id="auth-tabs">
       <button class="auth-tab-btn active" onclick="switchAuthTab('login')">Login</button>
       <button class="auth-tab-btn" onclick="switchAuthTab('register')">Register</button>
     </div>
-
-    <!-- LOGIN -->
     <div id="auth-panel-login">
-      <div class="auth-form-group">
-        <label class="auth-form-label">Email</label>
-        <input type="email" class="auth-form-input" id="al-email" placeholder="you@example.com"/>
-      </div>
-      <div class="auth-form-group">
-        <label class="auth-form-label">Password</label>
-        <input type="password" class="auth-form-input" id="al-password" placeholder="Your password"
-       autocomplete="new-password"/>
-      </div>
-      <button class="auth-submit-btn" onclick="handleModalLogin()">
-        <i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Login
-      </button>
+      <div class="auth-form-group"><label class="auth-form-label">Email</label><input type="email" class="auth-form-input" id="al-email" placeholder="you@example.com"/></div>
+      <div class="auth-form-group"><label class="auth-form-label">Password</label><input type="password" class="auth-form-input" id="al-password" placeholder="Your password" autocomplete="new-password"/></div>
+      <button class="auth-submit-btn" onclick="handleModalLogin()"><i class="fas fa-sign-in-alt" style="margin-right:6px"></i>Login</button>
       <div class="auth-link"><a onclick="switchAuthTab('forgot')">Forgot Password?</a></div>
       <div class="auth-msg" id="al-msg"></div>
     </div>
-
-    <!-- REGISTER -->
     <div id="auth-panel-register" style="display:none">
-      <div class="auth-form-group">
-        <label class="auth-form-label">Full Name</label>
-        <input type="text" class="auth-form-input" id="ar-name" placeholder="Your full name"/>
-      </div>
-      <div class="auth-form-group">
-        <label class="auth-form-label">Email</label>
-        <input type="email" class="auth-form-input" id="ar-email" placeholder="you@example.com"/>
-      </div>
-      <div class="auth-form-group">
-        <label class="auth-form-label">Password</label>
-        <input type="password" class="auth-form-input" id="ar-password" placeholder="Min 6 characters"/>
-      </div>
-      <div class="auth-form-group">
-        <label class="auth-form-label">Confirm Password</label>
-        <input type="password" class="auth-form-input" id="ar-confirm" placeholder="Re-enter password"/>
-      </div>
-      <button class="auth-submit-btn" onclick="handleModalRegister()">
-        <i class="fas fa-user-plus" style="margin-right:6px"></i>Create Account
-      </button>
+      <div class="auth-form-group"><label class="auth-form-label">Full Name</label><input type="text" class="auth-form-input" id="ar-name" placeholder="Your full name"/></div>
+      <div class="auth-form-group"><label class="auth-form-label">Email</label><input type="email" class="auth-form-input" id="ar-email" placeholder="you@example.com"/></div>
+      <div class="auth-form-group"><label class="auth-form-label">Password</label><input type="password" class="auth-form-input" id="ar-password" placeholder="Min 6 characters"/></div>
+      <div class="auth-form-group"><label class="auth-form-label">Confirm Password</label><input type="password" class="auth-form-input" id="ar-confirm" placeholder="Re-enter password"/></div>
+      <button class="auth-submit-btn" onclick="handleModalRegister()"><i class="fas fa-user-plus" style="margin-right:6px"></i>Create Account</button>
       <div class="auth-msg" id="ar-msg"></div>
     </div>
-
-    <!-- FORGOT PASSWORD -->
     <div id="auth-panel-forgot" style="display:none">
-      <div class="auth-form-group">
-        <label class="auth-form-label">Email Address</label>
-        <input type="email" class="auth-form-input" id="af-email" placeholder="your@email.com"/>
-      </div>
-      <button class="auth-submit-btn" onclick="handleModalForgot()">
-        <i class="fas fa-paper-plane" style="margin-right:6px"></i>Send Reset Link
-      </button>
+      <div class="auth-form-group"><label class="auth-form-label">Email Address</label><input type="email" class="auth-form-input" id="af-email" placeholder="your@email.com"/></div>
+      <button class="auth-submit-btn" onclick="handleModalForgot()"><i class="fas fa-paper-plane" style="margin-right:6px"></i>Send Reset Link</button>
       <div class="auth-link"><a onclick="switchAuthTab('login')">&#8592; Back to Login</a></div>
       <div class="auth-msg" id="af-msg"></div>
     </div>
-
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<!-- Firebase Auth only (no Firestore needed) -->
+<!-- Firebase SDKs: App + Auth + Firestore (NEW) -->
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
 <script>
+
 // ═══════════════════════════════════════════
 // FIREBASE CONFIG
 // ═══════════════════════════════════════════
@@ -623,13 +459,76 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const db   = firebase.firestore();
 
 // ═══════════════════════════════════════════
-// CHANGE 1: NO FORCED REDIRECT — browse freely
+// CLOUD DATA CACHE (loaded once from Firestore)
 // ═══════════════════════════════════════════
-let frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
+var _coffees  = [];
+var _promos   = [];
+var _discount = {threshold:2, pct:10};
+var _dataReady = false;
 
-// Update nav login/logout button
+var DEFAULT_COFFEES = [
+  {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:"images/bison-valley-bright.jpg"},
+  {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:"images/stanmore-triple-ice.jpg"},
+  {id:3,estate:"Hidden Falls Estate",name:"Hidden Falls Effervescent",process:"Double Fermentation",acidity:"Sweet, effervescent",body:"Syrupy, Medium+",notes:["Muscat Grapes","Hibiscus","Dark Chocolate","Almond","Cocoa"],price:649,img:"images/hidden-falls-effervescent.jpg"},
+  {id:4,estate:"Orchardale Estate",name:"Orchardale Watermelon",process:"Watermelon Process",acidity:"Sweet / Tart",body:"Light but silky",notes:["Red Currant","Mandarin Orange","Honeysuckle","Floral"],price:625,img:"images/orchardale-watermelon.jpg"},
+  {id:5,estate:"Bison Valley Estate",name:"Bison Valley Brown Sugar",process:"Brown Sugar Process",acidity:"Medium+, Intense",body:"Medium",notes:["Brown Sugar","Berries","Nuts","Complex"],price:675,img:"images/bison-valley-brown-sugar.jpg"},
+  {id:6,estate:"Moganad Estate",name:"Moganad Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Complex",body:"Medium, well rounded",notes:["Mulberry","Peach","Palm Sugar","Dried Fig","Elderflower"],price:699,img:"images/moganad-triple-ice.jpg"},
+  {id:7,estate:"Stanmore Estate",name:"Stanmore Watermelon",process:"Watermelon Process",acidity:"Sweet / Medium",body:"Velvety, smooth",notes:["Lavender","Rose Hip","Baking Chocolate","Chocolatey"],price:649,img:"images/stanmore-watermelon.jpg"},
+  {id:8,estate:"Orchardale Estate",name:"Orchardale Hazelnut",process:"Watermelon Process",acidity:"Bright / Sweet",body:"Medium+",notes:["Hazelnut","Milk Chocolate","Honey","Cocoa","Lime Zest"],price:625,img:"images/orchardale-hazelnut.jpg"}
+];
+
+// Fetch all cloud data once on page load
+function loadCloudData() {
+  var grid = document.getElementById("coffees-grid");
+  grid.innerHTML = "<div style='text-align:center;padding:60px 20px;color:#9b8070;grid-column:1/-1'>"
+    + "<i class='fas fa-coffee fa-spin' style='font-size:2rem;margin-bottom:14px;display:block;color:#d4a843'></i>"
+    + "Loading coffees...</div>";
+
+  Promise.all([
+    db.collection("frc_settings").doc("coffees").get(),
+    db.collection("frc_settings").doc("promos").get(),
+    db.collection("frc_settings").doc("discount").get()
+  ]).then(function(results) {
+    var cDoc = results[0], pDoc = results[1], dDoc = results[2];
+
+    // Coffees
+    if (cDoc.exists && cDoc.data().list && cDoc.data().list.length > 0) {
+      _coffees = cDoc.data().list;
+    } else {
+      _coffees = DEFAULT_COFFEES.slice();
+    }
+    // Promos
+    _promos = (pDoc.exists && pDoc.data().list) ? pDoc.data().list : [];
+    // Discount
+    _discount = dDoc.exists ? dDoc.data() : {threshold:2, pct:10};
+
+    _dataReady = true;
+    renderGrid();
+    renderCart();
+  }).catch(function(err) {
+    console.warn("Firestore load failed, using defaults:", err.message);
+    _coffees  = DEFAULT_COFFEES.slice();
+    _promos   = [];
+    _discount = {threshold:2, pct:10};
+    _dataReady = true;
+    renderGrid();
+    renderCart();
+  });
+}
+
+// Accessors (now return in-memory cache, not localStorage)
+function getCoffees()  { return _coffees; }
+function getPromos()   { return _promos; }
+function getDiscount() { return _discount; }
+
+// ═══════════════════════════════════════════
+// AUTH STATE
+// ═══════════════════════════════════════════
+var frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
+
 function updateNav() {
   frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
   var icon = document.getElementById("nav-auth-icon");
@@ -646,20 +545,18 @@ function updateNav() {
 function handleNavAuth() {
   frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
   if (frcUser) {
-    // Logged in — logout
     auth.signOut().then(function() {
       localStorage.removeItem("frc_user");
       updateNav();
       showToast("Logged out successfully.");
     });
   } else {
-    // Guest — open auth modal
     openAuthModal("login", false);
   }
 }
 
 // ═══════════════════════════════════════════
-// CHANGE 2 & 3: CART PERSISTS IN LOCALSTORAGE
+// CART (stays in localStorage — per user device)
 // ═══════════════════════════════════════════
 var cart = JSON.parse(localStorage.getItem("frc_cart") || "[]");
 var appliedPromo = null;
@@ -668,174 +565,156 @@ function saveCart() {
   localStorage.setItem("frc_cart", JSON.stringify(cart));
 }
 
-// ═══════════════════════════════════════════
-// COFFEE DATA
-// ═══════════════════════════════════════════
-var DEFAULT_COFFEES = [
-  {id:1,estate:"Bison Valley Estate",name:"Bison Valley Bright",process:"Double Fermentation",acidity:"Refreshing, bright",body:"Well rounded, smooth",notes:["Golden Kiwi","White Chocolate","Mandarin Orange","Sweet"],price:599,img:"images/bison-valley-bright.jpg"},
-  {id:2,estate:"Stanmore Estate",name:"Stanmore Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Bright, sweet",body:"Medium",notes:["Complex Fruits","Jaggery","Dates","Dark Fruits","Black Currant"],price:699,img:"images/stanmore-triple-ice.jpg"},
-  {id:3,estate:"Hidden Falls Estate",name:"Hidden Falls Effervescent",process:"Double Fermentation",acidity:"Sweet, effervescent",body:"Syrupy, Medium+",notes:["Muscat Grapes","Hibiscus","Dark Chocolate","Almond","Cocoa"],price:649,img:"images/hidden-falls-effervescent.jpg"},
-  {id:4,estate:"Orchardale Estate",name:"Orchardale Watermelon",process:"Watermelon Process",acidity:"Sweet / Tart",body:"Light but silky",notes:["Red Currant","Mandarin Orange","Honeysuckle","Floral"],price:625,img:"images/orchardale-watermelon.jpg"},
-  {id:5,estate:"Bison Valley Estate",name:"Bison Valley Brown Sugar",process:"Brown Sugar Process",acidity:"Medium+, Intense",body:"Medium",notes:["Brown Sugar","Berries","Nuts","Complex"],price:675,img:"images/bison-valley-brown-sugar.jpg"},
-  {id:6,estate:"Moganad Estate",name:"Moganad Triple ICE",process:"Triple Fermentation ICE Blast",acidity:"Complex",body:"Medium, well rounded",notes:["Mulberry","Peach","Palm Sugar","Dried Fig","Elderflower"],price:699,img:"images/moganad-triple-ice.jpg"},
-  {id:7,estate:"Stanmore Estate",name:"Stanmore Watermelon",process:"Watermelon Process",acidity:"Sweet / Medium",body:"Velvety, smooth",notes:["Lavender","Rose Hip","Baking Chocolate","Chocolatey"],price:649,img:"images/stanmore-watermelon.jpg"},
-  {id:8,estate:"Orchardale Estate",name:"Orchardale Hazelnut",process:"Watermelon Process",acidity:"Bright / Sweet",body:"Medium+",notes:["Hazelnut","Milk Chocolate","Honey","Cocoa","Lime Zest"],price:625,img:"images/orchardale-hazelnut.jpg"}
-];
-
-
-var BREW_OPTIONS = ["Espresso","Pour Over / V60","AeroPress","French Press","Moka Pot","Cold Brew"];
+var BREW_OPTIONS  = ["Espresso","Pour Over / V60","AeroPress","French Press","Moka Pot","Cold Brew"];
 var ROAST_OPTIONS = ["Light Roast","Medium Roast","Dark Roast"];
 
-var DATA_VERSION = "v2";
-if(localStorage.getItem("frc_data_version") !== DATA_VERSION){
-  localStorage.removeItem("frc_coffees");
-  localStorage.setItem("frc_data_version", DATA_VERSION);
-}
-function getCoffees(){
-  return JSON.parse(localStorage.getItem("frc_coffees")) || DEFAULT_COFFEES;
-}
-function getPromos(){ return JSON.parse(localStorage.getItem("frc_promos")||"[]"); }
-function getDiscount(){ return JSON.parse(localStorage.getItem("frc_discount")||'{"threshold":2,"pct":10}'); }
+function fmt(n) { return "\u20b9" + Number(n).toLocaleString("en-IN"); }
 
-function fmt(n){ return "\u20b9"+Number(n).toLocaleString("en-IN"); }
-
-function renderGrid(){
+function renderGrid() {
   var coffees = getCoffees();
   var grid = document.getElementById("coffees-grid");
   grid.innerHTML = "";
-  coffees.forEach(function(c){
-    var imgHtml = c.img ? "<img src='"+c.img+"' alt='"+c.name+"'/>" : "<span style='font-size:3rem'>&#9749;</span>";
-    var notePills = c.notes.map(function(n){ return "<span class='note-pill'>"+n+"</span>"; }).join("");
-    var brewOpts = BREW_OPTIONS.map(function(b){ return "<option value='"+b+"'>"+b+"</option>"; }).join("");
-    var roastOpts = ROAST_OPTIONS.map(function(r){ return "<option value='"+r+"'>"+r+"</option>"; }).join("");
+  coffees.forEach(function(c) {
+    var imgHtml = c.img ? "<img src='" + c.img + "' alt='" + c.name + "'/>" : "<span style='font-size:3rem'>&#9749;</span>";
+    var notePills = c.notes.map(function(n) { return "<span class='note-pill'>" + n + "</span>"; }).join("");
+    var brewOpts  = BREW_OPTIONS.map(function(b)  { return "<option value='" + b + "'>" + b + "</option>"; }).join("");
+    var roastOpts = ROAST_OPTIONS.map(function(r) { return "<option value='" + r + "'>" + r + "</option>"; }).join("");
     var card = document.createElement("div");
     card.className = "coffee-card";
     card.innerHTML =
-      "<div class='coffee-card-img'>"+imgHtml+"</div>"
-      +"<div class='coffee-card-body'>"
-      +  "<div class='coffee-estate'>"+c.estate+"</div>"
-      +  "<div class='coffee-name'>"+c.name+"</div>"
-      +  "<div class='coffee-process'><i class='fas fa-flask' style='color:var(--gold);margin-right:4px'></i>"+c.process+"</div>"
-      +  "<div class='coffee-notes'>"+notePills+"</div>"
-      +"</div>"
-      +"<div class='card-selectors' style='flex-direction:row;gap:10px;padding:0 20px 10px;'>"
-      +  "<div style='flex:1;'><div class='card-sel-label'>Brew Method</div>"
-      +    "<select class='card-sel' id='brew-"+c.id+"'><option value=''>Select brew...</option>"+brewOpts+"</select></div>"
-      +  "<div style='flex:1;'><div class='card-sel-label'>Roast Level</div>"
-      +    "<select class='card-sel' id='roast-"+c.id+"'><option value=''>Select roast...</option>"+roastOpts+"</select></div>"
-      +"</div>"
-      +"<div class='coffee-card-footer'>"
-      +  "<div class='coffee-price'>"+fmt(c.price)+" <span>/ 250g</span></div>"
-      +  "<button class='add-btn' onclick='addToCart("+c.id+")'>\u002b Add</button>"
-      +"</div>";
+      "<div class='coffee-card-img'>" + imgHtml + "</div>"
+      + "<div class='coffee-card-body'>"
+      +   "<div class='coffee-estate'>" + c.estate + "</div>"
+      +   "<div class='coffee-name'>" + c.name + "</div>"
+      +   "<div class='coffee-process'><i class='fas fa-flask' style='color:var(--gold);margin-right:4px'></i>" + c.process + "</div>"
+      +   "<div class='coffee-notes'>" + notePills + "</div>"
+      + "</div>"
+      + "<div class='card-selectors' style='flex-direction:row;gap:10px;padding:0 20px 10px;'>"
+      +   "<div style='flex:1;'><div class='card-sel-label'>Brew Method</div>"
+      +     "<select class='card-sel' id='brew-" + c.id + "'><option value=''>Select brew...</option>" + brewOpts + "</select></div>"
+      +   "<div style='flex:1;'><div class='card-sel-label'>Roast Level</div>"
+      +     "<select class='card-sel' id='roast-" + c.id + "'><option value=''>Select roast...</option>" + roastOpts + "</select></div>"
+      + "</div>"
+      + "<div class='coffee-card-footer'>"
+      +   "<div class='coffee-price'>" + fmt(c.price) + " <span>/ 250g</span></div>"
+      +   "<button class='add-btn' onclick='addToCart(" + c.id + ")'>&#43; Add</button>"
+      + "</div>";
     grid.appendChild(card);
   });
 }
 
-function addToCart(id){
+function addToCart(id) {
   var coffees = getCoffees();
-  var c = coffees.find(function(x){ return x.id===id; });
-  var brew = document.getElementById("brew-"+id).value;
-  var roast = document.getElementById("roast-"+id).value;
-  if(!brew){ showToast("Please select a Brew Method first."); return; }
-  if(!roast){ showToast("Please select a Roast Level first."); return; }
-  var key = id+"|"+brew+"|"+roast;
-  var existing = cart.find(function(i){ return i.key===key; });
-  if(existing){ existing.qty++; }
-  else{ cart.push({key:key,id:id,name:c.name,estate:c.estate,price:c.price,brew:brew,roast:roast,img:c.img,qty:1}); }
-  saveCart(); // CHANGE 3
+  var c = coffees.find(function(x) { return x.id === id; });
+  var brew  = document.getElementById("brew-"  + id).value;
+  var roast = document.getElementById("roast-" + id).value;
+  if (!brew)  { showToast("Please select a Brew Method first.");  return; }
+  if (!roast) { showToast("Please select a Roast Level first."); return; }
+  var key = id + "|" + brew + "|" + roast;
+  var existing = cart.find(function(i) { return i.key === key; });
+  if (existing) { existing.qty++; }
+  else { cart.push({key:key,id:id,name:c.name,estate:c.estate,price:c.price,brew:brew,roast:roast,img:c.img,qty:1}); }
+  saveCart();
   renderCart();
-  showToast(c.name+" added to cart!","success");
+  showToast(c.name + " added to cart!", "success");
 }
 
-function removeFromCart(key){
-  cart = cart.filter(function(i){ return i.key!==key; });
-  if(cart.length===0) appliedPromo=null;
-  saveCart(); // CHANGE 3
+function removeFromCart(key) {
+  cart = cart.filter(function(i) { return i.key !== key; });
+  if (cart.length === 0) appliedPromo = null;
+  saveCart();
   renderCart();
 }
 
-function changeQty(key,delta){
-  var item = cart.find(function(i){ return i.key===key; });
-  if(!item) return;
+function changeQty(key, delta) {
+  var item = cart.find(function(i) { return i.key === key; });
+  if (!item) return;
   item.qty += delta;
-  if(item.qty<=0) removeFromCart(key);
-  else { saveCart(); renderCart(); } // CHANGE 3
+  if (item.qty <= 0) removeFromCart(key);
+  else { saveCart(); renderCart(); }
 }
 
-function calcTotals(){
-  var subtotal = cart.reduce(function(s,i){ return s+i.price*i.qty; },0);
-  var totalQty = cart.reduce(function(s,i){ return s+i.qty; },0);
-  var disc = getDiscount();
+function calcTotals() {
+  var subtotal  = cart.reduce(function(s, i) { return s + i.price * i.qty; }, 0);
+  var totalQty  = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+  var disc      = getDiscount();
   var multiDiscount = 0;
-  if(totalQty>=disc.threshold){ multiDiscount = Math.round(subtotal*disc.pct/100); }
+  if (totalQty >= disc.threshold) { multiDiscount = Math.round(subtotal * disc.pct / 100); }
   var promoDiscount = 0;
-  if(appliedPromo){ promoDiscount = Math.round((subtotal-multiDiscount)*appliedPromo.discount/100); }
+  if (appliedPromo) { promoDiscount = Math.round((subtotal - multiDiscount) * appliedPromo.discount / 100); }
   var grand = subtotal - multiDiscount - promoDiscount;
-  return {subtotal:subtotal,totalQty:totalQty,multiDiscount:multiDiscount,promoDiscount:promoDiscount,grand:grand};
+  return {subtotal:subtotal, totalQty:totalQty, multiDiscount:multiDiscount, promoDiscount:promoDiscount, grand:grand};
 }
 
-function renderCart(){
-  var itemsEl = document.getElementById("cart-items");
+function renderCart() {
+  var itemsEl  = document.getElementById("cart-items");
   var footerEl = document.getElementById("cart-footer");
-  var badge = document.getElementById("cart-badge");
-  var totals = calcTotals();
-  var totalQty = cart.reduce(function(s,i){ return s+i.qty; },0);
+  var badge    = document.getElementById("cart-badge");
+  var totals   = calcTotals();
+  var totalQty = cart.reduce(function(s, i) { return s + i.qty; }, 0);
   badge.textContent = totalQty;
-  badge.style.display = totalQty>0 ? "flex" : "none";
-  if(cart.length===0){
+  badge.style.display = totalQty > 0 ? "flex" : "none";
+  if (cart.length === 0) {
     itemsEl.innerHTML = "<div class='cart-empty'><i class='fas fa-shopping-bag'></i><p>Your cart is empty.<br/>Add some coffees!</p></div>";
     footerEl.style.display = "none";
     return;
   }
   footerEl.style.display = "block";
   itemsEl.innerHTML = "";
-  cart.forEach(function(item){
+  cart.forEach(function(item) {
     var thumb = item.img
-      ? "<div class='cart-item-thumb'><img src='"+item.img+"' alt='"+item.name+"'></div>"
+      ? "<div class='cart-item-thumb'><img src='" + item.img + "' alt='" + item.name + "'></div>"
       : "<div class='cart-item-thumb'>&#9749;</div>";
     var div = document.createElement("div");
     div.className = "cart-item";
     div.innerHTML = thumb
-      +"<div class='cart-item-info'>"
-      +  "<div class='cart-item-name'>"+item.name+"</div>"
-      +  "<div class='cart-item-meta'>"+item.brew+" &middot; "+item.roast+"</div>"
-      +  "<div class='cart-item-controls'>"
-      +    "<button class='qty-btn' onclick='changeQty(\""+item.key+"\",-1)'>&#8722;</button>"
-      +    "<span class='qty-num'>"+item.qty+"</span>"
-      +    "<button class='qty-btn' onclick='changeQty(\""+item.key+"\",1)'>&#43;</button>"
-      +    "<button class='qty-btn' onclick='removeFromCart(\""+item.key+"\")' style='font-size:0.75rem;color:var(--danger)'>&#10005;</button>"
-      +  "</div>"
-      +"</div>"
-      +"<div class='cart-item-price'>"+fmt(item.price*item.qty)+"</div>";
+      + "<div class='cart-item-info'>"
+      +   "<div class='cart-item-name'>" + item.name + "</div>"
+      +   "<div class='cart-item-meta'>" + item.brew + " &middot; " + item.roast + "</div>"
+      +   "<div class='cart-item-controls'>"
+      +     "<button class='qty-btn' onclick='changeQty(\"" + item.key + "\",-1)'>&#8722;</button>"
+      +     "<span class='qty-num'>" + item.qty + "</span>"
+      +     "<button class='qty-btn' onclick='changeQty(\"" + item.key + "\",1)'>&#43;</button>"
+      +     "<button class='qty-btn' onclick='removeFromCart(\"" + item.key + "\")' style='font-size:0.75rem;color:var(--danger)'>&#10005;</button>"
+      +   "</div>"
+      + "</div>"
+      + "<div class='cart-item-price'>" + fmt(item.price * item.qty) + "</div>";
     itemsEl.appendChild(div);
   });
   var disc = getDiscount();
-  var tq = cart.reduce(function(s,i){ return s+i.qty; },0);
-  var html = "<div class='cart-total-row'><span>Subtotal ("+tq+" item"+(tq>1?"s":"")+")</span><span>"+fmt(totals.subtotal)+"</span></div>";
-  if(totals.multiDiscount>0){
-    html += "<div class='cart-total-row discount'><span><i class='fas fa-tag' style='margin-right:4px'></i>Multi-pack "+disc.pct+"% off</span><span>-"+fmt(totals.multiDiscount)+"</span></div>";
+  var tq = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+  var html = "<div class='cart-total-row'><span>Subtotal (" + tq + " item" + (tq > 1 ? "s" : "") + ")</span><span>" + fmt(totals.subtotal) + "</span></div>";
+  if (totals.multiDiscount > 0) {
+    html += "<div class='cart-total-row discount'><span><i class='fas fa-tag' style='margin-right:4px'></i>Multi-pack " + disc.pct + "% off</span><span>-" + fmt(totals.multiDiscount) + "</span></div>";
   }
-  if(totals.promoDiscount>0){
-    html += "<div class='cart-total-row discount'><span><i class='fas fa-percent' style='margin-right:4px'></i>Promo \""+appliedPromo.code+"\"</span><span>-"+fmt(totals.promoDiscount)+"</span></div>";
+  if (totals.promoDiscount > 0) {
+    html += "<div class='cart-total-row discount'><span><i class='fas fa-percent' style='margin-right:4px'></i>Promo \"" + appliedPromo.code + "\"</span><span>-" + fmt(totals.promoDiscount) + "</span></div>";
   }
-  html += "<div class='cart-total-row'><span class='free-delivery-note'><i class='fas fa-truck'></i> Free Shipping </span></div>";
-  html += "<div class='cart-total-row grand'><span>Total Payable</span><span>"+fmt(totals.grand)+"</span></div>";
+  html += "<div class='cart-total-row'><span class='free-delivery-note'><i class='fas fa-truck'></i> Free Shipping</span></div>";
+  html += "<div class='cart-total-row grand'><span>Total Payable</span><span>" + fmt(totals.grand) + "</span></div>";
   document.getElementById("cart-totals").innerHTML = html;
 }
 
-function applyPromo(){
-  var code = document.getElementById("promo-input").value.trim().toUpperCase();
+// ═══════════════════════════════════════════
+// PROMO — validate from Firestore cache,
+//         write usage count back to Firestore
+// ═══════════════════════════════════════════
+function applyPromo() {
+  var code  = document.getElementById("promo-input").value.trim().toUpperCase();
   var msgEl = document.getElementById("promo-msg");
-  if(!code){ msgEl.innerHTML = "<div class='promo-msg err'>Enter a promo code.</div>"; return; }
+  if (!code) { msgEl.innerHTML = "<div class='promo-msg err'>Enter a promo code.</div>"; return; }
   var promos = getPromos();
-  var found = promos.find(function(p){ return p.code===code && p.active; });
-  if(found){
+  var found  = promos.find(function(p) { return p.code === code && p.active; });
+  if (found) {
     appliedPromo = found;
-    var idx = promos.findIndex(function(p){ return p.code===code; });
-    promos[idx].uses = (promos[idx].uses||0)+1;
-    localStorage.setItem("frc_promos",JSON.stringify(promos));
-    msgEl.innerHTML = "<div class='promo-msg ok'><i class='fas fa-check-circle'></i> Code applied! "+found.discount+"% off.</div>";
+    // Increment usage count in Firestore
+    var idx = promos.findIndex(function(p) { return p.code === code; });
+    if (idx >= 0) {
+      _promos[idx].uses = (_promos[idx].uses || 0) + 1;
+      db.collection("frc_settings").doc("promos").set({list: _promos})
+        .catch(function(e) { console.warn("Promo usage update failed:", e.message); });
+    }
+    msgEl.innerHTML = "<div class='promo-msg ok'><i class='fas fa-check-circle'></i> Code applied! " + found.discount + "% off.</div>";
     renderCart();
   } else {
     appliedPromo = null;
@@ -844,16 +723,15 @@ function applyPromo(){
   }
 }
 
-// CHANGE 2: openCheckout now checks auth first
-function openCheckout(){
-  if(cart.length===0) return;
+function openCheckout() {
+  if (cart.length === 0) return;
   frcUser = JSON.parse(localStorage.getItem("frc_user") || "null");
-  if(!frcUser){
+  if (!frcUser) {
     toggleCart();
     openAuthModal("login", true);
     return;
   }
-  if(frcUser){
+  if (frcUser) {
     document.getElementById("co-name").value  = frcUser.displayName || "";
     document.getElementById("co-email").value = frcUser.email || "";
   }
@@ -862,7 +740,7 @@ function openCheckout(){
   toggleCart();
 }
 
-function goToStep1(){
+function goToStep1() {
   document.getElementById("co-panel-1").classList.add("active");
   document.getElementById("co-panel-2").classList.remove("active");
   document.getElementById("co-step-1").className = "co-step active";
@@ -870,13 +748,13 @@ function goToStep1(){
   document.getElementById("co-step-line").className = "co-step-line";
 }
 
-function goToStep2(){
+function goToStep2() {
   var name    = document.getElementById("co-name").value.trim();
   var phone   = document.getElementById("co-phone").value.trim();
   var address = document.getElementById("co-address").value.trim();
-  if(!name){    showToast("Please enter your full name."); return; }
-  if(!/^[6-9]\d{9}$/.test(phone)){ showToast("Enter a valid 10-digit mobile number."); return; }
-  if(!address){ showToast("Please enter your delivery address."); return; }
+  if (!name)                          { showToast("Please enter your full name.");             return; }
+  if (!/^[6-9]\d{9}$/.test(phone))   { showToast("Enter a valid 10-digit mobile number.");    return; }
+  if (!address)                       { showToast("Please enter your delivery address.");       return; }
   buildGstInvoice();
   document.getElementById("co-panel-1").classList.remove("active");
   document.getElementById("co-panel-2").classList.add("active");
@@ -885,117 +763,112 @@ function goToStep2(){
   document.getElementById("co-step-line").className = "co-step-line done";
 }
 
-function buildGstInvoice(){
-  var totals  = calcTotals();
-  var disc    = getDiscount();
-  var email   = document.getElementById("co-email").value.trim();
-  var name    = document.getElementById("co-name").value.trim();
-  var phone   = document.getElementById("co-phone").value.trim();
+function buildGstInvoice() {
+  var totals   = calcTotals();
+  var disc     = getDiscount();
+  var email    = document.getElementById("co-email").value.trim();
+  var name     = document.getElementById("co-name").value.trim();
+  var phone    = document.getElementById("co-phone").value.trim();
   var grandRaw = totals.grand;
   var baseAmt  = Math.round(grandRaw / 1.05);
   var gstAmt   = grandRaw - baseAmt;
-  var totalQty = cart.reduce(function(s,i){ return s+i.qty; },0);
-
-  var itemRows = cart.map(function(i){
-    return "<div class='gst-row item-row'><span>"+i.name+" &times;"+i.qty+"</span><span>"+fmt(i.price*i.qty)+"</span></div>"
-      +"<div class='gst-row item-meta'><span>"+i.brew+" &middot; "+i.roast+"</span><span style='color:var(--text-muted)'>"+fmt(i.price)+" / 250g</span></div>";
+  var totalQty = cart.reduce(function(s, i) { return s + i.qty; }, 0);
+  var itemRows = cart.map(function(i) {
+    return "<div class='gst-row item-row'><span>" + i.name + " &times;" + i.qty + "</span><span>" + fmt(i.price * i.qty) + "</span></div>"
+      + "<div class='gst-row item-meta'><span>" + i.brew + " &middot; " + i.roast + "</span><span style='color:var(--text-muted)'>" + fmt(i.price) + " / 250g</span></div>";
   }).join("");
-
-  var multiRow = totals.multiDiscount>0
-    ? "<div class='gst-row discount'><span><i class='fas fa-tag' style='margin-right:3px'></i>Multi-pack "+disc.pct+"% off</span><span>-"+fmt(totals.multiDiscount)+"</span></div>" : "";
-  var promoRow = totals.promoDiscount>0
-    ? "<div class='gst-row discount'><span><i class='fas fa-percent' style='margin-right:3px'></i>Promo \""+appliedPromo.code+"\"</span><span>-"+fmt(totals.promoDiscount)+"</span></div>" : "";
-
+  var multiRow = totals.multiDiscount > 0
+    ? "<div class='gst-row discount'><span><i class='fas fa-tag' style='margin-right:3px'></i>Multi-pack " + disc.pct + "% off</span><span>-" + fmt(totals.multiDiscount) + "</span></div>" : "";
+  var promoRow = totals.promoDiscount > 0
+    ? "<div class='gst-row discount'><span><i class='fas fa-percent' style='margin-right:3px'></i>Promo \"" + appliedPromo.code + "\"</span><span>-" + fmt(totals.promoDiscount) + "</span></div>" : "";
   document.getElementById("gst-invoice-box").innerHTML =
     "<div class='gst-invoice-header'>"
-    +"<div><div class='gst-brand'>Five<span>Roam</span> Coffee</div><div class='gst-label'>Tax Invoice</div></div>"
-    +"<div style='text-align:right'>"
-    +"<div style='font-size:0.7rem;color:var(--text-muted)'>Date: "+new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"})+"</div>"
-    +"<div style='font-size:0.7rem;color:var(--text-muted)'>GSTIN: 29AADCF1234R1ZT</div>"
-    +"</div></div>"
-    +"<div style='font-size:0.72rem;color:var(--text-muted);margin-bottom:10px;'>"
-    +"<span style='font-weight:700;color:var(--brown)'>Bill To: </span>"+name+(email?" &middot; "+email:"")+" &middot; "+phone+"</div>"
-    +"<div class='gst-invoice-title'>Items Ordered</div>"
-    +itemRows
-    +"<div class='gst-divider'></div>"
-    +"<div class='gst-row subtotal'><span>Subtotal ("+totalQty+" item"+(totalQty>1?"s":"")+")</span><span>"+fmt(totals.subtotal)+"</span></div>"
-    +multiRow+promoRow
-    +"<div class='gst-free-delivery'><i class='fas fa-truck'></i> Shipping Free</div>"
-    +"<div class='gst-divider'></div>"
-    +"<div class='gst-row'><span>Taxable Value (excl. GST)</span><span>"+fmt(baseAmt)+"</span></div>"
-    +"<div class='gst-row gst'><span>GST @ 5% (CGST 2.5% + SGST 2.5%)</span><span>+"+fmt(gstAmt)+"</span></div>"
-    +"<div class='gst-divider'></div>"
-    +"<div class='gst-row total'><span>Total Payable (incl. GST)</span><span>"+fmt(grandRaw)+"</span></div>"
-    +"<div class='gst-note'>* Prices inclusive of 5% GST &nbsp;|&nbsp; Amounts in INR</div>";
+    + "<div><div class='gst-brand'>Five<span>Roam</span> Coffee</div><div class='gst-label'>Tax Invoice</div></div>"
+    + "<div style='text-align:right'>"
+    + "<div style='font-size:0.7rem;color:var(--text-muted)'>Date: " + new Date().toLocaleDateString("en-IN", {day:"2-digit",month:"short",year:"numeric"}) + "</div>"
+    + "<div style='font-size:0.7rem;color:var(--text-muted)'>GSTIN: 29AADCF1234R1ZT</div>"
+    + "</div></div>"
+    + "<div style='font-size:0.72rem;color:var(--text-muted);margin-bottom:10px;'>"
+    + "<span style='font-weight:700;color:var(--brown)'>Bill To: </span>" + name + (email ? " &middot; " + email : "") + " &middot; " + phone + "</div>"
+    + "<div class='gst-invoice-title'>Items Ordered</div>"
+    + itemRows
+    + "<div class='gst-divider'></div>"
+    + "<div class='gst-row subtotal'><span>Subtotal (" + totalQty + " item" + (totalQty > 1 ? "s" : "") + ")</span><span>" + fmt(totals.subtotal) + "</span></div>"
+    + multiRow + promoRow
+    + "<div class='gst-free-delivery'><i class='fas fa-truck'></i> Shipping Free</div>"
+    + "<div class='gst-divider'></div>"
+    + "<div class='gst-row'><span>Taxable Value (excl. GST)</span><span>" + fmt(baseAmt) + "</span></div>"
+    + "<div class='gst-row gst'><span>GST @ 5% (CGST 2.5% + SGST 2.5%)</span><span>+" + fmt(gstAmt) + "</span></div>"
+    + "<div class='gst-divider'></div>"
+    + "<div class='gst-row total'><span>Total Payable (incl. GST)</span><span>" + fmt(grandRaw) + "</span></div>"
+    + "<div class='gst-note'>* Prices inclusive of 5% GST &nbsp;|&nbsp; Amounts in INR</div>";
 }
 
-
-function buildInvoice(){
+function buildInvoice() {
   var totals = calcTotals();
   var disc = getDiscount();
-  var itemRows = cart.map(function(i){
-    return "<div class='invoice-row'><span>"+i.name+" x"+i.qty+"</span><span>"+fmt(i.price*i.qty)+"</span></div>";
+  var itemRows = cart.map(function(i) {
+    return "<div class='invoice-row'><span>" + i.name + " x" + i.qty + "</span><span>" + fmt(i.price * i.qty) + "</span></div>";
   }).join("");
-  var multiRow = totals.multiDiscount>0
-    ? "<div class='invoice-row discount'><span>Multi-pack "+disc.pct+"% off</span><span>-"+fmt(totals.multiDiscount)+"</span></div>" : "";
-  var promoRow = totals.promoDiscount>0
-    ? "<div class='invoice-row discount'><span>Promo \""+appliedPromo.code+"\"</span><span>-"+fmt(totals.promoDiscount)+"</span></div>" : "";
+  var multiRow = totals.multiDiscount > 0
+    ? "<div class='invoice-row discount'><span>Multi-pack " + disc.pct + "% off</span><span>-" + fmt(totals.multiDiscount) + "</span></div>" : "";
+  var promoRow = totals.promoDiscount > 0
+    ? "<div class='invoice-row discount'><span>Promo \"" + appliedPromo.code + "\"</span><span>-" + fmt(totals.promoDiscount) + "</span></div>" : "";
   document.getElementById("checkout-invoice").innerHTML =
     "<div class='invoice-title'>Order Summary</div>"
-    +itemRows
-    +"<div class='invoice-row'><span>Subtotal</span><span>"+fmt(totals.subtotal)+"</span></div>"
-    +multiRow+promoRow
-    +"<div class='invoice-free-delivery'><i class='fas fa-truck'></i> Delivery Free on every order</div>"
-    +"<div class='invoice-row total'><span>Total Payable</span><span>"+fmt(totals.grand)+"</span></div>";
+    + itemRows
+    + "<div class='invoice-row'><span>Subtotal</span><span>" + fmt(totals.subtotal) + "</span></div>"
+    + multiRow + promoRow
+    + "<div class='invoice-free-delivery'><i class='fas fa-truck'></i> Delivery Free on every order</div>"
+    + "<div class='invoice-row total'><span>Total Payable</span><span>" + fmt(totals.grand) + "</span></div>";
 }
 
-function placeOrder(){
-  var name = document.getElementById("co-name").value.trim();
-  var phone = document.getElementById("co-phone").value.trim();
-  var email = document.getElementById("co-email").value.trim();
+function placeOrder() {
+  var name    = document.getElementById("co-name").value.trim();
+  var phone   = document.getElementById("co-phone").value.trim();
+  var email   = document.getElementById("co-email").value.trim();
   var address = document.getElementById("co-address").value.trim();
-  if(!name){ showToast("Please enter your name."); return; }
-  if(!/^[6-9]\d{9}$/.test(phone)){ showToast("Enter a valid 10-digit mobile number."); return; }
-  if(!address){ showToast("Please enter your delivery address."); return; }
-  var totals = calcTotals();
-  var orderId = "FRC-"+Date.now().toString(36).toUpperCase()+"-"+Math.random().toString(36).substr(2,4).toUpperCase();
-  var order = {
+  if (!name)                          { showToast("Please enter your name."); return; }
+  if (!/^[6-9]\d{9}$/.test(phone))   { showToast("Enter a valid 10-digit mobile number."); return; }
+  if (!address)                       { showToast("Please enter your delivery address."); return; }
+  var totals  = calcTotals();
+  var orderId = "FRC-" + Date.now().toString(36).toUpperCase() + "-" + Math.random().toString(36).substr(2,4).toUpperCase();
+  var order   = {
     orderId:orderId, timestamp:Date.now(),
     name:name, phone:phone, email:email, address:address,
-    items:cart.map(function(i){ return {name:i.name,qty:i.qty,price:i.price,brew:i.brew,roast:i.roast}; }),
+    items:cart.map(function(i) { return {name:i.name,qty:i.qty,price:i.price,brew:i.brew,roast:i.roast}; }),
     subtotal:totals.subtotal, multiDiscount:totals.multiDiscount,
-    promoCode:appliedPromo?appliedPromo.code:"", promoDiscount:totals.promoDiscount,
+    promoCode:appliedPromo ? appliedPromo.code : "", promoDiscount:totals.promoDiscount,
     delivery:0, grand:totals.grand, status:"New"
   };
-  var orders = JSON.parse(localStorage.getItem("frc_orders")||"[]");
+  var orders = JSON.parse(localStorage.getItem("frc_orders") || "[]");
   orders.unshift(order);
-  localStorage.setItem("frc_orders",JSON.stringify(orders));
+  localStorage.setItem("frc_orders", JSON.stringify(orders));
   document.getElementById("checkout-modal").classList.remove("open");
   document.getElementById("success-order-id").textContent = orderId;
   document.getElementById("success-modal").classList.add("open");
-  cart=[]; appliedPromo=null;
-  saveCart(); // CHANGE 3 - clear cart in localStorage too
-  ["co-name","co-phone","co-email","co-address"].forEach(function(id){ document.getElementById(id).value=""; });
-  document.getElementById("promo-input").value="";
-  document.getElementById("promo-msg").innerHTML="";
+  cart = []; appliedPromo = null;
+  saveCart();
+  ["co-name","co-phone","co-email","co-address"].forEach(function(id) { document.getElementById(id).value = ""; });
+  document.getElementById("promo-input").value = "";
+  document.getElementById("promo-msg").innerHTML = "";
   renderCart();
 }
 
-function closeSuccess(){
+function closeSuccess() {
   document.getElementById("success-modal").classList.remove("open");
   renderCart();
 }
 
-function toggleCart(){
-  var drawer = document.getElementById("cart-drawer");
+function toggleCart() {
+  var drawer  = document.getElementById("cart-drawer");
   var overlay = document.getElementById("cart-overlay");
-  var isOpen = drawer.classList.contains("open");
-  if(isOpen){
+  var isOpen  = drawer.classList.contains("open");
+  if (isOpen) {
     drawer.classList.remove("open");
     overlay.classList.remove("open");
   } else {
-    // Clear promo field when opening cart
-    document.getElementById("promo-input").value = "";
+    document.getElementById("promo-input").value  = "";
     document.getElementById("promo-msg").innerHTML = "";
     renderCart();
     drawer.classList.add("open");
@@ -1003,27 +876,26 @@ function toggleCart(){
   }
 }
 
-function showToast(msg, type){
-  var t = document.getElementById("toast");
+function showToast(msg, type) {
+  var t    = document.getElementById("toast");
   var icon = type === "success"
     ? "<i class='fas fa-check-circle' style='margin-right:6px'></i>"
     : "<i class='fas fa-info-circle' style='margin-right:6px'></i>";
-  t.innerHTML = icon + msg;
-  t.className = "toast show " + (type || "");
-  setTimeout(function(){ t.className = "toast"; }, 3000);
+  t.innerHTML   = icon + msg;
+  t.className   = "toast show " + (type || "");
+  setTimeout(function() { t.className = "toast"; }, 3000);
 }
 
 // ═══════════════════════════════════════════
-// AUTH MODAL FUNCTIONS
+// AUTH MODAL
 // ═══════════════════════════════════════════
 var _authPostLoginCheckout = false;
 
 function openAuthModal(tab, proceedToCheckout) {
   _authPostLoginCheckout = proceedToCheckout || false;
-  // Clear all fields every time modal opens
-  ["al-email","al-password","ar-name","ar-email","ar-password","ar-confirm","af-email"].forEach(function(id){
+  ["al-email","al-password","ar-name","ar-email","ar-password","ar-confirm","af-email"].forEach(function(id) {
     var el = document.getElementById(id);
-    if(el) el.value = "";
+    if (el) el.value = "";
   });
   var sub = document.getElementById("auth-modal-sub");
   sub.textContent = proceedToCheckout
@@ -1038,72 +910,51 @@ function closeAuthModal() {
   clearAuthMsgs();
 }
 
-// Close on overlay click
-document.getElementById("auth-modal-overlay").addEventListener("click", function(e){
-  if(e.target === this) closeAuthModal();
+document.getElementById("auth-modal-overlay").addEventListener("click", function(e) {
+  if (e.target === this) closeAuthModal();
 });
 
 function switchAuthTab(tab) {
   document.getElementById("auth-panel-login").style.display    = "none";
   document.getElementById("auth-panel-register").style.display = "none";
   document.getElementById("auth-panel-forgot").style.display   = "none";
-  document.querySelectorAll(".auth-tab-btn").forEach(function(b){ b.classList.remove("active"); });
+  document.querySelectorAll(".auth-tab-btn").forEach(function(b) { b.classList.remove("active"); });
   clearAuthMsgs();
-  
-  // Clear all auth input fields on every tab switch
-  document.getElementById("al-email").value    = "";
-  document.getElementById("al-password").value = "";
-  document.getElementById("ar-name").value     = "";
-  document.getElementById("ar-email").value    = "";
-  document.getElementById("ar-password").value = "";
-  document.getElementById("ar-confirm").value  = "";
-  document.getElementById("af-email").value    = "";
-  
-  if(tab==="login"){
+  ["al-email","al-password","ar-name","ar-email","ar-password","ar-confirm","af-email"].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = "";
+  });
+  if (tab === "login") {
     document.getElementById("auth-panel-login").style.display = "block";
     document.querySelectorAll(".auth-tab-btn")[0].classList.add("active");
-  } else if(tab==="register"){
+  } else if (tab === "register") {
     document.getElementById("auth-panel-register").style.display = "block";
     document.querySelectorAll(".auth-tab-btn")[1].classList.add("active");
-  } else if(tab==="forgot"){
+  } else if (tab === "forgot") {
     document.getElementById("auth-panel-forgot").style.display = "block";
   }
 }
 
-function clearAuthMsgs(){
-  ["al-msg","ar-msg","af-msg"].forEach(function(id){
+function clearAuthMsgs() {
+  ["al-msg","ar-msg","af-msg"].forEach(function(id) {
     var el = document.getElementById(id);
-    if(el){ el.className="auth-msg"; el.textContent=""; }
+    if (el) { el.className = "auth-msg"; el.textContent = ""; }
   });
 }
 
-function showAuthMsg(id, msg, type){
+function showAuthMsg(id, msg, type) {
   var el = document.getElementById(id);
-  el.className = "auth-msg "+type;
+  el.className = "auth-msg " + type;
   el.textContent = msg;
 }
 
-function handleModalLogin(){
+function handleModalLogin() {
   var email    = document.getElementById("al-email").value.trim();
   var password = document.getElementById("al-password").value.trim();
-
-  if(!email || !password){
-    showAuthMsg("al-msg", "Please enter email and password.", "error");
-    return;
-  }
-
-  if(!email.includes("@") || !email.includes(".")){
-    showAuthMsg("al-msg", "Please enter a valid email address.", "error");
-    return;
-  }
-
+  if (!email || !password) { showAuthMsg("al-msg", "Please enter email and password.", "error"); return; }
+  if (!email.includes("@") || !email.includes(".")) { showAuthMsg("al-msg", "Please enter a valid email address.", "error"); return; }
   showAuthMsg("al-msg", "Logging in...", "info");
-
-  // Directly attempt sign in — Firebase v10 merged user-not-found
-  // & wrong-password into auth/invalid-credential, so we handle
-  // the distinction AFTER the failed attempt using fetchSignInMethods
   auth.signInWithEmailAndPassword(email, password)
-    .then(function(uc){
+    .then(function(uc) {
       localStorage.setItem("frc_user", JSON.stringify({
         uid: uc.user.uid,
         email: uc.user.email,
@@ -1113,107 +964,79 @@ function handleModalLogin(){
       updateNav();
       closeAuthModal();
       var userName = uc.user.displayName || email.split("@")[0];
-      showToast("Welcome back, " + userName + "! ☕", "success");
-      if(_authPostLoginCheckout){ setTimeout(function(){ openCheckout(); }, 400); }
+      showToast("Welcome back, " + userName + "! \u2615", "success");
+      if (_authPostLoginCheckout) { setTimeout(function() { openCheckout(); }, 400); }
     })
-    .catch(function(err){
-
-      // Too many attempts — show immediately, no need to check further
-      if(err.code === "auth/too-many-requests"){
-        showAuthMsg("al-msg", "Too many failed attempts. Please reset your password or try again later.", "error");
-        return;
-      }
-
-      // Network failure
-      if(err.code === "auth/network-request-failed"){
-        showAuthMsg("al-msg", "Network error. Please check your internet connection.", "error");
-        return;
-      }
-
-      // For auth/invalid-credential (Firebase v10+) and auth/user-not-found (older):
-      // Use fetchSignInMethodsForEmail ONLY as a secondary check after login fails
+    .catch(function(err) {
+      if (err.code === "auth/too-many-requests") { showAuthMsg("al-msg", "Too many failed attempts. Please reset your password or try again later.", "error"); return; }
+      if (err.code === "auth/network-request-failed") { showAuthMsg("al-msg", "Network error. Please check your internet connection.", "error"); return; }
       auth.fetchSignInMethodsForEmail(email)
-        .then(function(methods){
-          if(!methods || methods.length === 0){
-            // Email genuinely not in Firebase
+        .then(function(methods) {
+          if (!methods || methods.length === 0) {
             showAuthMsg("al-msg", "Email address not found. Please register first.", "error");
           } else {
-            // Email exists — so password was wrong
             showAuthMsg("al-msg", "Invalid credentials. Please check your password or use Forgot Password.", "error");
           }
         })
-        .catch(function(){
-          // fetchSignInMethods also failed — show safe fallback
+        .catch(function() {
           showAuthMsg("al-msg", "Invalid credentials. Please check your email and password.", "error");
         });
     });
 }
 
-
-function handleModalRegister(){
+function handleModalRegister() {
   var name     = document.getElementById("ar-name").value.trim();
   var email    = document.getElementById("ar-email").value.trim();
   var password = document.getElementById("ar-password").value.trim();
   var confirm  = document.getElementById("ar-confirm").value.trim();
-  if(!name||!email||!password||!confirm){ showAuthMsg("ar-msg","Please fill all fields","error"); return; }
-  if(password!==confirm){ showAuthMsg("ar-msg","Passwords do not match","error"); return; }
-  if(password.length<6){ showAuthMsg("ar-msg","Password must be at least 6 characters","error"); return; }
-  showAuthMsg("ar-msg","Creating account...","info");
+  if (!name || !email || !password || !confirm) { showAuthMsg("ar-msg", "Please fill all fields", "error"); return; }
+  if (password !== confirm) { showAuthMsg("ar-msg", "Passwords do not match", "error"); return; }
+  if (password.length < 6)  { showAuthMsg("ar-msg", "Password must be at least 6 characters", "error"); return; }
+  showAuthMsg("ar-msg", "Creating account...", "info");
   auth.createUserWithEmailAndPassword(email, password)
-    .then(function(uc){
-      return uc.user.updateProfile({displayName:name}).then(function(){
-        localStorage.setItem("frc_user", JSON.stringify({
-          uid: uc.user.uid,
-          email: uc.user.email,
-          displayName: name
-        }));
+    .then(function(uc) {
+      return uc.user.updateProfile({displayName: name}).then(function() {
+        localStorage.setItem("frc_user", JSON.stringify({uid:uc.user.uid, email:uc.user.email, displayName:name}));
         frcUser = JSON.parse(localStorage.getItem("frc_user"));
         updateNav();
         uc.user.sendEmailVerification();
-        showAuthMsg("ar-msg","Account created! Verification email sent.","success");
-        setTimeout(function(){
+        showAuthMsg("ar-msg", "Account created! Verification email sent.", "success");
+        setTimeout(function() {
           closeAuthModal();
           showToast("Welcome to Five Roam Coffee, " + name + "!", "success");
-          if(_authPostLoginCheckout){ setTimeout(function(){ openCheckout(); }, 400); }
+          if (_authPostLoginCheckout) { setTimeout(function() { openCheckout(); }, 400); }
         }, 2000);
       });
     })
-    .catch(function(err){
-      var msg = err.code==="auth/email-already-in-use" ? "Email already registered" :
-                err.code==="auth/weak-password"        ? "Password too weak" :
-                err.message;
+    .catch(function(err) {
+      var msg = err.code === "auth/email-already-in-use" ? "Email already registered" :
+                err.code === "auth/weak-password"        ? "Password too weak" : err.message;
       showAuthMsg("ar-msg", msg, "error");
     });
 }
 
-function handleModalForgot(){
+function handleModalForgot() {
   var email = document.getElementById("af-email").value.trim();
-  if(!email){ showAuthMsg("af-msg","Please enter your email","error"); return; }
-  showAuthMsg("af-msg","Sending reset link...","info");
-  var actionCodeSettings = {
-    url: 'https://fiveroamcoffee.com',
-    handleCodeInApp: false
-  };
-  var actionCodeSettings = {
-    url: 'https://fiveroamcoffee.com',
-    handleCodeInApp: false
-  };
+  if (!email) { showAuthMsg("af-msg", "Please enter your email", "error"); return; }
+  showAuthMsg("af-msg", "Sending reset link...", "info");
+  var actionCodeSettings = {url: "https://fiveroamcoffee.com", handleCodeInApp: false};
   auth.sendPasswordResetEmail(email, actionCodeSettings)
-    .then(function(){ showAuthMsg("af-msg","Reset link sent! Check your inbox.","success"); })
-    .catch(function(err){
-      var msg = err.code==="auth/user-not-found" ? "No account with this email." :
-                err.code==="auth/invalid-email"  ? "Please enter a valid email address." :
+    .then(function() { showAuthMsg("af-msg", "Reset link sent! Check your inbox.", "success"); })
+    .catch(function(err) {
+      var msg = err.code === "auth/user-not-found" ? "No account with this email." :
+                err.code === "auth/invalid-email"  ? "Please enter a valid email address." :
                 "Something went wrong. Please try again.";
       showAuthMsg("af-msg", msg, "error");
     });
 }
 
 // ═══════════════════════════════════════════
-// INIT
+// INIT — load from Firestore, then render
 // ═══════════════════════════════════════════
-renderGrid();
-renderCart();
 updateNav();
+renderCart();
+loadCloudData();
+
 </script>
 </body>
 </html>
